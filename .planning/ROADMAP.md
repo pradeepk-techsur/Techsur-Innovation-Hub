@@ -86,13 +86,13 @@ Plans:
   3. Unauthenticated or unauthorized users receive an appropriate redirect or error — never silent access — when attempting to reach any `/curator/*` route or protected API endpoint; unauthorized access attempts are recorded in audit history (AUTH-04, SEC-02, SEC-03)
   4. A chronological audit history records every material content, governance, lifecycle, and configuration change — identifying who made the change, what changed, and when — and this history cannot be modified or deleted by any application role
   5. Authorized curators can review the opportunity submission queue, innovation contribution queue, and engagement activity list — and disposition each item (accept, decline, needs-more-information) with the disposition recorded and traceable
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 04-01: RBAC middleware, role enforcement (curator/admin), and auth audit events (AUTH-02–06)
-- [ ] 04-02: Curator dashboard, record management list, and record creation/editing interface (F9.1–F9.5)
-- [ ] 04-03: Maturity, review status, attribution management, publication gate, and lifecycle transitions (F9.6–F9.10)
-- [ ] 04-04: Audit history, submission queues, engagement review, settings management, and content model reference (F9.11–F9.16)
+- [ ] 04-01-PLAN.md — requireRole() RBAC middleware, unauthorized access audit logging, curator SSR layout with server-side session check (AUTH-02–06)
+- [ ] 04-02-PLAN.md — records.service.ts (create/update + optimistic concurrency + audit), curator dashboard API + UI, record list + editor pages, artifact management (F9.1–F9.5)
+- [ ] 04-03-PLAN.md — publication.service.ts with all 15 gate checks, lifecycle transition endpoints (publish/unpublish/submit/supersede/archive/retire), maturity/review_statuses independent (F9.6–F9.10)
+- [ ] 04-04-PLAN.md — Audit history API, submission queues + disposition, engagement follow-up, settings management (admin-only), content model reference (F9.11–F9.16)
 
 ### Phase 5: Launch Readiness
 **Goal**: The application has complete, verified navigation with no dead links; at least 8 published seeded records spanning all required metadata dimensions; and all accessibility, deployment security, and launch-acceptance conditions are confirmed — so the Hub is ready for stakeholder use and the product acceptance criteria are met
@@ -121,5 +121,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation | 0/3 | Planned | - |
 | 2. Discovery | 0/4 | Planned | - |
 | 3. Engagement Flows | 0/4 | Planned | - |
-| 4. Curation and Administration | 0/4 | Not started | - |
+| 4. Curation and Administration | 0/4 | Planned | - |
 | 5. Launch Readiness | 0/3 | Not started | - |
