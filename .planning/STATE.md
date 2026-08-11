@@ -1,3 +1,19 @@
+---
+pivota_spec_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-foundation-03-PLAN.md
+last_updated: "2026-08-11T14:54:41.973Z"
+last_activity: "2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)"
+progress:
+  total_phases: 5
+  completed_phases: 1
+  total_plans: 3
+  completed_plans: 3
+  percent: 67
+---
+
 # Project State
 
 ## Project Reference
@@ -10,30 +26,35 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 ## Current Position
 
 Phase: 1 of 5 (Foundation)
-Plan: 0 of 3 in current phase
-Status: Ready to plan
-Last activity: 2026-08-11 — Roadmap created; all 79 v1 requirements mapped across 5 phases
+Plan: 2 of 3 in current phase
+Status: In progress
+Last activity: 2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
+
+- Total plans completed: 2
+- Average duration: 10min
+- Total execution time: 20min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01-foundation | 2 | 20min | 10min |
 
 **Recent Trend:**
-- Last 5 plans: —
-- Trend: —
+
+- Last 5 plans: 13min, 7min
+- Trend: improving
 
 *Updated after each plan completion*
+| Phase 01-foundation P01 | 13min | 2 tasks | 17 files |
+| Phase 01-foundation P02 | 7min | 2 tasks | 14 files |
+| Phase 01-foundation P03 | 11min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -47,6 +68,13 @@ Recent decisions affecting current work:
 - Roadmap: F3 (full record model) placed in Phase 1 so the primary journey is end-to-end before search is added
 - Architecture: Next.js App Router + PostgreSQL + Docker; identity system TBD (auth stub in Phase 1)
 - Blockers: Hosting environment and identity/access management TBD — both are operational blockers before non-development deployment
+- [Phase 01-foundation]: tsx over ts-node for TypeScript ESM execution in Node.js 20 (ts-node --require incompatible with ESM module resolution)
+- [Phase 01-foundation]: Separate postgres superuser and tsio_hub_app app role in Docker Compose: enables REVOKE UPDATE/DELETE on audit_events (table owner cannot lose own privileges)
+- [Phase 01-foundation]: DATABASE_ADMIN_URL separate from DATABASE_URL: migrate.ts uses superuser for DDL; app runtime uses least-privilege tsio_hub_app
+- [Phase 01-foundation]: SSR catalog page calls repository directly (not fetch('/api/v1/catalog')) to avoid loopback HTTP overhead in server components
+- [Phase 01-foundation]: MaturityBadge (filled ▲ pill) vs ReviewStatusBadge (outlined ✓/🛡) — three-layer visual distinction (shape + icon + color) per F1.6 and SEC-11
+- [Phase 01-foundation]: Kysely sql tagged template for CASE WHEN: db.raw() not a Kysely API; used sql<T>`...`.as() for SEC-04 URL redaction
+- [Phase 01-foundation]: node-postgres DATE→Date coercion: formatReviewDate() guard in TrustBanner converts runtime Date objects to YYYY-MM-DD strings before React rendering
 
 ### Pending Todos
 
@@ -60,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11
-Stopped at: Roadmap creation complete; ROADMAP.md and STATE.md written; REQUIREMENTS.md traceability updated
+Last session: 2026-08-11T14:54:41.972Z
+Stopped at: Completed 01-foundation-03-PLAN.md
 Resume file: None
