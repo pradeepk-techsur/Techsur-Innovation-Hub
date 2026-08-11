@@ -1,3 +1,6 @@
+.nuxt/
+.vite/
+.turbo/
 
 # >>> pivota:gitignore-managed
 # Patterns auto-managed by Pivota — refreshed on every push so coverage
@@ -108,12 +111,6 @@ playwright-report/
 htmlcov/
 .coverage
 
-# ── Environment files (secrets must not be committed) ──
-.env
-.env.local
-.env.*.local
-# .env.example is intentionally NOT ignored — committed with placeholder values only
-
 # ── OpenCode / Pivota workspace ──
 # NOTE: `.pivota/` is INTENTIONALLY NOT ignored here. Pivota commits
 # `.pivota/start-dev.sh` + `.pivota/dev-script.meta.json` (the dev-server
@@ -126,6 +123,3 @@ opencode.json.bak
 AGENTS.md
 .opencode.session
 # <<< pivota:gitignore-managed
-.nuxt/
-.vite/
-.turbo/
