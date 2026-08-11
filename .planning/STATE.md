@@ -2,15 +2,15 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: planning
-stopped_at: Completed 01-foundation-01-PLAN.md
-last_updated: "2026-08-11T14:27:35.007Z"
-last_activity: 2026-08-11 — Roadmap created; all 79 v1 requirements mapped across 5 phases
+status: executing
+stopped_at: Completed 01-foundation-02-PLAN.md
+last_updated: "2026-08-11T14:38:29.097Z"
+last_activity: "2026-08-11 — Completed 01-01 (app bootstrap: Next.js 15 + PostgreSQL 16 + all 8 DB tables)"
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
+  completed_plans: 2
   percent: 33
 ---
 
@@ -26,33 +26,34 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 ## Current Position
 
 Phase: 1 of 5 (Foundation)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: In progress
-Last activity: 2026-08-11 — Completed 01-01 (app bootstrap: Next.js 15 + PostgreSQL 16 + all 8 DB tables)
+Last activity: 2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)
 
-Progress: [███░░░░░░░] 33%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 1
-- Average duration: 13min
-- Total execution time: 13min
+- Total plans completed: 2
+- Average duration: 10min
+- Total execution time: 20min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation | 1 | 13min | 13min |
+| 01-foundation | 2 | 20min | 10min |
 
 **Recent Trend:**
 
-- Last 5 plans: 13min
-- Trend: baseline
+- Last 5 plans: 13min, 7min
+- Trend: improving
 
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 13min | 2 tasks | 17 files |
+| Phase 01-foundation P02 | 7min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -69,6 +70,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: tsx over ts-node for TypeScript ESM execution in Node.js 20 (ts-node --require incompatible with ESM module resolution)
 - [Phase 01-foundation]: Separate postgres superuser and tsio_hub_app app role in Docker Compose: enables REVOKE UPDATE/DELETE on audit_events (table owner cannot lose own privileges)
 - [Phase 01-foundation]: DATABASE_ADMIN_URL separate from DATABASE_URL: migrate.ts uses superuser for DDL; app runtime uses least-privilege tsio_hub_app
+- [Phase 01-foundation]: SSR catalog page calls repository directly (not fetch('/api/v1/catalog')) to avoid loopback HTTP overhead in server components
+- [Phase 01-foundation]: MaturityBadge (filled ▲ pill) vs ReviewStatusBadge (outlined ✓/🛡) — three-layer visual distinction (shape + icon + color) per F1.6 and SEC-11
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T14:27:35.006Z
-Stopped at: Completed 01-foundation-01-PLAN.md
+Last session: 2026-08-11T14:38:29.096Z
+Stopped at: Completed 01-foundation-02-PLAN.md
 Resume file: None
