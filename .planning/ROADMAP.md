@@ -104,12 +104,12 @@ Plans:
   3. At least 8 published innovation records are seeded, spanning multiple mission areas, multiple technology areas (cloud, AI/ML, security, data, UX), all six maturity levels, multiple review statuses, and multiple contributing offices — so every filter dimension returns meaningfully distinct, non-overlapping results (SEED-01–06)
   4. The Audio Security POC is published as the primary technical reuse example with significant findings, source artifact links, an executive-decision example, and at least one record actively seeking an adopter or collaborator — and at least one record is archived/retired for lifecycle transparency (SEED-07–12)
   5. Every seeded published record satisfies all 15 publication gate fields (maturity, review status, attribution, owner/steward, last-reviewed date, source basis, applicable disclaimer) and displays an applicable trust disclaimer — no seeded record bypasses the publication gate (SEED-11)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 05-01: Navigation audit, route map verification, breadcrumb/context presence, and IA-05 auth-state header
-- [ ] 05-02: Seed data authoring and publication for ≥8 records (Audio Security POC as primary; records covering all SEED dimensions)
-- [ ] 05-03: Accessibility verification (WCAG 2.1 AA), deployment security checks (SEC-10 headers, SEC-08 secrets), and launch-acceptance sign-off
+- [ ] 05-01-PLAN.md — Navigation audit, docs/NAVIGATION-MAP.md, Breadcrumb component on all pages, auth-state nav (Sign In / user + Sign Out), Playwright navigation tests (IA-01–05)
+- [ ] 05-02-PLAN.md — 8-record launch seed (all 6 maturity levels, 3+ mission areas, 4+ tech areas, 2+ offices, lifecycle transparency) with artifact rows (SEED-01–12)
+- [ ] 05-03-PLAN.md — axe-core accessibility tests (WCAG 2.1 AA), PRD §12 launch acceptance suite, docs/LAUNCH-CHECKLIST.md + docs/DEPLOYMENT-SECURITY.md (SEED-11, SEC-08/09/10)
 
 ## Progress
 
@@ -122,4 +122,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Discovery | 0/4 | Planned | - |
 | 3. Engagement Flows | 0/4 | Planned | - |
 | 4. Curation and Administration | 0/4 | Planned | - |
-| 5. Launch Readiness | 0/3 | Not started | - |
+| 5. Launch Readiness | 0/3 | Planned | - |
