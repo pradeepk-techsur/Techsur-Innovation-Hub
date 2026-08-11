@@ -50,37 +50,50 @@ export function OpportunityForm({ userInfo }: Props) {
     setSubmitting(true);
     setErrors({});
 
-    const res = await fetch('/api/v1/submissions/opportunity', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        requestType: form.requestType,
-        problemTitle: form.problemTitle,
-        problemDescription: form.problemDescription,
-        affectedUsers: form.affectedUsers,
-        currentWorkflow: form.currentWorkflow || undefined,
-        impact: form.impact,
-        desiredOutcome: form.desiredOutcome || undefined,
-        knownConstraints: form.knownConstraints || undefined,
-        relatedWorkAttempted: form.relatedWorkAttempted || undefined,
-        discoveryParticipants: form.discoveryParticipants || undefined,
-        additionalContext: form.additionalContext || undefined,
-        submittingOffice: form.submittingOffice,
-        submitterName: form.submitterName,
-        submitterEmail: form.submitterEmail,
-        consentToContact: true,
-        nonAcceptanceAcknowledged: true,
-      }),
-    });
+    try {
+      const res = await fetch('/api/v1/submissions/opportunity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requestType: form.requestType,
+          problemTitle: form.problemTitle,
+          problemDescription: form.problemDescription,
+          affectedUsers: form.affectedUsers,
+          currentWorkflow: form.currentWorkflow || undefined,
+          impact: form.impact,
+          desiredOutcome: form.desiredOutcome || undefined,
+          knownConstraints: form.knownConstraints || undefined,
+          relatedWorkAttempted: form.relatedWorkAttempted || undefined,
+          discoveryParticipants: form.discoveryParticipants || undefined,
+          additionalContext: form.additionalContext || undefined,
+          submittingOffice: form.submittingOffice,
+          submitterName: form.submitterName,
+          submitterEmail: form.submitterEmail,
+          consentToContact: true,
+          nonAcceptanceAcknowledged: true,
+        }),
+      });
 
-    const data = await res.json();
+      let data: Record<string, unknown>;
+      try {
+        data = await res.json();
+      } catch {
+        // API returned non-JSON (e.g. HTML 500) — surface a generic error
+        setErrors({ _: 'Server error. Please try again in a moment.' });
+        return;
+      }
 
-    if (res.ok) {
-      router.push(`/submit-opportunity/confirmation?ref=${data.referenceNumber}`);
-    } else {
-      setErrors(data.fields ?? { _: data.message ?? 'Submission failed' });
+      if (res.ok) {
+        router.push(`/submit-opportunity/confirmation?ref=${data.referenceNumber}`);
+      } else {
+        const fields = data.fields as Record<string, string> | undefined;
+        setErrors(fields ?? { _: (data.message as string) ?? 'Submission failed. Please try again.' });
+      }
+    } catch {
+      setErrors({ _: 'Network error. Please check your connection and try again.' });
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   }
 
   return (

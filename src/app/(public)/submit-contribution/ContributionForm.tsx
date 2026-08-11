@@ -57,36 +57,54 @@ export function ContributionForm({ userInfo }: Props) {
     setSubmitting(true);
     setErrors({});
 
-    const res = await fetch('/api/v1/submissions/contribution', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contributionTitle: form.contributionTitle,
-        problemAddressed: form.problemAddressed,
-        workDescription: form.workDescription,
-        contributingOffice: form.contributingOffice,
-        contributorNames: form.contributorNames,
-        currentMaturity: form.currentMaturity,
-        currentOwner: form.currentOwner,
-        ownerContactEmail: form.ownerContactEmail,
-        collaborationPreference: form.collaborationPreference,
-        artifactLinks: form.artifactLinks || undefined,
-        knownLimitations: form.knownLimitations || undefined,
-        submitterName: form.submitterName,
-        submitterEmail: form.submitterEmail,
-        nonEndorsementAcknowledged: true,
-        consentToContact: true,
-      }),
-    });
+    try {
+      const res = await fetch('/api/v1/submissions/contribution', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contributionTitle: form.contributionTitle,
+          problemAddressed: form.problemAddressed,
+          workDescription: form.workDescription,
+          contributingOffice: form.contributingOffice,
+          contributorNames: form.contributorNames,
+          currentMaturity: form.currentMaturity,
+          currentOwner: form.currentOwner,
+          ownerContactEmail: form.ownerContactEmail,
+          collaborationPreference: form.collaborationPreference,
+          artifactLinks: form.artifactLinks || undefined,
+          knownLimitations: form.knownLimitations || undefined,
+          submitterName: form.submitterName,
+          submitterEmail: form.submitterEmail,
+          nonEndorsementAcknowledged: true,
+          consentToContact: true,
+        }),
+      });
 
-    const data = await res.json();
+      let data: Record<string, unknown>;
+      try {
+        data = await res.json();
+      } catch {
+        setErrors({ _: 'Server error. Please try again in a moment.' });
+        return;
+      }
 
-    if (res.ok) {
-      router.push(`/submit-contribution/confirmation?ref=${data.referenceNumber}`);
-    } else {
-      setErrors(data.fields ?? { _: data.message ?? 'Submission failed' });
+      if (res.ok) {
+        router.push(`/submit-contribution/confirmation?ref=${data.referenceNumber}`);
+      } else {
+        const fields = data.fields as Record<string, string> | undefined;
+        // If API errors are for step-1 fields, reset to step 1 so errors are visible
+        const step1Fields = ['contributionTitle', 'problemAddressed', 'workDescription', 'currentMaturity', 'collaborationPreference'];
+        const hasStep1Errors = fields && Object.keys(fields).some(k => step1Fields.includes(k));
+        if (hasStep1Errors) {
+          setStep(1);
+        }
+        setErrors(fields ?? { _: (data.message as string) ?? 'Submission failed. Please try again.' });
+      }
+    } catch {
+      setErrors({ _: 'Network error. Please check your connection and try again.' });
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   }
 
   return (
@@ -370,7 +388,19 @@ export function ContributionForm({ userInfo }: Props) {
         {step < 2 ? (
           <button
             type="button"
-            onClick={() => setStep(s => s + 1)}
+            onClick={() => {
+              // Client-side validation for step 1 before advancing
+              const step1Errors: Record<string, string> = {};
+              if (!form.contributionTitle.trim()) step1Errors.contributionTitle = 'Contribution title is required';
+              if (form.problemAddressed.trim().length < 30) step1Errors.problemAddressed = 'Problem addressed must be at least 30 characters';
+              if (form.workDescription.trim().length < 50) step1Errors.workDescription = 'Work description must be at least 50 characters';
+              if (Object.keys(step1Errors).length > 0) {
+                setErrors(step1Errors);
+                return;
+              }
+              setErrors({});
+              setStep(s => s + 1);
+            }}
             className="ml-auto px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
           >
             Next

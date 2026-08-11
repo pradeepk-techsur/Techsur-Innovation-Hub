@@ -17,6 +17,10 @@ test.describe('Innovation Contribution (F7)', () => {
 
   test('F7.3 – attribution fields are required', async ({ page }) => {
     await page.goto('/submit-contribution');
+    // Fill step 1 fields so validation passes and we can advance to step 2
+    await page.getByLabel(/contribution title/i).fill('Test Innovation Work');
+    await page.getByLabel(/problem addressed/i).fill('A problem that needed to be solved in the courts');
+    await page.getByLabel(/work description/i).fill('This is a description of the work completed and the outcomes achieved during innovation.');
     // Navigate to Step 2 where attribution fields are
     await page.getByRole('button', { name: 'Next', exact: true }).click();
     // Contributing office and contributor names should be visible and required
@@ -59,5 +63,40 @@ test.describe('Innovation Contribution (F7)', () => {
     expect(res.status()).toBe(422);
     const body = await res.json();
     expect(body.error_code).toBe('VALIDATION_ERROR');
+  });
+
+  test('F7-step1-validation – Next button blocked when step-1 fields are empty', async ({ page }) => {
+    await page.goto('/submit-contribution');
+    // Do not fill any fields — click Next immediately
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    // Should still be on step 1
+    await expect(page.getByText(/step 1 of 2/i)).toBeVisible();
+    // At least one field error should appear
+    await expect(page.getByText(/required|at least/i).first()).toBeVisible();
+  });
+
+  test('F7-submit-error – API error re-enables Submit and shows error', async ({ page }) => {
+    await page.goto('/submit-contribution');
+    // Fill step 1
+    await page.getByLabel(/contribution title/i).fill('Test Contribution Title');
+    await page.getByLabel(/problem addressed/i).fill('A clear problem statement that exceeds the thirty character minimum');
+    await page.getByLabel(/work description/i).fill('This is a sufficiently detailed work description that exceeds fifty characters for the test.');
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    // Fill step 2
+    await page.getByLabel(/contributing office/i).fill('District Court, Eastern District');
+    await page.getByLabel(/contributor.*name/i).fill('Jane Doe');
+    await page.getByLabel(/current owner/i).fill('Jane Doe');
+    await page.getByLabel(/owner contact email/i).fill('jane@ao.uscourts.gov');
+    await page.getByLabel(/does not imply.*endorsement/i).check();
+    await page.getByLabel(/consent to.*contacting/i).check();
+    // Intercept API to return 500
+    await page.route('/api/v1/submissions/contribution', route =>
+      route.fulfill({ status: 500, body: 'Internal Server Error', contentType: 'text/html' })
+    );
+    await page.getByRole('button', { name: /submit contribution/i }).click();
+    // Button must re-enable
+    await expect(page.getByRole('button', { name: /submit contribution/i })).not.toBeDisabled();
+    // p[role="alert"] excludes Next.js route announcer div
+    await expect(page.locator('p[role="alert"]')).toBeVisible();
   });
 });

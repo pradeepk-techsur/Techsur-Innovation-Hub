@@ -56,4 +56,26 @@ test.describe('Opportunity Submission (F6)', () => {
     await expect(page.getByText(/OPP-/)).toBeVisible();
     await expect(page.getByText(/does not imply acceptance/i)).toBeVisible();
   });
+
+  test('F6.5-error – network/API error shows error message and re-enables Submit', async ({ page }) => {
+    await page.goto('/submit-opportunity');
+    // Fill and advance through all 3 steps with valid data
+    await page.getByLabel(/problem title/i).fill('Test Mission Problem');
+    await page.getByLabel(/describe the problem/i).fill('This is a minimum fifty character description of the mission problem.');
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    await page.getByLabel(/who is affected/i).fill('Court clerks and district court administrators nationwide');
+    await page.getByLabel(/what is the impact/i).fill('Significant manual processing burden requiring hours of staff time');
+    await page.getByRole('button', { name: 'Next', exact: true }).click();
+    await page.getByLabel(/does not imply acceptance/i).check();
+    await page.getByLabel(/consent to.*contacting/i).check();
+    // Intercept the API to simulate a server error
+    await page.route('/api/v1/submissions/opportunity', route =>
+      route.fulfill({ status: 500, body: 'Internal Server Error', contentType: 'text/html' })
+    );
+    await page.getByRole('button', { name: /submit/i }).click();
+    // Submit button must re-enable (not stuck as "Submitting...")
+    await expect(page.getByRole('button', { name: /submit/i })).not.toBeDisabled();
+    // Error message must appear (p[role="alert"] excludes Next.js route announcer)
+    await expect(page.locator('p[role="alert"]')).toBeVisible();
+  });
 });

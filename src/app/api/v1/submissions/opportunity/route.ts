@@ -64,9 +64,10 @@ export async function POST(request: Request) {
 
   // Persist (F6.5: must be recorded for curator review)
   const id = crypto.randomUUID();
-  const referenceNumber = await generateReferenceNumber('OPP');
 
   try {
+    const referenceNumber = await generateReferenceNumber('OPP');
+
     await db
       .insertInto('opportunity_submissions')
       .values({
