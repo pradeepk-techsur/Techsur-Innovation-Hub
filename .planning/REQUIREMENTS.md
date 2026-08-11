@@ -163,27 +163,100 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ## Traceability
 
-*(Populated during roadmap creation)*
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| AUTH-01–AUTH-10 | Phase TBD | Pending |
-| F1.1–F1.6 | Phase TBD | Pending |
-| F2.1–F2.5 | Phase TBD | Pending |
-| F3.1–F3.9 | Phase TBD | Pending |
-| F4.1–F4.4 | Phase TBD | Pending |
-| F5.1–F5.5 | Phase TBD | Pending |
-| F6.1–F6.5 | Phase TBD | Pending |
-| F7.1–F7.4 | Phase TBD | Pending |
-| F8.1–F8.6 | Phase TBD | Pending |
-| F9.1–F9.16 | Phase TBD | Pending |
-| IA-01–IA-05 | Phase TBD | Pending |
-| SEED-01–SEED-12 | Phase TBD | Pending |
+| AUTH-01 | Phase 1 — Foundation | Pending |
+| AUTH-07 | Phase 1 — Foundation | Pending |
+| F1.1 | Phase 1 — Foundation | Pending |
+| F1.2 | Phase 1 — Foundation | Pending |
+| F1.3 | Phase 1 — Foundation | Pending |
+| F1.4 | Phase 1 — Foundation | Pending |
+| F1.5 | Phase 1 — Foundation | Pending |
+| F1.6 | Phase 1 — Foundation | Pending |
+| F3.1 | Phase 1 — Foundation | Pending |
+| F3.2 | Phase 1 — Foundation | Pending |
+| F3.3 | Phase 1 — Foundation | Pending |
+| F3.4 | Phase 1 — Foundation | Pending |
+| F3.5 | Phase 1 — Foundation | Pending |
+| F3.6 | Phase 1 — Foundation | Pending |
+| F3.7 | Phase 1 — Foundation | Pending |
+| F3.8 | Phase 1 — Foundation | Pending |
+| F3.9 | Phase 1 — Foundation | Pending |
+| F2.1 | Phase 2 — Discovery | Pending |
+| F2.2 | Phase 2 — Discovery | Pending |
+| F2.3 | Phase 2 — Discovery | Pending |
+| F2.4 | Phase 2 — Discovery | Pending |
+| F2.5 | Phase 2 — Discovery | Pending |
+| F4.1 | Phase 2 — Discovery | Pending |
+| F4.2 | Phase 2 — Discovery | Pending |
+| F4.3 | Phase 2 — Discovery | Pending |
+| F4.4 | Phase 2 — Discovery | Pending |
+| F5.1 | Phase 2 — Discovery | Pending |
+| F5.2 | Phase 2 — Discovery | Pending |
+| F5.3 | Phase 2 — Discovery | Pending |
+| F5.4 | Phase 2 — Discovery | Pending |
+| F5.5 | Phase 2 — Discovery | Pending |
+| AUTH-08 | Phase 3 — Engagement Flows | Pending |
+| AUTH-09 | Phase 3 — Engagement Flows | Pending |
+| AUTH-10 | Phase 3 — Engagement Flows | Pending |
+| F6.1 | Phase 3 — Engagement Flows | Pending |
+| F6.2 | Phase 3 — Engagement Flows | Pending |
+| F6.3 | Phase 3 — Engagement Flows | Pending |
+| F6.4 | Phase 3 — Engagement Flows | Pending |
+| F6.5 | Phase 3 — Engagement Flows | Pending |
+| F7.1 | Phase 3 — Engagement Flows | Pending |
+| F7.2 | Phase 3 — Engagement Flows | Pending |
+| F7.3 | Phase 3 — Engagement Flows | Pending |
+| F7.4 | Phase 3 — Engagement Flows | Pending |
+| F8.1 | Phase 3 — Engagement Flows | Pending |
+| F8.2 | Phase 3 — Engagement Flows | Pending |
+| F8.3 | Phase 3 — Engagement Flows | Pending |
+| F8.4 | Phase 3 — Engagement Flows | Pending |
+| F8.5 | Phase 3 — Engagement Flows | Pending |
+| F8.6 | Phase 3 — Engagement Flows | Pending |
+| AUTH-02 | Phase 4 — Curation and Administration | Pending |
+| AUTH-03 | Phase 4 — Curation and Administration | Pending |
+| AUTH-04 | Phase 4 — Curation and Administration | Pending |
+| AUTH-05 | Phase 4 — Curation and Administration | Pending |
+| AUTH-06 | Phase 4 — Curation and Administration | Pending |
+| F9.1 | Phase 4 — Curation and Administration | Pending |
+| F9.2 | Phase 4 — Curation and Administration | Pending |
+| F9.3 | Phase 4 — Curation and Administration | Pending |
+| F9.4 | Phase 4 — Curation and Administration | Pending |
+| F9.5 | Phase 4 — Curation and Administration | Pending |
+| F9.6 | Phase 4 — Curation and Administration | Pending |
+| F9.7 | Phase 4 — Curation and Administration | Pending |
+| F9.8 | Phase 4 — Curation and Administration | Pending |
+| F9.9 | Phase 4 — Curation and Administration | Pending |
+| F9.10 | Phase 4 — Curation and Administration | Pending |
+| F9.11 | Phase 4 — Curation and Administration | Pending |
+| F9.12 | Phase 4 — Curation and Administration | Pending |
+| F9.13 | Phase 4 — Curation and Administration | Pending |
+| F9.14 | Phase 4 — Curation and Administration | Pending |
+| F9.15 | Phase 4 — Curation and Administration | Pending |
+| F9.16 | Phase 4 — Curation and Administration | Pending |
+| IA-01 | Phase 5 — Launch Readiness | Pending |
+| IA-02 | Phase 5 — Launch Readiness | Pending |
+| IA-03 | Phase 5 — Launch Readiness | Pending |
+| IA-04 | Phase 5 — Launch Readiness | Pending |
+| IA-05 | Phase 5 — Launch Readiness | Pending |
+| SEED-01 | Phase 5 — Launch Readiness | Pending |
+| SEED-02 | Phase 5 — Launch Readiness | Pending |
+| SEED-03 | Phase 5 — Launch Readiness | Pending |
+| SEED-04 | Phase 5 — Launch Readiness | Pending |
+| SEED-05 | Phase 5 — Launch Readiness | Pending |
+| SEED-06 | Phase 5 — Launch Readiness | Pending |
+| SEED-07 | Phase 5 — Launch Readiness | Pending |
+| SEED-08 | Phase 5 — Launch Readiness | Pending |
+| SEED-09 | Phase 5 — Launch Readiness | Pending |
+| SEED-10 | Phase 5 — Launch Readiness | Pending |
+| SEED-11 | Phase 5 — Launch Readiness | Pending |
+| SEED-12 | Phase 5 — Launch Readiness | Pending |
 
 **Coverage:**
 - v1 requirements: 79 total (10 AUTH + 5 IA + 6 F1 + 5 F2 + 9 F3 + 4 F4 + 5 F5 + 5 F6 + 4 F7 + 6 F8 + 16 F9 + 12 SEED)
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 79 ⚠️
+- Mapped to phases: 79/79 ✓
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-08-11*
