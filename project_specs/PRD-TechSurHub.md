@@ -472,7 +472,7 @@ Each feature group below is an independently traceable part of the MVP. A partia
 - **F9.7 Review Status Management** — Allow authorized management of applicable review statuses independently from maturity
 - **F9.8 Attribution and Ownership** — Allow maintenance of contributing offices, contributors, I&R contribution, current steward, operational owner, and production owner where applicable
 - **F9.9 Publication Lifecycle** — Support draft, review, publish/unpublish, supersede, archive, and retire behaviors consistent with the lifecycle rules in this PRD
-- **F9.10 Publication Gate** — Prevent publication when required product information is absent, including: problem statement, owner/steward, maturity, review status, attribution, source basis, last-reviewed date, and applicable disclaimer
+- **F9.10 Publication Gate** — Prevent publication when required product information is absent, including: problem statement, owner/steward, maturity, review status, attribution, source basis, last-reviewed date, and applicable disclaimer. The complete enumeration of all 15 required fields is defined in FRD F03a §Publication Gate Fields, which is the authoritative contract. The description above identifies the key governance categories; the FRD provides the field-level implementation specification.
 - **F9.11 Audit History** — Provide a chronological history of material content, governance, and lifecycle changes
 - **F9.12 Opportunity Submission Queue** — Allow authorized I&R users to review and disposition opportunity submissions
 - **F9.13 Contribution Submission Queue** — Allow authorized I&R users to review, disposition, and where appropriate initiate record creation from innovation contributions

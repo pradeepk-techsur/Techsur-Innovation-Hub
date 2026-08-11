@@ -666,6 +666,22 @@ Acceptance criteria are listed beneath each story. Stories are grouped by epic a
 
 ---
 
+### US-9-SEC: Deployment Security Verification
+
+**As a** receiving technical team member,  
+**I want** to verify that development-only access mechanisms are not active in operational environments  
+**So that** the application meets SEC-09 before any non-development deployment.
+
+**References:** PRD SEC-09, F9 (F9.15 Settings Management), PRD §9 NFRs (Security)
+
+**Acceptance Criteria:**
+- AC-1: The application startup process raises a fatal error if `NODE_ENV=production` and the development-only auth stub is still enabled — the app refuses to start rather than expose a development bypass
+- AC-2: Deployment documentation includes a pre-deployment checklist item: "Confirm development auth stub is disabled and production identity provider is configured"
+- AC-3 (SEC-10): The deployed application returns HTTP security headers on all responses including at minimum: `Strict-Transport-Security`, `X-Content-Type-Options`, `X-Frame-Options` (or `Content-Security-Policy frame-ancestors`), `Referrer-Policy`; headers are verified via automated scan before release
+- AC-4 (SEC-12): A signed-off security decision register exists before any protected curator/admin feature is deployed to a non-development environment; all open security decisions are classified as Implementation Blocker, Approved Assumption, or Approved Development Stub with documented rationale
+
+---
+
 ## Summary Table
 
 | Epic | Stories | P0 | P1 | P2 |

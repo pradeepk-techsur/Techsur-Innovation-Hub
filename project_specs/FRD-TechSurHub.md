@@ -2042,6 +2042,7 @@ The following 15 conditions must all be satisfied for publication to proceed (se
 - `maturity = production_validated` with source type indicating a POC-only basis.
 - `maturity` is a lower stage than a previous published state (downgrade).
 - `title` matches an existing published record's title (uniqueness warning).
+- If `maturity` is `Production / Validated Pattern` or `Prototype / Pilot` and `applicable_disclaimer` contains the text `'Experiment / POC'`, the system MUST display a curator-visible warning: "Disclaimer language references POC/Experiment maturity but the record is set to [current maturity]. Please confirm the disclaimer is accurate." This warning applies to all records, not only lessons-learned sources. The warning does not block publication — it is a curator prompt.
 
 ---
 
