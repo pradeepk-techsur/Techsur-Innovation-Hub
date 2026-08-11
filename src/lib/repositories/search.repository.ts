@@ -1,7 +1,5 @@
-import { sql } from 'kysely';
 import { db } from '@/lib/db/client';
 import type { CatalogCardData } from '@/lib/db/types';
-import type { MaturityValue, PublicationState } from '@/lib/db/types';
 
 export interface RawSearchParams {
   query?: string;           // user-supplied text (may be empty/null → browse mode)
@@ -28,69 +26,54 @@ export interface SearchRow extends SearchCardData {
 }
 
 export async function executeSearch(params: RawSearchParams): Promise<SearchRow[]> {
-  const hasQuery = params.query && params.query.trim().length >= 2;
-  const states = (params.publication_states ?? ['published']) as PublicationState[];
+  const hasQuery = !!(params.query && params.query.trim().length >= 2);
+  const states = params.publication_states ?? ['published'];
 
-  // Use raw SQL for the full query to avoid Kysely type inference issues with
-  // window functions, tsvector operators, and array operators simultaneously.
-  // All user inputs are passed as parameterized values — never interpolated.
-  const whereClauses: string[] = [
-    `ir.publication_state = ANY(${
-      sql.raw('$' + 1)
-    })`,
-  ];
-  // We'll build this as a raw parameterized query
-  // Collect params in order
-  const queryParams: unknown[] = [states];
-  let paramIdx = 2;
+  // Build parameterized query manually for correct Kysely + PostgreSQL interop.
+  // All user inputs passed as $N params — never interpolated into SQL string.
+  const queryParams: unknown[] = [];
 
-  if (hasQuery) {
-    whereClauses.push(
-      `ir.search_vector @@ plainto_tsquery('english', $${paramIdx})`
-    );
-    queryParams.push(params.query);
-    paramIdx++;
+  function addParam(value: unknown): string {
+    queryParams.push(value);
+    return `$${queryParams.length}`;
+  }
+
+  const whereParts: string[] = [];
+
+  // Always filter by publication states
+  whereParts.push(`ir.publication_state = ANY(${addParam(states)}::text[])`);
+
+  // Full-text search via tsvector
+  const queryParamPlaceholder = hasQuery ? addParam(params.query) : null;
+  if (hasQuery && queryParamPlaceholder) {
+    whereParts.push(`ir.search_vector @@ plainto_tsquery('english', ${queryParamPlaceholder})`);
   }
 
   if (params.maturity && params.maturity.length > 0) {
-    whereClauses.push(`ir.maturity = ANY($${paramIdx}::text[])`);
-    queryParams.push(params.maturity);
-    paramIdx++;
+    whereParts.push(`ir.maturity = ANY(${addParam(params.maturity)}::text[])`);
   }
   if (params.mission_areas && params.mission_areas.length > 0) {
-    whereClauses.push(`ir.mission_areas && $${paramIdx}::text[]`);
-    queryParams.push(params.mission_areas);
-    paramIdx++;
+    whereParts.push(`ir.mission_areas && ${addParam(params.mission_areas)}::text[]`);
   }
   if (params.technology_areas && params.technology_areas.length > 0) {
-    whereClauses.push(`ir.technology_areas && $${paramIdx}::text[]`);
-    queryParams.push(params.technology_areas);
-    paramIdx++;
+    whereParts.push(`ir.technology_areas && ${addParam(params.technology_areas)}::text[]`);
   }
   if (params.review_statuses && params.review_statuses.length > 0) {
-    whereClauses.push(`ir.review_statuses && $${paramIdx}::text[]`);
-    queryParams.push(params.review_statuses);
-    paramIdx++;
+    whereParts.push(`ir.review_statuses && ${addParam(params.review_statuses)}::text[]`);
   }
   if (params.contributing_offices && params.contributing_offices.length > 0) {
-    whereClauses.push(`ir.contributing_offices && $${paramIdx}::text[]`);
-    queryParams.push(params.contributing_offices);
-    paramIdx++;
+    whereParts.push(`ir.contributing_offices && ${addParam(params.contributing_offices)}::text[]`);
   }
   if (params.reuse_potential) {
-    whereClauses.push(`ir.reuse_potential = $${paramIdx}`);
-    queryParams.push(params.reuse_potential);
-    paramIdx++;
+    whereParts.push(`ir.reuse_potential = ${addParam(params.reuse_potential)}`);
   }
   if (params.has_artifacts === true) {
-    whereClauses.push(`EXISTS (SELECT 1 FROM artifacts a WHERE a.record_id = ir.id)`);
+    whereParts.push(`EXISTS (SELECT 1 FROM artifacts a WHERE a.record_id = ir.id)`);
   }
 
-  // Rank expression
-  const rankExpr = hasQuery
-    ? `ts_rank(ir.search_vector, plainto_tsquery('english', $${
-        queryParams.indexOf(params.query) + 1
-      }))`
+  // Rank expression — use same param placeholder if hasQuery
+  const rankExpr = hasQuery && queryParamPlaceholder
+    ? `ts_rank(ir.search_vector, plainto_tsquery('english', ${queryParamPlaceholder}))`
     : '0';
 
   // Sort order
@@ -103,11 +86,8 @@ export async function executeSearch(params: RawSearchParams): Promise<SearchRow[
     orderBy = `ir.last_reviewed_date DESC NULLS LAST`;
   }
 
-  const offset = (params.page - 1) * params.page_size;
-  queryParams.push(params.page_size);
-  const limitParam = paramIdx++;
-  queryParams.push(offset);
-  const offsetParam = paramIdx++;
+  const limitP = addParam(params.page_size);
+  const offsetP = addParam((params.page - 1) * params.page_size);
 
   const rawSql = `
     SELECT
@@ -127,9 +107,9 @@ export async function executeSearch(params: RawSearchParams): Promise<SearchRow[
       ${rankExpr} AS rank,
       COUNT(*) OVER() AS total_count
     FROM innovation_records ir
-    WHERE ${whereClauses.join(' AND ')}
+    WHERE ${whereParts.join(' AND ')}
     ORDER BY ${orderBy}
-    LIMIT $${limitParam} OFFSET $${offsetParam}
+    LIMIT ${limitP} OFFSET ${offsetP}
   `;
 
   const { pool } = await import('@/lib/db/client');
@@ -148,7 +128,6 @@ export interface FacetCounts {
 }
 
 export async function executeFacetCounts(): Promise<FacetCounts> {
-  // Unnest array fields to count distinct values among published records
   const { pool } = await import('@/lib/db/client');
 
   const [maturity, mission_areas, technology_areas, review_statuses, contributing_offices, reuse_potential] = await Promise.all([

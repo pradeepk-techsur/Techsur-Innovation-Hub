@@ -83,7 +83,7 @@ async function seed() {
         now(),
         'Audio Security POC: Defense-in-Depth for Judiciary Courtroom Audio',
         'Evaluated GPU/CPU separation and Azure Government Cloud constraints for securing courtroom audio streams, identifying key production-readiness gaps and architecture recommendations.',
-        'Judiciary courtroom audio systems lack defense-in-depth security controls, creating potential vectors for unauthorized recording or interception of sensitive in-camera proceedings.',
+        'Judiciary courtroom audio systems lack defense-in-depth security controls, failing to protect sensitive in-camera proceedings from unauthorized recording or interception.',
         'Court IT administrators and judicial security officers responsible for courtroom A/V infrastructure.',
         'Existing commercial courtroom audio systems lack government-grade encryption and network isolation controls; experimentation was needed to establish feasibility before committing to full deployment.',
         'GPU/CPU workload separation combined with Azure Government Cloud network isolation will provide sufficient defense-in-depth for courtroom audio security without unacceptable latency penalties.',
@@ -121,6 +121,7 @@ async function seed() {
         'Contact I&R to discuss production readiness gaps or request a demonstration of the POC environment.'
       )
       ON CONFLICT (slug) DO UPDATE SET
+        problem_statement = EXCLUDED.problem_statement,
         affected_users = EXCLUDED.affected_users,
         why_experimentation = EXCLUDED.why_experimentation,
         scope_description = EXCLUDED.scope_description,
