@@ -30,12 +30,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The catalog never visually implies all records are equally mature or approved — maturity and review status badges are visually distinct from each other (SEC-11) and from the publication state
   4. The development auth stub raises a fatal startup error when `NODE_ENV=production`, confirming development-only mechanisms cannot reach operational environments (AUTH-07 / SEC-09)
   5. The application deploys successfully in the containerized dev environment with database migrations applied, all required environment variables in `.env.example`, and no credentials in source code (SEC-08)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Database schema, migrations, and application scaffolding (Next.js + PostgreSQL + Docker)
-- [ ] 01-02: Innovation record data model, seed fixtures, and catalog API + page
-- [ ] 01-03: Full innovation record detail page with all nine content sections and trust model display
+- [ ] 01-01-PLAN.md — Next.js + PostgreSQL Docker stack, full DB schema migration (8 tables), dev auth stub with production guard
+- [ ] 01-02-PLAN.md — TypeScript DB types, seed fixtures, catalog API + SSR page, CatalogCard + MaturityBadge + ReviewStatusBadge components
+- [ ] 01-03-PLAN.md — Record detail page with all nine content sections, TrustBanner, ArtifactList (SEC-04), NextActionCTAs
 
 ### Phase 2: Discovery
 **Goal**: A user can find relevant innovation work using mission-problem language and view audience-appropriate executive or technical perspectives — so the Hub's problem-oriented discovery promise is fulfilled and existing lessons-learned content is surfaced
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/3 | Not started | - |
+| 1. Foundation | 0/3 | Planned | - |
 | 2. Discovery | 0/4 | Not started | - |
 | 3. Engagement Flows | 0/4 | Not started | - |
 | 4. Curation and Administration | 0/4 | Not started | - |
