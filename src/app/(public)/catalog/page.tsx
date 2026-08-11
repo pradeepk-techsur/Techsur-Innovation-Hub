@@ -15,8 +15,8 @@ export const metadata = {
     'Browse published Judiciary innovation work: proofs of concept, pilots, and validated patterns from I&R teams.',
 };
 
-// Revalidate every 60 seconds so catalog stays reasonably fresh without full SSR on every request
-export const revalidate = 60;
+// Force dynamic rendering — this page fetches from PostgreSQL at runtime and cannot be statically prerendered at build time
+export const dynamic = 'force-dynamic';
 
 export default async function CatalogPage() {
   const records = await getPublishedCatalog();
