@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: Completed 03-engagement-flows-02-PLAN.md
-last_updated: "2026-08-11T18:28:19.442Z"
-last_activity: "2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)"
+status: in_progress
+stopped_at: Completed 03-engagement-flows-03-PLAN.md
+last_updated: "2026-08-11T18:33:45.582Z"
+last_activity: "2026-08-11 — Completed 03-03 (F7 Innovation Contribution Flow: separate form, attribution-preserving fields, non-endorsement in 3 locations)"
 progress:
   total_phases: 7
   completed_phases: 2
   total_plans: 18
-  completed_plans: 9
-  percent: 100
+  completed_plans: 10
+  percent: 56
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 
 ## Current Position
 
-Phase: 2 of 5 (Discovery) — COMPLETE
-Plan: 4 of 4 in phase 2 — Phase 2 COMPLETE
-Status: Phase 2 complete; ready for Phase 3
-Last activity: 2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)
+Phase: 3 of 7 (Engagement Flows) — IN PROGRESS
+Plan: 3 of 4 in phase 3 — 03-03 complete, next: 03-04 (Engagement Request Flow)
+Status: Phase 3 in progress; 3 of 4 plans complete
+Last activity: 2026-08-11 — Completed 03-03 (F7 Innovation Contribution Flow: separate form, attribution-preserving fields, non-endorsement in 3 locations)
 
-Progress: [██████████] 100%
+Progress: [██████░░░░] 56%
 
 ## Performance Metrics
 
@@ -61,6 +61,7 @@ Progress: [██████████] 100%
 | Phase 02-discovery P04 | 4min | 1 tasks | 3 files |
 | Phase 03-engagement-flows P01 | 4min | 2 tasks | 12 files |
 | Phase 03-engagement-flows P02 | 8min | 2 tasks | 6 files |
+| Phase 03-engagement-flows P03 | 3min | 1 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -90,6 +91,7 @@ Recent decisions affecting current work:
 - [Phase 03-engagement-flows]: AuthProvider interface abstraction: DevAuthProvider now, OidcAuthProvider wired in Phase 4 when identity system confirmed
 - [Phase 03-engagement-flows]: JWT in HTTP-only cookie: middleware reads JWT via jose without DB round-trip; session payload carries name/office/email for AUTH-10 attribution
 - [Phase 03-engagement-flows]: In-memory rate limiter for dev (production: Redis-backed Map replacement annotated in submissions.service.ts)
+- [Phase 03-engagement-flows]: Two-step contribution form: Step 1 (about the work) → Step 2 (attribution + contact) — simpler than F6 3-step, appropriate for contribution detail level
 
 ### Pending Todos
 
@@ -103,6 +105,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T18:28:19.441Z
-Stopped at: Completed 03-engagement-flows-02-PLAN.md
+Last session: 2026-08-11T18:33:45.581Z
+Stopped at: Completed 03-engagement-flows-03-PLAN.md
 Resume file: None
