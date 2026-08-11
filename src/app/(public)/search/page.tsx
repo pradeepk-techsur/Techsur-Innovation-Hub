@@ -20,17 +20,19 @@ import { FilterPanel } from './FilterPanel';
 import { SearchResultCard } from './SearchResultCard';
 import { ActiveFilters } from './ActiveFilters';
 
+type SearchParamsShape = {
+  q?: string;
+  'maturity[]'?: string | string[];
+  'mission_areas[]'?: string | string[];
+  'technology_areas[]'?: string | string[];
+  'review_statuses[]'?: string | string[];
+  'contributing_offices[]'?: string | string[];
+  reuse_potential?: string;
+  page?: string;
+};
+
 interface SearchPageProps {
-  searchParams: {
-    q?: string;
-    'maturity[]'?: string | string[];
-    'mission_areas[]'?: string | string[];
-    'technology_areas[]'?: string | string[];
-    'review_statuses[]'?: string | string[];
-    'contributing_offices[]'?: string | string[];
-    reuse_potential?: string;
-    page?: string;
-  };
+  searchParams: Promise<SearchParamsShape>;
 }
 
 function toArray(val: string | string[] | undefined): string[] {
@@ -38,7 +40,7 @@ function toArray(val: string | string[] | undefined): string[] {
   return Array.isArray(val) ? val : [val];
 }
 
-async function getSearchResults(params: SearchPageProps['searchParams']) {
+async function getSearchResults(params: SearchParamsShape) {
   const base = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
   const url = new URL('/api/v1/search', base);
 
@@ -73,18 +75,19 @@ async function getFacets() {
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const params = await searchParams;
   const [searchResult, facets] = await Promise.all([
-    getSearchResults(searchParams),
+    getSearchResults(params),
     getFacets(),
   ]);
 
   const activeFilters = {
-    maturity: toArray(searchParams['maturity[]']),
-    mission_areas: toArray(searchParams['mission_areas[]']),
-    technology_areas: toArray(searchParams['technology_areas[]']),
-    review_statuses: toArray(searchParams['review_statuses[]']),
-    contributing_offices: toArray(searchParams['contributing_offices[]']),
-    reuse_potential: searchParams.reuse_potential,
+    maturity: toArray(params['maturity[]']),
+    mission_areas: toArray(params['mission_areas[]']),
+    technology_areas: toArray(params['technology_areas[]']),
+    review_statuses: toArray(params['review_statuses[]']),
+    contributing_offices: toArray(params['contributing_offices[]']),
+    reuse_potential: params.reuse_potential,
   };
 
   const hasActiveFilters = Object.values(activeFilters).some(v =>
@@ -103,7 +106,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {/* Search form — client component wrapped in Suspense (uses useSearchParams) */}
       <Suspense fallback={null}>
-        <SearchForm initialQuery={searchParams.q ?? ''} />
+        <SearchForm initialQuery={params.q ?? ''} />
       </Suspense>
 
       <div className="mt-6 flex gap-6">
@@ -114,7 +117,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <FilterPanel
                 facets={facets}
                 activeFilters={activeFilters}
-                currentQuery={searchParams.q}
+                currentQuery={params.q}
               />
             </Suspense>
           ) : (
@@ -127,7 +130,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           {/* Active filter chips */}
           {hasActiveFilters && (
             <Suspense fallback={null}>
-              <ActiveFilters activeFilters={activeFilters} currentQuery={searchParams.q} />
+              <ActiveFilters activeFilters={activeFilters} currentQuery={params.q} />
             </Suspense>
           )}
 
@@ -138,8 +141,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             aria-atomic="true"
             className="mb-4 text-sm text-gray-600"
           >
-            {searchParams.q
-              ? `${total} result${total !== 1 ? 's' : ''} for "${searchParams.q}"`
+            {params.q
+              ? `${total} result${total !== 1 ? 's' : ''} for "${params.q}"`
               : `${total} published innovation record${total !== 1 ? 's' : ''}`}
           </div>
 
@@ -148,15 +151,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
             <ul aria-label="Search results" className="space-y-4">
               {records.map(record => (
                 <li key={record.id}>
-                  <SearchResultCard record={record} query={searchParams.q} />
+                  <SearchResultCard record={record} query={params.q} />
                 </li>
               ))}
             </ul>
           ) : (
             <div role="status" className="py-12 text-center">
               <p className="text-gray-500">
-                {searchParams.q
-                  ? `No innovation records found for "${searchParams.q}". Try broader terms or remove some filters.`
+                {params.q
+                  ? `No innovation records found for "${params.q}". Try broader terms or remove some filters.`
                   : 'No published innovation records yet.'}
               </p>
             </div>
