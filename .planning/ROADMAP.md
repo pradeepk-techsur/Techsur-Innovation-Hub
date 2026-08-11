@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation
-**Status**: In Progress
+**Status**: passed
 **Goal**: Anonymous users can browse a trustworthy catalog of published innovation records and open a full structured record — so the primary discovery journey is functional end-to-end before search, authentication, or curation is added
 **Depends on**: Nothing (first phase)
 **Requirements**: AUTH-01, AUTH-07, F1.1, F1.2, F1.3, F1.4, F1.5, F1.6, F3.1, F3.2, F3.3, F3.4, F3.5, F3.6, F3.7, F3.8, F3.9
@@ -48,13 +48,13 @@ Plans:
   3. A user viewing an innovation record can toggle between executive perspective (problem, outcome, evidence, decision recommendation, next step) and technical perspective (architecture, tools, security, limitations, artifacts, production-readiness gaps) — both perspectives draw from the same underlying record fields with no duplicate source records
   4. A curator can create a structured innovation record that links back to an existing lessons-learned document as its source of record without migrating or rewriting the authoritative source — the resulting record is discoverable via problem-oriented search
   5. The search index never returns results that omit maturity, review status, or lifecycle state from result cards — the trust model is preserved in every search result view
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 02-01: PostgreSQL full-text search service with weighted tsvector, ranking, and facet counts
-- [ ] 02-02: Search page UI with filter panel, active-filter chips, result cards, and no-results state
-- [ ] 02-03: Executive/technical perspective toggle component and perspective-aware record view
-- [ ] 02-04: Lessons-learned content model support and source-linking artifact workflow
+- [ ] 02-01-PLAN.md — PostgreSQL tsvector search service, GET /api/v1/search + /facets endpoints, validation layer (F2.1–F2.5)
+- [ ] 02-02-PLAN.md — /search SSR page with filter panel, active-filter chips, SearchResultCard with trust badges, ARIA live region
+- [ ] 02-03-PLAN.md — Executive/technical perspective toggle (ARIA tablist) on record detail page (F4.1–F4.4)
+- [ ] 02-04-PLAN.md — SourceBasisBanner component, enriched Audio Security POC seed with full findings + source_basis (F5.1–F5.5)
 
 ### Phase 3: Engagement Flows
 **Goal**: Authenticated stakeholders can log in under their identity and submit opportunities, share existing innovation work, and initiate engagement requests — so submissions are traceable to an office and contact, and all routing is recorded before any email is sent
@@ -118,7 +118,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 0/3 | Planned | - |
-| 2. Discovery | 0/4 | Not started | - |
+| 2. Discovery | 0/4 | Planned | - |
 | 3. Engagement Flows | 0/4 | Not started | - |
 | 4. Curation and Administration | 0/4 | Not started | - |
 | 5. Launch Readiness | 0/3 | Not started | - |
