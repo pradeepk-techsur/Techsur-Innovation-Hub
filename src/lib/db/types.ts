@@ -4,6 +4,32 @@ import type { Generated, Insertable, Selectable, Updateable } from 'kysely';
 type Timestamp = Date;
 type UUID = string;
 
+// ─── Enum value types ──────────────────────────────────────────────────────
+export type MaturityValue =
+  | 'idea'
+  | 'evaluated_idea'
+  | 'experiment_poc'
+  | 'prototype_pilot'
+  | 'production_validated'
+  | 'archived_retired';
+
+export type PublicationState =
+  | 'draft'
+  | 'submitted_for_review'
+  | 'published'
+  | 'superseded'
+  | 'archived'
+  | 'retired';
+
+export type EngagementIndicator =
+  | 'demo_available'
+  | 'seeking_adoption_partner'
+  | 'technical_playbook_available'
+  | 'reference_pattern_available'
+  | 'monitoring_only'
+  | 'archived'
+  | 'none';
+
 // ─── innovation_contributions ─────────────────────────────────────────────
 export interface InnovationContributionsTable {
   id: Generated<UUID>;
@@ -36,7 +62,7 @@ export interface InnovationContributionsTable {
 export interface InnovationRecordsTable {
   id: Generated<UUID>;
   slug: string;
-  publication_state: Generated<'draft' | 'submitted_for_review' | 'published' | 'superseded' | 'archived' | 'retired'>;
+  publication_state: Generated<PublicationState>;
   created_at: Generated<Timestamp>;
   created_by: UUID;
   updated_at: Generated<Timestamp>;
@@ -75,7 +101,7 @@ export interface InnovationRecordsTable {
   findings_cost: string | null;
   findings_scalability: string | null;
   findings_other: string | null;
-  maturity: 'idea' | 'evaluated_idea' | 'experiment_poc' | 'prototype_pilot' | 'production_validated' | 'archived_retired' | null;
+  maturity: MaturityValue | null;
   review_statuses: Generated<string[]>;
   ready_for: string | null;
   not_ready_for: string | null;
@@ -91,7 +117,7 @@ export interface InnovationRecordsTable {
   required_skills: string | null;
   required_services: string | null;
   production_readiness_gaps: string | null;
-  engagement_indicator: Generated<'demo_available' | 'seeking_adoption_partner' | 'technical_playbook_available' | 'reference_pattern_available' | 'monitoring_only' | 'archived' | 'none'>;
+  engagement_indicator: Generated<EngagementIndicator>;
   opportunity_source: string | null;
   contributing_offices: Generated<string[]>;
   contributor_names: Generated<string[]>;
@@ -223,6 +249,8 @@ export interface Database {
 
 // ─── Convenience type exports ──────────────────────────────────────────────
 export type InnovationRecord = Selectable<InnovationRecordsTable>;
+// Alias for plan 01-02 contract compatibility
+export type InnovationRecordRow = Selectable<InnovationRecordsTable>;
 export type NewInnovationRecord = Insertable<InnovationRecordsTable>;
 export type InnovationRecordUpdate = Updateable<InnovationRecordsTable>;
 
@@ -235,3 +263,19 @@ export type NewArtifact = Insertable<ArtifactsTable>;
 export type HubSetting = Selectable<HubSettingsTable>;
 export type AuditEvent = Selectable<AuditEventsTable>;
 export type NewAuditEvent = Insertable<AuditEventsTable>;
+
+// ─── Projected types for catalog display (F1.2–F1.5) ─────────────────────
+export type CatalogCardData = Pick<InnovationRecordRow,
+  | 'id'
+  | 'slug'
+  | 'title'
+  | 'summary'
+  | 'maturity'
+  | 'review_statuses'
+  | 'contributing_offices'
+  | 'last_reviewed_date'
+  | 'engagement_indicator'
+  | 'publication_state'
+  | 'technology_areas'
+  | 'mission_areas'
+>;
