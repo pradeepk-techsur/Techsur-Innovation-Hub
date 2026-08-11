@@ -1,9 +1,9 @@
 ---
-status: complete
+status: diagnosed
 phase: 03-engagement-flows
 source: 03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md
 started: 2026-08-11T21:02:29Z
-updated: 2026-08-11T21:14:00Z
+updated: 2026-08-11T21:18:00Z
 ---
 
 ## Current Test
@@ -86,10 +86,16 @@ per_test:
   severity: major
   test: 3
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "OpportunityForm.tsx handleSubmit (lines 49-84) has no try/catch — any exception silently prevents router.push to the confirmation page. Additionally, generateReferenceNumber DB call in route.ts sits outside try/catch block (line 67 vs line 69); if DB fails, Next.js returns HTML 500 instead of structured JSON, causing res.json() to throw SyntaxError in the form."
+  artifacts:
+    - path: "src/app/(public)/submit-opportunity/OpportunityForm.tsx"
+      issue: "handleSubmit lacks try/catch and finally block — exceptions leave submitting=true and silently abort navigation"
+    - path: "src/app/api/v1/submissions/opportunity/route.ts"
+      issue: "generateReferenceNumber() call at line 67 is outside the try/catch block starting at line 69"
+  missing:
+    - "Add try/catch/finally to handleSubmit in OpportunityForm.tsx"
+    - "Move generateReferenceNumber inside try block in route.ts"
+  debug_session: ".planning/debug/opportunity-confirmation-not-shown.md"
 
 - truth: "After completing the 2-step innovation contribution form and submitting, a confirmation page with a CONTRIB-YYYY-NNN reference number is shown"
   status: failed
@@ -97,10 +103,15 @@ per_test:
   severity: major
   test: 4
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "ContributionForm.tsx handleSubmit (lines 56-89) has no try/catch and no finally — exceptions leave submitting=true permanently. Additionally the Step 1 Next button (line 373) performs no validation before advancing; if user advances with empty fields and submits, the API returns 422 with step-1 field errors that are set via setErrors() but those error elements are inside the step===1 conditional and invisible on step 2."
+  artifacts:
+    - path: "src/app/(public)/submit-contribution/ContributionForm.tsx"
+      issue: "handleSubmit lacks try/catch/finally; Step 1 Next button (line 373) skips client-side validation; step-1 API errors rendered invisible when on step 2"
+  missing:
+    - "Add try/catch/finally to handleSubmit in ContributionForm.tsx"
+    - "Add step-1 client-side validation before allowing Next button advance"
+    - "Add step reset to step 1 when API returns step-1 field errors"
+  debug_session: ".planning/debug/contribution-confirmation-not-showing.md"
 
 - truth: "The record detail page Next Actions section shows engagement type buttons (Request Demo, Discuss Use Case, etc.) that open a modal form capturing name/office/email/description; submission returns an ENG-YYYY-NNN reference number"
   status: failed
@@ -108,8 +119,16 @@ per_test:
   severity: major
   test: 5
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
-  debug_session: ""
+  root_cause: "record_next_actions table is never seeded in seed.ts — NextActionCTAs receives empty actions array and falls back to a single default 'contact_ir' button (line 29 of NextActionCTAs.tsx). Additionally, the section is titled 'Recommended Next Step' (ExecutiveView.tsx line 133) not 'Next Actions'."
+  artifacts:
+    - path: "src/lib/db/seed.ts"
+      issue: "No INSERT into record_next_actions table — engagement buttons for seeded records are never created"
+    - path: "src/app/(public)/records/[slug]/ExecutiveView.tsx"
+      issue: "Section title is 'Recommended Next Step' (line 133) instead of 'Next Actions'"
+    - path: "src/app/(public)/records/[slug]/NextActionCTAs.tsx"
+      issue: "Fallback at line 29 renders single 'contact_ir' button when actions array is empty"
+  missing:
+    - "Seed record_next_actions rows for audio-security-poc (request_demo, contact_ir) in seed.ts"
+    - "Rename section heading in ExecutiveView.tsx line 133 to 'Next Actions'"
+  debug_session: ".planning/debug/no-next-actions-engagement-modal.md"
 
