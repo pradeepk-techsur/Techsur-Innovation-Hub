@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-discovery-03-PLAN.md
-last_updated: "2026-08-11T16:21:25.268Z"
-last_activity: "2026-08-11 — Completed 02-03 (Perspective Toggle: PerspectiveToggle ARIA tablist, ExecutiveView, TechnicalView, 6 Playwright F4 tests — F4.1–F4.4)"
+stopped_at: Completed 02-discovery-04-PLAN.md
+last_updated: "2026-08-11T16:28:02.400Z"
+last_activity: "2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)"
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 7
-  completed_plans: 6
+  completed_plans: 7
   percent: 86
 ---
 
@@ -26,19 +26,19 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 ## Current Position
 
 Phase: 2 of 5 (Discovery) — COMPLETE
-Plan: 3 of 3 in phase 2 — Phase 2 COMPLETE
+Plan: 4 of 4 in phase 2 — Phase 2 COMPLETE
 Status: Phase 2 complete; ready for Phase 3
-Last activity: 2026-08-11 — Completed 02-03 (Perspective Toggle: PerspectiveToggle ARIA tablist, ExecutiveView, TechnicalView, 6 Playwright F4 tests — F4.1–F4.4)
+Last activity: 2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)
 
-Progress: [█████████░] 86%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 6
-- Average duration: 8min
-- Total execution time: ~49min
+- Total plans completed: 7
+- Average duration: 7min
+- Total execution time: ~53min
 
 **By Phase:**
 
@@ -58,6 +58,7 @@ Progress: [█████████░] 86%
 | Phase 02-discovery P01 | 8min | 2 tasks | 6 files |
 | Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
 | Phase 02-discovery P03 | 5min | 1 tasks | 6 files |
+| Phase 02-discovery P04 | 4min | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -83,6 +84,7 @@ Recent decisions affecting current work:
 - [Phase 02-discovery]: SSR search page calls /api/v1/search via fetch() rather than importing searchRecords() directly — keeps validation/response shape identical for external and internal callers
 - [Phase 02-discovery]: PerspectiveToggle as 'use client' wrapper: toggle needs useState for active perspective; all other record components are server-friendly
 - [Phase 02-discovery]: TrustBanner in each view (not above tabs): F4.4 requires TrustBanner visible in both perspectives; rendered inside each view ensures it appears regardless of active tab
+- [Phase 02-discovery]: SourceBasisBanner placed in record page header (above perspective tabs) so source attribution is visible regardless of active perspective; source_basis for Audio Security POC uses plain-text reference to exercise text rendering path
 
 ### Pending Todos
 
@@ -96,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T16:21:25.266Z
-Stopped at: Completed 02-discovery-03-PLAN.md
+Last session: 2026-08-11T16:28:02.398Z
+Stopped at: Completed 02-discovery-04-PLAN.md
 Resume file: None
