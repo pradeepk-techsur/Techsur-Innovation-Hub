@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 02-discovery-02-PLAN.md
-last_updated: "2026-08-11T16:13:23.256Z"
-last_activity: "2026-08-11 — Completed 02-01 (Search Backend: GET /api/v1/search, GET /api/v1/search/facets, PostgreSQL tsvector full-text search with faceted filtering)"
+status: completed
+stopped_at: Completed 02-discovery-03-PLAN.md
+last_updated: "2026-08-11T16:21:25.268Z"
+last_activity: "2026-08-11 — Completed 02-03 (Perspective Toggle: PerspectiveToggle ARIA tablist, ExecutiveView, TechnicalView, 6 Playwright F4 tests — F4.1–F4.4)"
 progress:
   total_phases: 5
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 7
-  completed_plans: 5
-  percent: 71
+  completed_plans: 6
+  percent: 86
 ---
 
 # Project State
@@ -21,24 +21,24 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 2 — Discovery
+**Current focus:** Phase 3 — Stakeholder Engagement (Phase 2 complete)
 
 ## Current Position
 
-Phase: 2 of 5 (Discovery)
-Plan: 2 of 2 in current phase — Phase 2 COMPLETE
-Status: Phase 2 complete
-Last activity: 2026-08-11 — Completed 02-02 (Search UI: /search SSR page, SearchForm, FilterPanel, SearchResultCard, ActiveFilters, 8 Playwright tests — F2.1–F2.5)
+Phase: 2 of 5 (Discovery) — COMPLETE
+Plan: 3 of 3 in phase 2 — Phase 2 COMPLETE
+Status: Phase 2 complete; ready for Phase 3
+Last activity: 2026-08-11 — Completed 02-03 (Perspective Toggle: PerspectiveToggle ARIA tablist, ExecutiveView, TechnicalView, 6 Playwright F4 tests — F4.1–F4.4)
 
-Progress: [███████░░░] 71%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 5
-- Average duration: 9min
-- Total execution time: ~44min
+- Total plans completed: 6
+- Average duration: 8min
+- Total execution time: ~49min
 
 **By Phase:**
 
@@ -57,6 +57,7 @@ Progress: [███████░░░] 71%
 | Phase 01-foundation P03 | 11min | 2 tasks | 9 files |
 | Phase 02-discovery P01 | 8min | 2 tasks | 6 files |
 | Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
+| Phase 02-discovery P03 | 5min | 1 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,8 @@ Recent decisions affecting current work:
 - [Phase 02-discovery]: Used direct pg Pool.query() instead of Kysely for tsvector+window function queries: Kysely type system cannot safely express ts_rank + @@ operator in a typed chain
 - [Phase 02-discovery]: plainto_tsquery for natural-language search: treats all input as plain text, no tsquery injection possible, AND semantics match mission-problem search UX
 - [Phase 02-discovery]: SSR search page calls /api/v1/search via fetch() rather than importing searchRecords() directly — keeps validation/response shape identical for external and internal callers
+- [Phase 02-discovery]: PerspectiveToggle as 'use client' wrapper: toggle needs useState for active perspective; all other record components are server-friendly
+- [Phase 02-discovery]: TrustBanner in each view (not above tabs): F4.4 requires TrustBanner visible in both perspectives; rendered inside each view ensures it appears regardless of active tab
 
 ### Pending Todos
 
@@ -93,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T16:13:23.255Z
-Stopped at: Completed 02-discovery-02-PLAN.md
+Last session: 2026-08-11T16:21:25.266Z
+Stopped at: Completed 02-discovery-03-PLAN.md
 Resume file: None
