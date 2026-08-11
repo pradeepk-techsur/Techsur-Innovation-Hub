@@ -69,13 +69,14 @@ Plans:
   4. A user on any published innovation record can initiate an engagement request (demo, adoption discussion, technical guidance, related work, I&R contact), and the engagement action is recorded in the database before any email routing occurs — so no engagement action is silently lost even if email delivery fails
   5. The engagement routing destination is configurable via Hub settings by an authorized user without requiring a code change or redeployment — the configured address defaults to AOml_TSO_IRB_Team@ao.uscourts.gov
   6. Unauthenticated users can browse, search, and view published records anonymously but are redirected to login when attempting to submit an opportunity (F6), share innovation (F7), or initiate an engagement request (F8) — the login requirement is enforced, not merely suggested
-**Plans**: 4 plans
+**Plans**: 5 plans
 
 Plans:
 - [ ] 03-01-PLAN.md — AuthProvider interface + dev-stub, HTTP-only cookie session, login/logout API routes, /login page, middleware protecting /submit-* routes (AUTH-08/09/10)
 - [ ] 03-02-PLAN.md — POST /api/v1/submissions/opportunity, 3-step form starting with problem description, non-acceptance language, Zod validation + rate-limit (F6.1–F6.5)
 - [ ] 03-03-PLAN.md — POST /api/v1/submissions/contribution, attribution-preserving form, non-endorsement language, separate flow from F6 (F7.1–F7.4)
 - [ ] 03-04-PLAN.md — POST /api/v1/engagement with DB-first persistence, hub-settings configurable routing, EngagementModal, email service (F8.1–F8.6)
+- [ ] 03-GAP-PLAN.md — Gap closure: fix confirmation page not shown (OpportunityForm + ContributionForm try/catch/finally), seed record_next_actions, rename section heading to "Next Actions" (F6.5, F7.5, F8.1, F8.2)
 
 ### Phase 4: Curation and Administration
 **Goal**: Authorized curators can create, edit, govern, and publish innovation records through the full publication lifecycle with role-based access control, audit history, and submission/engagement queue management — so the Hub has a complete, auditable back-office that prevents incomplete or misleading records from reaching stakeholders
