@@ -58,7 +58,7 @@ Plans:
 - [ ] 02-04-PLAN.md — SourceBasisBanner component, enriched Audio Security POC seed with full findings + source_basis (F5.1–F5.5)
 
 ### Phase 3: Engagement Flows
-**Status**: failed
+**Status**: In Progress
 **Goal**: Authenticated stakeholders can log in under their identity and submit opportunities, share existing innovation work, and initiate engagement requests — so submissions are traceable to an office and contact, and all routing is recorded before any email is sent
 **Depends on**: Phase 2
 **Requirements**: AUTH-08, AUTH-09, AUTH-10, F6.1, F6.2, F6.3, F6.4, F6.5, F7.1, F7.2, F7.3, F7.4, F8.1, F8.2, F8.3, F8.4, F8.5, F8.6
