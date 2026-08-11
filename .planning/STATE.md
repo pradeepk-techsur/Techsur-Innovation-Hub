@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-stopped_at: Completed 03-engagement-flows-03-PLAN.md
-last_updated: "2026-08-11T18:33:45.582Z"
-last_activity: "2026-08-11 — Completed 03-03 (F7 Innovation Contribution Flow: separate form, attribution-preserving fields, non-endorsement in 3 locations)"
+status: executing
+stopped_at: Completed 03-engagement-flows-04-PLAN.md
+last_updated: "2026-08-11T18:42:18.987Z"
+  last_activity: "2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)"
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 18
-  completed_plans: 10
-  percent: 56
+  completed_plans: 11
+  percent: 61
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 3 — Stakeholder Engagement (Phase 2 complete)
+**Current focus:** Phase 4 — Curator Tools (Phase 3 complete)
 
 ## Current Position
 
-Phase: 3 of 7 (Engagement Flows) — IN PROGRESS
-Plan: 3 of 4 in phase 3 — 03-03 complete, next: 03-04 (Engagement Request Flow)
-Status: Phase 3 in progress; 3 of 4 plans complete
-Last activity: 2026-08-11 — Completed 03-03 (F7 Innovation Contribution Flow: separate form, attribution-preserving fields, non-endorsement in 3 locations)
+Phase: 3 of 7 (Engagement Flows) — COMPLETE; next: Phase 4 (Curator Tools)
+Plan: 4 of 4 in phase 3 — all plans complete
+Status: Phase 3 complete; 11 of 18 plans done
+Last activity: 2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)
 
-Progress: [██████░░░░] 56%
+Progress: [██████░░░░] 61%
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [██████░░░░] 56%
 | Phase 03-engagement-flows P01 | 4min | 2 tasks | 12 files |
 | Phase 03-engagement-flows P02 | 8min | 2 tasks | 6 files |
 | Phase 03-engagement-flows P03 | 3min | 1 tasks | 5 files |
+| Phase 03-engagement-flows P04 | 4min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,8 @@ Recent decisions affecting current work:
 - [Phase 03-engagement-flows]: JWT in HTTP-only cookie: middleware reads JWT via jose without DB round-trip; session payload carries name/office/email for AUTH-10 attribution
 - [Phase 03-engagement-flows]: In-memory rate limiter for dev (production: Redis-backed Map replacement annotated in submissions.service.ts)
 - [Phase 03-engagement-flows]: Two-step contribution form: Step 1 (about the work) → Step 2 (attribution + contact) — simpler than F6 3-step, appropriate for contribution detail level
+- [Phase 03-engagement-flows]: DB-first engagement: INSERT to engagement_requests before sendEmail(); email failure sets email_routing_initiated=false but record always persisted (F8.3)
+- [Phase 03-engagement-flows]: routing_address_at_submission snapshot: audit field captured at INSERT time from hub_settings; past records retain routing address in effect at submission (F8.4 + T-03-04-03)
 
 ### Pending Todos
 
@@ -105,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T18:33:45.581Z
-Stopped at: Completed 03-engagement-flows-03-PLAN.md
+Last session: 2026-08-11T18:42:18.985Z
+Stopped at: Completed 03-engagement-flows-04-PLAN.md
 Resume file: None
