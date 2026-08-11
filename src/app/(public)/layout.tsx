@@ -32,6 +32,12 @@ export default function PublicLayout({
                 >
                   Browse
                 </Link>
+                <Link
+                  href="/search"
+                  className="text-sm font-medium text-gray-600 hover:text-blue-700"
+                >
+                  Search
+                </Link>
               </div>
             </div>
           </div>

@@ -3,10 +3,17 @@
  *
  * Verifies:
  *   - Navigation from catalog card to record detail page
- *   - All nine content sections present for a fully-seeded record
+ *   - All content sections present for a fully-seeded record across perspectives
  *   - Trust banner shows maturity and review status (F3.5, SEC-11)
  *   - Restricted artifact URLs are not exposed (SEC-04, T-01-03-01)
  *   - Unknown slug returns 404
+ *
+ * NOTE (plan 02-03): The record detail page now uses a PerspectiveToggle (F4.1) that
+ * organises the nine F3 sections into two audience-specific views:
+ *   - Executive perspective (default): Problem, What Was Demonstrated, Maturity and Readiness,
+ *     Ownership, Recommended Next Step
+ *   - Technical perspective: Architecture, Tools and Services, Security Considerations,
+ *     Known Limitations, Production-Readiness Gaps, Reuse Guidance, Authoritative Source Artifacts
  *
  * Depends on: seed record 'audio-security-poc-2024' (plan 01-02/01-03 fixture)
  */
@@ -33,27 +40,30 @@ test.describe('Innovation Record Detail (F3)', () => {
     await expect(page).toHaveURL(/\/records\//);
   });
 
-  test('F3.1 – Problem and Context section is present', async ({ page }) => {
+  test('F3.1 – Problem section visible in executive perspective (default)', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /problem and context/i })).toBeVisible();
+    // Executive is the default perspective — "The Problem" section visible without clicking
+    await expect(page.getByRole('region', { name: /the problem/i })).toBeVisible();
   });
 
-  test('F3.2 – What Was Explored section is present', async ({ page }) => {
+  test('F3.2 – Tools and technical details visible in technical perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /what was explored/i })).toBeVisible();
+    await page.getByRole('tab', { name: /technical/i }).click();
+    await expect(page.getByRole('region', { name: /tools and services/i })).toBeVisible();
   });
 
-  test('F3.3 – Outcome and Evidence section is present', async ({ page }) => {
+  test('F3.3 – Outcome section visible in executive perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /outcome and evidence/i })).toBeVisible();
+    await expect(page.getByRole('region', { name: /what was demonstrated/i })).toBeVisible();
   });
 
-  test('F3.4 – Key Findings section is present', async ({ page }) => {
+  test('F3.4 – Architecture findings visible in technical perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /key findings/i })).toBeVisible();
+    await page.getByRole('tab', { name: /technical/i }).click();
+    await expect(page.getByRole('region', { name: /architecture/i })).toBeVisible();
   });
 
-  test('F3.5 – Maturity and Readiness section is present', async ({ page }) => {
+  test('F3.5 – Maturity and Readiness section visible in executive perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
     await expect(page.getByRole('region', { name: /maturity and readiness/i })).toBeVisible();
   });
@@ -66,26 +76,29 @@ test.describe('Innovation Record Detail (F3)', () => {
     await expect(trustBanner.getByLabel(/maturity:/i)).toBeVisible();
   });
 
-  test('F3.6 – Reuse Guidance section is present', async ({ page }) => {
+  test('F3.6 – Reuse Guidance section visible in technical perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
+    await page.getByRole('tab', { name: /technical/i }).click();
     await expect(page.getByRole('region', { name: /reuse guidance/i })).toBeVisible();
   });
 
-  test('F3.7 – Ownership and Attribution section is present', async ({ page }) => {
+  test('F3.7 – Ownership section visible in executive perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /ownership and attribution/i })).toBeVisible();
+    await expect(page.getByRole('region', { name: /ownership/i })).toBeVisible();
   });
 
-  test('F3.8 – Authoritative Artifacts section is present', async ({ page }) => {
+  test('F3.8 – Authoritative Source Artifacts visible in technical perspective', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /authoritative artifacts/i })).toBeVisible();
+    await page.getByRole('tab', { name: /technical/i }).click();
+    await expect(page.getByRole('region', { name: /authoritative source artifacts/i })).toBeVisible();
   });
 
-  test('F3.9 – Next Action section is present with CTA link', async ({ page }) => {
+  test('F3.9 – Recommended Next Step section present with CTA link', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    await expect(page.getByRole('region', { name: /next action/i })).toBeVisible();
+    // Recommended Next Step is in the executive perspective (default)
+    await expect(page.getByRole('region', { name: /recommended next step/i })).toBeVisible();
     // At least one link (Contact I&R fallback or configured action) must be present
-    const ctaRegion = page.getByRole('region', { name: /next action/i });
+    const ctaRegion = page.getByRole('region', { name: /recommended next step/i });
     await expect(ctaRegion.getByRole('link').first()).toBeVisible();
   });
 

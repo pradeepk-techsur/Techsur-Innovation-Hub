@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 01-foundation-03-PLAN.md
-last_updated: "2026-08-11T14:54:41.973Z"
-last_activity: "2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)"
+status: completed
+stopped_at: Completed 02-discovery-04-PLAN.md
+last_updated: "2026-08-11T16:28:02.400Z"
+last_activity: "2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)"
 progress:
   total_phases: 5
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 67
+  completed_phases: 2
+  total_plans: 7
+  completed_plans: 7
+  percent: 86
 ---
 
 # Project State
@@ -21,24 +21,24 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 1 — Foundation
+**Current focus:** Phase 3 — Stakeholder Engagement (Phase 2 complete)
 
 ## Current Position
 
-Phase: 1 of 5 (Foundation)
-Plan: 2 of 3 in current phase
-Status: In progress
-Last activity: 2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)
+Phase: 2 of 5 (Discovery) — COMPLETE
+Plan: 4 of 4 in phase 2 — Phase 2 COMPLETE
+Status: Phase 2 complete; ready for Phase 3
+Last activity: 2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)
 
-Progress: [███████░░░] 67%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2
-- Average duration: 10min
-- Total execution time: 20min
+- Total plans completed: 7
+- Average duration: 7min
+- Total execution time: ~53min
 
 **By Phase:**
 
@@ -55,6 +55,10 @@ Progress: [███████░░░] 67%
 | Phase 01-foundation P01 | 13min | 2 tasks | 17 files |
 | Phase 01-foundation P02 | 7min | 2 tasks | 14 files |
 | Phase 01-foundation P03 | 11min | 2 tasks | 9 files |
+| Phase 02-discovery P01 | 8min | 2 tasks | 6 files |
+| Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
+| Phase 02-discovery P03 | 5min | 1 tasks | 6 files |
+| Phase 02-discovery P04 | 4min | 1 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -75,6 +79,12 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: MaturityBadge (filled ▲ pill) vs ReviewStatusBadge (outlined ✓/🛡) — three-layer visual distinction (shape + icon + color) per F1.6 and SEC-11
 - [Phase 01-foundation]: Kysely sql tagged template for CASE WHEN: db.raw() not a Kysely API; used sql<T>`...`.as() for SEC-04 URL redaction
 - [Phase 01-foundation]: node-postgres DATE→Date coercion: formatReviewDate() guard in TrustBanner converts runtime Date objects to YYYY-MM-DD strings before React rendering
+- [Phase 02-discovery]: Used direct pg Pool.query() instead of Kysely for tsvector+window function queries: Kysely type system cannot safely express ts_rank + @@ operator in a typed chain
+- [Phase 02-discovery]: plainto_tsquery for natural-language search: treats all input as plain text, no tsquery injection possible, AND semantics match mission-problem search UX
+- [Phase 02-discovery]: SSR search page calls /api/v1/search via fetch() rather than importing searchRecords() directly — keeps validation/response shape identical for external and internal callers
+- [Phase 02-discovery]: PerspectiveToggle as 'use client' wrapper: toggle needs useState for active perspective; all other record components are server-friendly
+- [Phase 02-discovery]: TrustBanner in each view (not above tabs): F4.4 requires TrustBanner visible in both perspectives; rendered inside each view ensures it appears regardless of active tab
+- [Phase 02-discovery]: SourceBasisBanner placed in record page header (above perspective tabs) so source attribution is visible regardless of active perspective; source_basis for Audio Security POC uses plain-text reference to exercise text rendering path
 
 ### Pending Todos
 
@@ -88,6 +98,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T14:54:41.972Z
-Stopped at: Completed 01-foundation-03-PLAN.md
+Last session: 2026-08-11T16:28:02.398Z
+Stopped at: Completed 02-discovery-04-PLAN.md
 Resume file: None
