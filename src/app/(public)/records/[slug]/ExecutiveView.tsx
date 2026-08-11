@@ -128,8 +128,8 @@ export function ExecutiveView({ record, next_actions }: Props) {
         )}
       </RecordSection>
 
-      {/* F4.2 — Recommended next step */}
-      <RecordSection id="exec-next" title="Recommended Next Step">
+      {/* F8.1 — Next actions CTAs (seeded from record_next_actions) */}
+      <RecordSection id="exec-next" title="Next Actions">
         {record.next_action_description && (
           <p className="text-gray-700">{record.next_action_description}</p>
         )}

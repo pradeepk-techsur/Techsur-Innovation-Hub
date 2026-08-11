@@ -9,12 +9,14 @@ test.describe('Engagement Routing (F8)', () => {
     recordSlug = body.data[0].slug;
   });
 
-  test('F8.1 – next action CTAs visible on record page', async ({ page }) => {
-    await page.goto(`/records/${recordSlug}`);
-    const ctaRegion = page.getByRole('group', { name: /next action/i }).or(
-      page.getByLabel(/next action options/i)
-    );
-    await expect(ctaRegion.getByRole('button').first()).toBeVisible();
+  test('F8.1 – next action CTAs visible on record page (seeded actions)', async ({ page }) => {
+    await page.goto('/records/audio-security-poc');
+    const ctaRegion = page.getByLabel(/next action options/i);
+    // At least two buttons should appear (request_demo + contact_ir from seed)
+    const buttons = ctaRegion.getByRole('button');
+    await expect(buttons).toHaveCount(2);
+    // Section heading must read "Next Actions"
+    await expect(page.getByRole('heading', { name: /next actions/i })).toBeVisible();
   });
 
   test('F8.2 – engagement modal opens and shows context', async ({ page }) => {
