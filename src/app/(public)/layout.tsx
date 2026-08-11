@@ -4,12 +4,16 @@
  */
 
 import Link from 'next/link';
+import { getSession } from '@/lib/auth/session';
+import { LogoutButton } from './LogoutButton';
 
-export default function PublicLayout({
+export default async function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getSession();
+
   return (
     <>
       <header className="border-b border-gray-200 bg-white">
@@ -39,6 +43,21 @@ export default function PublicLayout({
                   Search
                 </Link>
               </div>
+            </div>
+            <div className="flex items-center gap-4">
+              {session ? (
+                <>
+                  <span className="text-sm text-gray-600">{session.name}</span>
+                  <LogoutButton />
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="text-sm font-medium text-gray-600 hover:text-blue-700"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </div>
         </nav>
