@@ -21,6 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation
+**Status**: In Progress
 **Goal**: Anonymous users can browse a trustworthy catalog of published innovation records and open a full structured record — so the primary discovery journey is functional end-to-end before search, authentication, or curation is added
 **Depends on**: Nothing (first phase)
 **Requirements**: AUTH-01, AUTH-07, F1.1, F1.2, F1.3, F1.4, F1.5, F1.6, F3.1, F3.2, F3.3, F3.4, F3.5, F3.6, F3.7, F3.8, F3.9
