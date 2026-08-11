@@ -1,0 +1,44 @@
+## PER-05: Jasmine Okafor
+
+### JRN-05.1: Curate and Publish an Innovation Record from a Lessons-Learned Document
+
+**Persona:** PER-05 (Jasmine Okafor)
+**Scenario:** Jasmine has received the Audio Security POC lessons-learned document and has been asked to curate it into a full Hub innovation record. The source document is the authoritative artifact; her job is to create a structured record around it — extracting reusable findings, applying the full content model and metadata, managing maturity and review status independently, linking the source document and additional artifacts, and moving the record through the publication gate to published state. She works entirely within the curation interface and does not need to consult any external governance document because the content model reference is accessible within the product.
+**Related Jobs:** JTBD-05.1
+
+#### Journey Stages
+
+| Stage | Action | Touchpoint | Thinking | Feeling | Pain Point | Opportunity |
+|-------|--------|------------|----------|---------|------------|-------------|
+| Create Record | Opens curation interface; clicks "Create New Record"; chooses source type (Lessons-Learned Document) | Record Creation (F9.3) | "I have the source document. I'll work from it directly. Let me start with the problem statement and work through the content model section by section." | Organized; purposeful | Without a structured interface, record creation begins from a blank document with no enforced field order — important fields are missed | Record creation interface presents fields in content-model sequence: problem → what was explored → outcome and evidence → findings → maturity → review status → attribution → artifacts → next action |
+| Apply Content Model | Fills all required record sections — problem statement, hypothesis, outcome and evidence, key findings (architecture, security, cloud constraints, performance), maturity, review status, reuse guidance, ownership, attribution, and next action | Record Editing (F9.4), Content Model Reference (F9.16) | "Is 'Experiment/POC' the right maturity for this? Let me check the content model reference. Yes — controlled effort that produced findings but not production-ready. Good." | Methodical; confident when the content model reference is within reach; anxious when definitions are ambiguous | Maturity and review status definitions are documented outside the product — curators consult external references inconsistently, leading to governance drift | Content model reference is accessible within the curation interface: maturity definitions, review status values, and publication gate requirements are one click away |
+| Set Maturity and Review Status | Assigns maturity (Experiment/POC) and review status (Technically Reviewed) independently; verifies that the two fields are decoupled and do not auto-infer from each other | Maturity Management (F9.6), Review Status Management (F9.7) | "This POC was technically reviewed, but it has not received a security review. I need to make sure those two fields reflect that independently — I don't want 'Technically Reviewed' to imply security clearance." | Precise; alert to governance nuance | Review status and maturity conflated in previous ad-hoc systems — a field labeled "reviewed" does not communicate whether that means technical review, security review, or both | Maturity and review status are independent fields with independent histories; applying a review status does not change maturity and vice versa |
+| Manage Attribution and Artifacts | Adds contributing office, individual contributor names, I&R contribution description, and current steward; links authoritative artifact (lessons-learned document URL), architecture diagram, and test results | Attribution Management (F9.8), Artifact Management (F9.5) | "I need to make sure attribution is on the record before I publish — if I miss a contributor name now, it's harder to correct after the fact. And I need to link the source document, not copy it." | Careful; attentive to attribution accuracy | Attribution is frequently lost in informal curation workflows; no single field captures contributing office, individual contributors, and I&R contribution together | Attribution section captures contributing office, contributors, I&R contribution, and steward in one structured area; artifact section links to authoritative sources without copying content |
+| Verify Publication Gate | Attempts to move record from Draft to Submitted for Review; receives gate check; reviews which required fields are complete and which are missing | Publication Gate (F9.10), Publication Lifecycle (F9.9) | "Let me run the gate check before I mark this ready for review. I don't want to send it for review and have it bounced back for a missing field." | Methodical; slightly anxious about missing something | Without a publication gate, incomplete records advance to published state — stakeholders encounter records missing maturity, owner, or disclaimer | Publication gate actively checks all required fields and surfaces missing items as a list before advancing lifecycle state; record cannot advance to Review or Published state with missing required fields |
+| Apply Disclaimer and Last-Reviewed Date | Adds applicable disclaimer ("This record represents an experiment/POC. It is not production-ready and has not been approved for adoption.") and sets last-reviewed date to today | Record Editing (F9.4), Publication Gate (F9.10) | "The disclaimer needs to match the maturity — Experiment/POC. And I need the last-reviewed date so stakeholders know when this was last validated." | Thorough; closing the loop on governance completeness | Disclaimers and review dates are applied inconsistently because curators must remember them rather than being prompted | Disclaimer options are tied to maturity stage — when maturity is set, the appropriate disclaimer is suggested; last-reviewed date is prompted before publication gate passes |
+| Publish Record | All gate requirements satisfied; moves record to Published state; confirms publication with a final lifecycle action | Publication Lifecycle (F9.9), Audit History (F9.11) | "Everything is in. Publishing now. This will be visible to stakeholders immediately. The audit history should capture this transition." | Satisfied; confident the record is complete and trustworthy | Lifecycle transitions are not explicitly tracked — stale records persist without signals and changes are not auditable | Publication is an explicit lifecycle action captured in audit history with timestamp and actor identity; published state is visually distinct from draft and review states |
+
+#### Key Moments
+
+- **Decision Point:** Set Maturity and Review Status stage — Jasmine decides the exact maturity and review status values; incorrect assignment (e.g., marking "Technically Reviewed" as implying security clearance) could mislead technical adopters and undermine the trust model; in-product content model reference prevents misclassification
+- **Risk of Abandonment:** Apply Content Model stage — if maturity definitions are ambiguous or unavailable in the interface, Jasmine either applies inconsistent labels or pauses the curation session to locate external documentation, introducing workflow interruption and governance drift
+- **Delight Opportunity:** Verify Publication Gate stage — a gate check that surfaces exactly which fields are missing (rather than blocking with a generic error) allows Jasmine to complete the record efficiently and gives her confidence that every published record meets the trust standard
+
+#### Success Outcome
+
+Jasmine creates a complete, publication-gate-compliant Audio Security POC record from the lessons-learned document, assigns Experiment/POC maturity and Technically Reviewed status independently, links the authoritative source document and artifacts without copying them, applies the correct disclaimer and last-reviewed date, passes the publication gate check, and publishes the record — all without consulting an external governance document. Audit history captures the full lifecycle transition. This satisfies JTBD-05.1 (create and govern innovation records through a full lifecycle with publication gate enforcement, with zero published records missing required trust fields).
+
+#### Feature Touchpoints
+
+| Stage | Features |
+|-------|----------|
+| Create Record | F9.3 (Record Creation) |
+| Apply Content Model | F9.4, F9.16 (Record Editing, Content Model Reference) |
+| Set Maturity and Review Status | F9.6, F9.7 (Maturity Management, Review Status Management) |
+| Manage Attribution and Artifacts | F9.5, F9.8 (Artifact Management, Attribution and Ownership) |
+| Verify Publication Gate | F9.9, F9.10 (Publication Lifecycle, Publication Gate) |
+| Apply Disclaimer and Last-Reviewed Date | F9.4, F9.10 (Record Editing, Publication Gate) |
+| Publish Record | F9.9, F9.11 (Publication Lifecycle, Audit History) |
+
+---
+
