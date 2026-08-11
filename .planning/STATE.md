@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-discovery-04-PLAN.md
-last_updated: "2026-08-11T16:28:02.400Z"
+stopped_at: Completed 03-engagement-flows-01-PLAN.md
+last_updated: "2026-08-11T18:16:16.907Z"
 last_activity: "2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)"
 progress:
-  total_phases: 5
+  total_phases: 7
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
-  percent: 86
+  total_plans: 18
+  completed_plans: 8
+  percent: 100
 ---
 
 # Project State
@@ -59,6 +59,7 @@ Progress: [██████████] 100%
 | Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
 | Phase 02-discovery P03 | 5min | 1 tasks | 6 files |
 | Phase 02-discovery P04 | 4min | 1 tasks | 3 files |
+| Phase 03-engagement-flows P01 | 4min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -85,6 +86,8 @@ Recent decisions affecting current work:
 - [Phase 02-discovery]: PerspectiveToggle as 'use client' wrapper: toggle needs useState for active perspective; all other record components are server-friendly
 - [Phase 02-discovery]: TrustBanner in each view (not above tabs): F4.4 requires TrustBanner visible in both perspectives; rendered inside each view ensures it appears regardless of active tab
 - [Phase 02-discovery]: SourceBasisBanner placed in record page header (above perspective tabs) so source attribution is visible regardless of active perspective; source_basis for Audio Security POC uses plain-text reference to exercise text rendering path
+- [Phase 03-engagement-flows]: AuthProvider interface abstraction: DevAuthProvider now, OidcAuthProvider wired in Phase 4 when identity system confirmed
+- [Phase 03-engagement-flows]: JWT in HTTP-only cookie: middleware reads JWT via jose without DB round-trip; session payload carries name/office/email for AUTH-10 attribution
 
 ### Pending Todos
 
@@ -98,6 +101,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T16:28:02.398Z
-Stopped at: Completed 02-discovery-04-PLAN.md
+Last session: 2026-08-11T18:16:16.906Z
+Stopped at: Completed 03-engagement-flows-01-PLAN.md
 Resume file: None
