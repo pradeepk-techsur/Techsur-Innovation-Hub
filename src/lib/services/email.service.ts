@@ -15,8 +15,10 @@ export async function sendEmail(payload: EmailPayload): Promise<{ sent: boolean;
   if (mode === 'smtp') {
     try {
       // Production: use nodemailer (add 'nodemailer' to package.json when enabling SMTP)
+      // Dynamic require used intentionally to keep nodemailer out of the bundle when not installed.
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const nodemailer: any = await import('nodemailer' as string).catch(() => null);
+      let nodemailer: any = null;
+      try { nodemailer = require('nodemailer'); } catch { /* not installed */ }
       if (!nodemailer) return { sent: false, error: 'nodemailer not installed' };
 
       const transporter = nodemailer.default.createTransport({
