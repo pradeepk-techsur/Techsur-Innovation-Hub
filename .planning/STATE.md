@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-foundation-02-PLAN.md
-last_updated: "2026-08-11T14:38:29.097Z"
-last_activity: "2026-08-11 — Completed 01-01 (app bootstrap: Next.js 15 + PostgreSQL 16 + all 8 DB tables)"
+stopped_at: Completed 01-foundation-03-PLAN.md
+last_updated: "2026-08-11T14:54:41.973Z"
+last_activity: "2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)"
 progress:
   total_phases: 5
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
-  percent: 33
+  completed_plans: 3
+  percent: 67
 ---
 
 # Project State
@@ -54,6 +54,7 @@ Progress: [███████░░░] 67%
 *Updated after each plan completion*
 | Phase 01-foundation P01 | 13min | 2 tasks | 17 files |
 | Phase 01-foundation P02 | 7min | 2 tasks | 14 files |
+| Phase 01-foundation P03 | 11min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,8 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: DATABASE_ADMIN_URL separate from DATABASE_URL: migrate.ts uses superuser for DDL; app runtime uses least-privilege tsio_hub_app
 - [Phase 01-foundation]: SSR catalog page calls repository directly (not fetch('/api/v1/catalog')) to avoid loopback HTTP overhead in server components
 - [Phase 01-foundation]: MaturityBadge (filled ▲ pill) vs ReviewStatusBadge (outlined ✓/🛡) — three-layer visual distinction (shape + icon + color) per F1.6 and SEC-11
+- [Phase 01-foundation]: Kysely sql tagged template for CASE WHEN: db.raw() not a Kysely API; used sql<T>`...`.as() for SEC-04 URL redaction
+- [Phase 01-foundation]: node-postgres DATE→Date coercion: formatReviewDate() guard in TrustBanner converts runtime Date objects to YYYY-MM-DD strings before React rendering
 
 ### Pending Todos
 
@@ -85,6 +88,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T14:38:29.096Z
-Stopped at: Completed 01-foundation-02-PLAN.md
+Last session: 2026-08-11T14:54:41.972Z
+Stopped at: Completed 01-foundation-03-PLAN.md
 Resume file: None
