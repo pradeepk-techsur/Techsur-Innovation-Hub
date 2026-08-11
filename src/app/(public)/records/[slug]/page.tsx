@@ -15,6 +15,7 @@
 import { notFound } from 'next/navigation';
 import { getRecordBySlug } from '@/lib/repositories/innovation-records.repository';
 import { PerspectiveToggle } from './PerspectiveToggle';
+import { SourceBasisBanner } from './SourceBasisBanner';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -34,6 +35,9 @@ export default async function RecordDetailPage({ params }: PageProps) {
           <h1 className="text-2xl font-bold text-gray-900">{record.title}</h1>
           {record.summary && (
             <p className="mt-2 text-lg text-gray-600">{record.summary}</p>
+          )}
+          {record.source_basis && (
+            <SourceBasisBanner sourceBasis={record.source_basis} />
           )}
         </header>
 
