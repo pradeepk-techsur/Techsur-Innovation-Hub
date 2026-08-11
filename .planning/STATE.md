@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-discovery-01-PLAN.md
-last_updated: "2026-08-11T16:03:53.122Z"
-last_activity: "2026-08-11 — Completed 01-02 (Innovation Catalog: GET /api/v1/catalog, /catalog SSR page, F1.1-F1.6 card components, Playwright tests)"
+stopped_at: Completed 02-discovery-02-PLAN.md
+last_updated: "2026-08-11T16:13:23.256Z"
+last_activity: "2026-08-11 — Completed 02-01 (Search Backend: GET /api/v1/search, GET /api/v1/search/facets, PostgreSQL tsvector full-text search with faceted filtering)"
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 7
-  completed_plans: 4
-  percent: 57
+  completed_plans: 5
+  percent: 71
 ---
 
 # Project State
@@ -26,19 +26,19 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 ## Current Position
 
 Phase: 2 of 5 (Discovery)
-Plan: 1 of 2 in current phase
-Status: In progress
-Last activity: 2026-08-11 — Completed 02-01 (Search Backend: GET /api/v1/search, GET /api/v1/search/facets, PostgreSQL tsvector full-text search with faceted filtering)
+Plan: 2 of 2 in current phase — Phase 2 COMPLETE
+Status: Phase 2 complete
+Last activity: 2026-08-11 — Completed 02-02 (Search UI: /search SSR page, SearchForm, FilterPanel, SearchResultCard, ActiveFilters, 8 Playwright tests — F2.1–F2.5)
 
-Progress: [██████░░░░] 57%
+Progress: [███████░░░] 71%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 2
-- Average duration: 10min
-- Total execution time: 20min
+- Total plans completed: 5
+- Average duration: 9min
+- Total execution time: ~44min
 
 **By Phase:**
 
@@ -56,6 +56,7 @@ Progress: [██████░░░░] 57%
 | Phase 01-foundation P02 | 7min | 2 tasks | 14 files |
 | Phase 01-foundation P03 | 11min | 2 tasks | 9 files |
 | Phase 02-discovery P01 | 8min | 2 tasks | 6 files |
+| Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,7 @@ Recent decisions affecting current work:
 - [Phase 01-foundation]: node-postgres DATE→Date coercion: formatReviewDate() guard in TrustBanner converts runtime Date objects to YYYY-MM-DD strings before React rendering
 - [Phase 02-discovery]: Used direct pg Pool.query() instead of Kysely for tsvector+window function queries: Kysely type system cannot safely express ts_rank + @@ operator in a typed chain
 - [Phase 02-discovery]: plainto_tsquery for natural-language search: treats all input as plain text, no tsquery injection possible, AND semantics match mission-problem search UX
+- [Phase 02-discovery]: SSR search page calls /api/v1/search via fetch() rather than importing searchRecords() directly — keeps validation/response shape identical for external and internal callers
 
 ### Pending Todos
 
@@ -91,6 +93,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T16:03:53.120Z
-Stopped at: Completed 02-discovery-01-PLAN.md
+Last session: 2026-08-11T16:13:23.255Z
+Stopped at: Completed 02-discovery-02-PLAN.md
 Resume file: None
