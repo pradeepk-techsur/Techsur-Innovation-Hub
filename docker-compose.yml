@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: tsio_hub
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devpassword_admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tsio_hub"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://tsio_hub_app:devpassword@db:5432/tsio_hub
+      DATABASE_ADMIN_URL: postgresql://postgres:devpassword_admin@db:5432/tsio_hub
+      ENABLE_DEV_AUTH_BYPASS: "true"
+      ENABLE_CAPTCHA_BYPASS: "true"
+      EMAIL_ROUTING_MODE: mailto
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      sh -c "npm run db:migrate && npm run dev"
+
+volumes:
+  db_data:
