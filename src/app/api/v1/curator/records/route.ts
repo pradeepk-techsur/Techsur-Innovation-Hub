@@ -43,9 +43,11 @@ export async function POST(request: Request) {
 
   const body = await request.json().catch(() => ({}));
   const title = String(body.title ?? '').slice(0, 200);
+  const problemStatement = String(body.problem_statement ?? '').slice(0, 5000);
 
   const id = await createRecord({
     title,
+    problemStatement,
     actorId: auth.session.userId,
     actorName: auth.session.name,
   });

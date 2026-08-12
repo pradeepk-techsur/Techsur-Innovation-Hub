@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 interface DashboardData {
   records: {
@@ -17,9 +18,10 @@ interface DashboardData {
 
 async function getDashboardData(): Promise<DashboardData | null> {
   try {
+    const cookieHeader = (await cookies()).toString();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/api/v1/curator/dashboard`,
-      { cache: 'no-store' }
+      { cache: 'no-store', headers: { Cookie: cookieHeader } }
     );
     if (!res.ok) return null;
     return (await res.json()).data as DashboardData;

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 export default function NewRecordPage() {
   const router = useRouter();
   const [title, setTitle] = useState('');
+  const [problemStatement, setProblemStatement] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +22,7 @@ export default function NewRecordPage() {
       const res = await fetch('/api/v1/curator/records', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: title.trim() }),
+        body: JSON.stringify({ title: title.trim(), problem_statement: problemStatement.trim() }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
@@ -57,8 +58,22 @@ export default function NewRecordPage() {
             autoFocus
           />
           <p className="text-xs text-gray-500 mt-1">
-            You can edit all record details after creating. The slug will be generated from this title.
+            The slug will be auto-generated from the title. All other fields can be completed in the record editor.
           </p>
+        </div>
+        <div>
+          <label htmlFor="problem_statement" className="block text-sm font-medium text-gray-700 mb-1">
+            Problem Statement <span className="text-gray-400 font-normal">(optional — can be completed in the editor)</span>
+          </label>
+          <textarea
+            id="problem_statement"
+            value={problemStatement}
+            onChange={e => setProblemStatement(e.target.value)}
+            placeholder="Describe the mission problem this innovation work addresses"
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={4}
+            disabled={submitting}
+          />
         </div>
         {error && (
           <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">

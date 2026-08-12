@@ -13,6 +13,7 @@ function generateSlug(title: string): string {
 
 export async function createRecord(params: {
   title?: string;
+  problemStatement?: string;
   actorId: string;
   actorName: string;
 }): Promise<string> {
@@ -29,7 +30,7 @@ export async function createRecord(params: {
       updated_by: params.actorId,
       title: params.title ?? '',
       summary: '',
-      problem_statement: '',
+      problem_statement: params.problemStatement ?? '',
       hypothesis_or_objective: '',
       outcome_summary: '',
       source_basis: '',
