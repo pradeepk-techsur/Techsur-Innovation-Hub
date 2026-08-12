@@ -1,6 +1,7 @@
 import { getSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { OpportunityForm } from './OpportunityForm';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 export default async function SubmitOpportunityPage() {
   const session = await getSession();
@@ -8,6 +9,7 @@ export default async function SubmitOpportunityPage() {
 
   return (
     <main id="main-content" className="max-w-2xl mx-auto py-8 px-4">
+      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Submit an Opportunity' }]} />
       <h1 className="text-2xl font-bold">Submit an Opportunity</h1>
       <p className="text-gray-600 mt-2 mb-6">
         Tell us about a mission problem or area of interest. We&apos;ll use this to

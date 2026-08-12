@@ -1,6 +1,7 @@
 import { getSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { ContributionForm } from './ContributionForm';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 export default async function SubmitContributionPage() {
   const session = await getSession();
@@ -8,6 +9,7 @@ export default async function SubmitContributionPage() {
 
   return (
     <main id="main-content" className="max-w-2xl mx-auto py-8 px-4">
+      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Share Innovation Work' }]} />
       <h1 className="text-2xl font-bold">Share Existing Innovation Work</h1>
       <p className="text-gray-600 mt-2 mb-4">
         Do you have existing innovation work, a POC, a lessons-learned document, or a
