@@ -104,7 +104,7 @@ Plans:
 - [ ] 04-07-PLAN.md — Gap closure: fix middleware hostname leak in login redirect (nextUrl.clone), SameSite=None; Secure session cookie for proxy compatibility, settings page 403→/unauthorized (UAT Test 9)
 
 ### Phase 5: Launch Readiness
-**Status**: In Progress
+**Status**: executing
 **Goal**: The application has complete, verified navigation with no dead links; at least 8 published seeded records spanning all required metadata dimensions; and all accessibility, deployment security, and launch-acceptance conditions are confirmed — so the Hub is ready for stakeholder use and the product acceptance criteria are met
 **Depends on**: Phase 4
 **Requirements**: IA-01, IA-02, IA-03, IA-04, IA-05, SEED-01, SEED-02, SEED-03, SEED-04, SEED-05, SEED-06, SEED-07, SEED-08, SEED-09, SEED-10, SEED-11, SEED-12
