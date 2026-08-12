@@ -2,15 +2,15 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-08-12T15:07:38Z"
-last_activity: "2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)"
+status: completed
+stopped_at: Completed 04-07-PLAN.md
+last_updated: "2026-08-12T17:57:55.334Z"
+last_activity: 2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)
 progress:
   total_phases: 8
-  completed_phases: 4
-  total_plans: 22
-  completed_plans: 18
+  completed_phases: 3
+  total_plans: 23
+  completed_plans: 19
   percent: 82
 ---
 
@@ -69,6 +69,7 @@ Progress: [████████░░] 82%
 | Phase 04-curation-and-administration P04 | 6min | 2 tasks | 16 files |
 | Phase 04-curation-and-administration P05 | 3min | 2 tasks | 7 files |
 | Phase 04-curation-and-administration P06 | 8min | 2 tasks | 5 files |
+| Phase 04-curation-and-administration P07 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -112,6 +113,8 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: problem_statement added as optional field at record creation (not required); reduces friction while ensuring field is available for publication gate
 - [Phase 04-curation-and-administration]: Unauthorized page at /unauthorized (top-level, outside /curator route tree) — avoids infinite redirect loop; curator layout fires for all /curator/* children
 - [Phase 04-curation-and-administration]: Two-branch RBAC layout: !session→/login, wrong-role→/unauthorized — not collapsed into single redirect (AUTH-04 gap closure)
+- [Phase 04-curation-and-administration]: nextUrl.clone() in middleware redirect — eliminates proxy hostname leak in Location header
+- [Phase 04-curation-and-administration]: SameSite=None; Secure unconditionally for session cookie — cross-origin preview proxy compatibility
 
 ### Pending Todos
 
@@ -125,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T15:07:38Z
-Stopped at: Completed 04-06-PLAN.md
+Last session: 2026-08-12T17:57:55.333Z
+Stopped at: Completed 04-07-PLAN.md
 Resume file: None
