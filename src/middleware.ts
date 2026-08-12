@@ -6,6 +6,7 @@ import { jwtVerify } from 'jose';
 const PROTECTED_ROUTES = [
   '/submit-opportunity',
   '/submit-contribution',
+  '/curator',       // SSR curator section — any authenticated user; role checked in layout
 ];
 
 const SESSION_COOKIE = 'tsio_hub_session';
