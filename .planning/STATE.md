@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-08-12T04:17:25.812Z"
-last_activity: "2026-08-12 — Completed 04-01 (RBAC enforcement layer: requireRole(), curator layout, audit helper)"
+stopped_at: Completed 04-03-PLAN.md
+last_updated: "2026-08-12T04:23:32.267Z"
+last_activity: 2026-08-12 — Completed 04-02 (curator dashboard, record CRUD, artifact management, record editor UI)
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 20
-  completed_plans: 14
-  percent: 70
+  completed_plans: 15
+  percent: 75
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 ## Current Position
 
 Phase: 4 of 7 (Curator Tools) — IN PROGRESS
-Plan: 2 of 4 in phase 4 — 2 plans complete
-Status: Phase 4 in progress; 14 of 20 plans done
-Last activity: 2026-08-12 — Completed 04-02 (curator dashboard, record CRUD, artifact management, record editor UI)
+Plan: 3 of 4 in phase 4 — 3 plans complete
+Status: Phase 4 in progress; 15 of 20 plans done
+Last activity: 2026-08-12 — Completed 04-03 (publication lifecycle gate: 15 checks, lifecycle routes, RecordEditor lifecycle panel)
 
-Progress: [███████░░░] 70%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [███████░░░] 70%
 | Phase 03-engagement-flows P04 | 4min | 2 tasks | 6 files |
 | Phase 04-curation-and-administration P01 | 4min | 1 tasks | 5 files |
 | Phase 04-curation-and-administration P02 | 6min | 2 tasks | 12 files |
+| Phase 04-curation-and-administration P03 | 3min | 1 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -101,6 +102,7 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: requireRole() returns { session } or Response (not throw): callers use instanceof Response guard — consistent with Next.js Route Handler idiom
 - [Phase 04-curation-and-administration]: Optimistic concurrency double-check: updateRecord() checks version at service AND DB WHERE clause; PostgreSQL trg_ir_version trigger makes stale writes 0-row no-ops
 - [Phase 04-curation-and-administration]: params as Promise in Next.js 15: dynamic route params are Promise<{id}> — handlers must await params before destructuring
+- [Phase 04-curation-and-administration]: ALLOWED_TRANSITIONS map in transitionState() enforces valid lifecycle sequence; VALID_REVIEW_STATUSES expanded to match editor values so Check 11 correctly validates curator-set statuses
 
 ### Pending Todos
 
@@ -114,6 +116,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T04:17:25.811Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-08-12T04:23:32.266Z
+Stopped at: Completed 04-03-PLAN.md
 Resume file: None
