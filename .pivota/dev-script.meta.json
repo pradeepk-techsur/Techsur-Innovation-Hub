@@ -1,8 +1,8 @@
 {
   "generator_version": "init-dev-server@1",
   "catalog_entry": "react-next",
-  "generated_at": "2026-08-12T02:45:33Z",
-  "inspection_inputs_hash": "f02689dbba05bc1f4ad8830c60e2f09e272b6f5c348f481328588fe4d365458f",
+  "generated_at": "2026-08-12T03:10:54Z",
+  "inspection_inputs_hash": "ec4009d00781477a95bdd9d22c23508d79a1bc6bf5f7e9fdfa4d333538380f03",
   "inspection_inputs": {
     "matched_globs": [
       "next.config.mjs",
