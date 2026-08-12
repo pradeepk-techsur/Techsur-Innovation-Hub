@@ -8,8 +8,11 @@ export async function GET(request: Request) {
   if (auth instanceof Response) return auth;
 
   const { searchParams } = new URL(request.url);
-  const page = Math.max(1, Number(searchParams.get('page') ?? 1));
-  const pageSize = Math.min(100, Number(searchParams.get('page_size') ?? 50));
+  // W4 fix: parseInt with isNaN guard prevents NaN flowing to Kysely limit/offset
+  const rawPage = parseInt(searchParams.get('page') ?? '1', 10);
+  const rawPageSize = parseInt(searchParams.get('page_size') ?? '50', 10);
+  const page = Math.max(1, isNaN(rawPage) ? 1 : rawPage);
+  const pageSize = Math.min(100, isNaN(rawPageSize) ? 50 : rawPageSize);
 
   // T-04-06-01: ip_address is never selected — admin global view still redacts IP
   const [events, totalRow] = await Promise.all([
