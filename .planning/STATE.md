@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
+status: executing
 stopped_at: Completed 04-07-PLAN.md
-last_updated: "2026-08-12T17:57:55.334Z"
-last_activity: 2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)
+last_updated: "2026-08-12T18:10:00Z"
+last_activity: "2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, Playwright spec)"
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 23
   completed_plans: 19
-  percent: 82
+  percent: 83
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 
 ## Current Position
 
-Phase: 4 of 7 (Curator Tools) — COMPLETE (all gaps closed)
-Plan: 6 of 6 in phase 4 — 6 plans complete (includes gap closure 04-06)
-Status: Phase 4 fully complete; 18 of 22 plans done; all UAT tests pass
-Last activity: 2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)
+Phase: 4 of 7 (Curator Tools) — COMPLETE (all gaps closed, including UAT Test 9)
+Plan: 7 of 7 in phase 4 — 7 plans complete (includes gap closure 04-07)
+Status: Phase 4 fully complete; 19 of 23 plans done; all UAT gaps closed; VERIFICATION.md status: passed
+Last activity: 2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, 4 Playwright tests)
 
-Progress: [████████░░] 82%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
