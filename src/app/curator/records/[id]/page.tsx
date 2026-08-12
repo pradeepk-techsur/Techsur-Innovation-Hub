@@ -1,5 +1,6 @@
 import { getSession } from '@/lib/auth/session';
 import { redirect, notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 import RecordEditor from './RecordEditor';
 
 interface RecordPageProps {
@@ -8,9 +9,10 @@ interface RecordPageProps {
 
 async function getRecord(id: string) {
   try {
+    const cookieHeader = (await cookies()).toString();
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/api/v1/curator/records/${id}`,
-      { cache: 'no-store' }
+      { cache: 'no-store', headers: { Cookie: cookieHeader } }
     );
     if (res.status === 404) return null;
     if (!res.ok) throw new Error(`Failed to fetch record: ${res.status}`);
