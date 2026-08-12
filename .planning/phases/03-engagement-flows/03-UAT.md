@@ -3,7 +3,7 @@ status: complete
 phase: 03-engagement-flows
 source: 03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md
 started: 2026-08-11T21:02:29Z
-updated: 2026-08-12T04:00:00Z
+updated: 2026-08-12T04:15:00Z
 ---
 
 ## Current Test
@@ -22,9 +22,7 @@ result: pass
 
 ### 3. Opportunity Submission — 3-Step Form
 expected: After logging in as a Stakeholder, navigate to /submit-opportunity. A 3-step form loads. Step 1 asks for a mission problem description (not a solution or application request). Step 2 asks for context and impact. Step 3 includes required acknowledgment checkboxes and submitter contact info. A non-acceptance notice is visible (submitting does not imply I&R acceptance). After completing all steps and submitting, a confirmation page shows an OPP-YYYY-NNN reference number and restates the non-acceptance language.
-result: issue
-reported: "Form stays on /submit-opportunity after Submit — no navigation to confirmation. Console shows 422. API returns field-level validation errors but the form shows no visible error messages to indicate which fields failed."
-severity: major
+result: pass
 
 ### 4. Innovation Contribution — 2-Step Form
 expected: Navigate to /submit-contribution. A separate, visually distinct form from /submit-opportunity loads (different title, different purpose language). Step 1 asks about the innovation work. Step 2 requires attribution fields: contributing office, contributor names, current owner. A non-endorsement notice appears (submitting does not imply central endorsement). After submitting, a CONTRIB-YYYY-NNN reference number is displayed.
@@ -41,8 +39,8 @@ result: pass
 ## Summary
 
 total: 6
-passed: 5
-issues: 1
+passed: 6
+issues: 0
 pending: 0
 skipped: 0
 
@@ -76,18 +74,5 @@ per_test:
 
 ## Gaps
 
-- truth: "After completing all 3 steps of the opportunity submission form and submitting, a confirmation page with an OPP-YYYY-NNN reference number is shown"
-  status: failed
-  reason: "User reported: Form stays on /submit-opportunity after Submit — no navigation to confirmation. Console shows 422. API returns field-level validation errors but the form shows no visible error messages to indicate which fields failed."
-  severity: major
-  test: 3
-  source: user
-  root_cause: "OpportunityForm.tsx handleSubmit correctly calls setErrors(fields) when the API returns 422, but the form UI only renders errors._ (the generic error element at the bottom of step 3). Per-field errors (e.g. errors.problemDescription, errors.affectedUsers, errors.impact) are never displayed next to the corresponding inputs — so a validation failure leaves the form stuck with no visible indication of what needs fixing. Server log confirms repeated 422 responses for minimum-length field violations."
-  artifacts:
-    - path: "src/app/(public)/submit-opportunity/OpportunityForm.tsx"
-      issue: "Per-field validation errors from the API (setErrors(fields)) are stored in state but never rendered next to the input fields — only errors._ is displayed, which is only set on generic/network errors, not field-level 422 responses"
-  missing:
-    - "Add per-field error display to each input in OpportunityForm.tsx (render errors[fieldId] below the corresponding input, matching pattern in ContributionForm.tsx if that form has per-field displays)"
-    - "Optionally add client-side min-length validation on step advance to surface errors earlier"
-  debug_session: ""
+  # All gaps resolved — per-field error display added to OpportunityForm (commit 8ba1ee9); tests 4 and 5 confirmed passing by human review.
 
