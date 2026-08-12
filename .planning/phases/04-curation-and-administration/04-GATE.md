@@ -3,7 +3,7 @@ phase: 4
 gate_status: passed
 build_command: "npm run build"
 test_command: "none"
-last_updated: 2026-08-12T10:30:00Z
+last_updated: 2026-08-12T18:05:00Z
 boot_smoke: pass
 waves:
   - wave: 1
@@ -15,6 +15,10 @@ waves:
     tests: skipped
     fix_attempts: 0
   - wave: gap-closure-2
+    build: pass
+    tests: skipped
+    fix_attempts: 0
+  - wave: gap-closure-3
     build: pass
     tests: skipped
     fix_attempts: 0
@@ -50,6 +54,14 @@ waves:
 |-----|-----|---------------|---------|
 | Test 5: Audit log 404 | gap-audit-404 | closed (repro constructed + re-driven) | GET /api/v1/curator/audit as admin → 200, data_count=4, no ip_address in response; GET /curator/audit → 200 "Audit Log" heading; GET /api/v1/curator/audit as curator → 403 |
 | Test 6: Wrong-role → /login | gap-rbac-redirect | closed (repro constructed + re-driven) | Stakeholder cookie → GET /curator → 307 Location:/unauthorized → GET /unauthorized → 200 "Access Restricted"; Unauthenticated → GET /curator → 307 Location:/login?returnTo=%2Fcurator (unchanged) |
+
+## Wave gap-closure-3 (04-07)
+
+- Build: `npm run build` → pass (compiled successfully, /unauthorized page included, 38/38 static pages)
+- Tests: no test runner detected → skipped
+- Boot smoke: port 3000 bound; / → 200; /unauthorized → 200; /curator → 307 middleware redirect; SameSite=none Secure cookie confirmed — pass
+- Gap redrive (UAT Test 9): unauthenticated GET /curator/settings → 307 Location:http://localhost:3000/login?returnTo=%2Fcurator%2Fsettings — NO external proxy hostname in redirect (INTERNAL_REDIRECT_OK)
+- Fix attempts: 0
 
 ## Phase gate (final regression — gap-closure-2)
 
