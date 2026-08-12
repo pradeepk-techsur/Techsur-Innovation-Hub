@@ -63,6 +63,12 @@ waves:
 - Gap redrive (UAT Test 9): unauthenticated GET /curator/settings → 307 Location:http://localhost:3000/login?returnTo=%2Fcurator%2Fsettings — NO external proxy hostname in redirect (INTERNAL_REDIRECT_OK)
 - Fix attempts: 0
 
+## Gap Redrive (04-07 — gap-closure-3)
+
+| Gap | ID | Redrive Result | Evidence |
+|-----|-----|---------------|---------|
+| UAT Test 9: curator /curator/settings → external URL instead of /unauthorized | gap-settings-rbac | closed (repro constructed + re-driven) | (1) Unauthenticated GET /curator/settings → 307 Location:http://localhost:3000/login?returnTo=%2Fcurator%2Fsettings — NO proxy hostname (INTERNAL_REDIRECT_OK); (2) Curator GET /api/v1/curator/settings → 403; (3) src/app/curator/settings/page.tsx:69 → router.push('/unauthorized') — client-side redirect to /unauthorized (not /curator); (4) SameSite=none Secure confirmed in Set-Cookie header |
+
 ## Phase gate (final regression — gap-closure-2)
 
 - Build: `npm run build` → pass (compiled successfully, 37/37 static pages)
