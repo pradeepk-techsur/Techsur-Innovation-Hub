@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-08-12T21:41:57.586Z"
-last_activity: 2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, 4 Playwright tests)
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-08-12T21:44:18.834Z"
+last_activity: 2026-08-12 — Completed 05-02 launch content seed (8 records, all SEED dimensions covered)
 progress:
   total_phases: 9
   completed_phases: 3
   total_plans: 23
-  completed_plans: 20
-  percent: 83
+  completed_plans: 21
+  percent: 87
 ---
 
 # Project State
@@ -71,6 +71,7 @@ Progress: [█████████░] 87%
 | Phase 04-curation-and-administration P06 | 8min | 2 tasks | 5 files |
 | Phase 04-curation-and-administration P07 | 6min | 2 tasks | 4 files |
 | Phase 05-launch-readiness P02 | 7min | 1 tasks | 4 files |
+| Phase 05-launch-readiness P01 | 10min | 1 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -118,6 +119,7 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: SameSite=None; Secure unconditionally for session cookie — cross-origin preview proxy compatibility
 - [Phase 05-launch-readiness]: Artifact idempotency via NOT EXISTS guard on (record_id, name) — artifacts table has no unique key
 - [Phase 05-launch-readiness]: Placeholder artifact URLs (placeholder.ao.uscourts.gov) are intentional per T-05-02-01 threat model — replaced with real URLs before launch
+- [Phase 05-launch-readiness]: Home page moved from src/app/page.tsx to src/app/(public)/page.tsx so all public pages including home have auth-state nav (IA-05)
 
 ### Pending Todos
 
@@ -131,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T21:41:57.585Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-08-12T21:44:18.833Z
+Stopped at: Completed 05-01-PLAN.md
 Resume file: None
