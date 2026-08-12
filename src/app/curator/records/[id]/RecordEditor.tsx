@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useTransition } from 'react';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -267,6 +267,314 @@ function SectionHeader({ title }: { title: string }) {
   );
 }
 
+// ─── Lifecycle Panel ─────────────────────────────────────────────────────────
+
+const STATE_LABELS: Record<string, { label: string; description: string; color: string }> = {
+  draft:                { label: 'Draft', description: 'Record is being prepared. Not visible to the public.', color: 'bg-gray-100 text-gray-700 border-gray-300' },
+  submitted_for_review: { label: 'Submitted for Review', description: 'Awaiting curatorial review before publication.', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
+  published:            { label: 'Published', description: 'Visible to all catalog users.', color: 'bg-green-100 text-green-800 border-green-300' },
+  superseded:           { label: 'Superseded', description: 'Replaced by a newer record.', color: 'bg-orange-100 text-orange-800 border-orange-300' },
+  archived:             { label: 'Archived', description: 'Retained for historical reference. Not visible in public catalog.', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+  retired:              { label: 'Retired', description: 'Permanently withdrawn. Not visible in public catalog.', color: 'bg-red-100 text-red-800 border-red-300' },
+};
+
+interface GateFailureErrors {
+  fields: Record<string, string>;
+  warnings: Record<string, string>;
+}
+
+function LifecycleActionsPanel({
+  record,
+  onStateChange,
+}: {
+  record: RecordData;
+  onStateChange: (newState: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [actionError, setActionError] = useState<string | null>(null);
+  const [gateFailure, setGateFailure] = useState<GateFailureErrors | null>(null);
+  const [gateWarnings, setGateWarnings] = useState<Record<string, string> | null>(null);
+  const [supersessionReason, setSupersessionReason] = useState('');
+  const [retirementReason, setRetirementReason] = useState('');
+  const [showSupersede, setShowSupersede] = useState(false);
+  const [showRetire, setShowRetire] = useState(false);
+
+  const stateInfo = STATE_LABELS[record.publication_state] ?? { label: record.publication_state, description: '', color: 'bg-gray-100 text-gray-700 border-gray-300' };
+
+  async function performTransition(endpoint: string, body?: Record<string, unknown>) {
+    setActionError(null);
+    setGateFailure(null);
+    setGateWarnings(null);
+
+    const res = await fetch(`/api/v1/curator/records/${record.id}/${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    const data = await res.json().catch(() => ({})) as {
+      status?: string;
+      error_code?: string;
+      message?: string;
+      fields?: Record<string, string>;
+      warnings?: Record<string, string>;
+    };
+
+    if (!res.ok) {
+      if (data.error_code === 'PUBLICATION_GATE_FAILED') {
+        setGateFailure({ fields: data.fields ?? {}, warnings: data.warnings ?? {} });
+        return;
+      }
+      setActionError(data.message ?? `Transition failed (${res.status}).`);
+      return;
+    }
+
+    // Success — check for non-blocking warnings
+    if (data.warnings && Object.keys(data.warnings).length > 0) {
+      setGateWarnings(data.warnings);
+    }
+
+    // Determine new state from endpoint name
+    const newStateMap: Record<string, string> = {
+      'publish': 'published',
+      'unpublish': 'draft',
+      'submit-for-review': 'submitted_for_review',
+      'supersede': 'superseded',
+      'archive': 'archived',
+      'retire': 'retired',
+    };
+    onStateChange(newStateMap[endpoint] ?? record.publication_state);
+  }
+
+  function handleAction(endpoint: string, body?: Record<string, unknown>) {
+    startTransition(() => {
+      void performTransition(endpoint, body);
+    });
+  }
+
+  return (
+    <div className="border border-gray-200 rounded mb-6">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 text-sm font-medium text-gray-800 rounded"
+      >
+        <span>Lifecycle Actions</span>
+        <div className="flex items-center gap-3">
+          <span className={`px-2 py-0.5 rounded border text-xs font-medium ${stateInfo.color}`}>
+            {stateInfo.label}
+          </span>
+          <span className="text-gray-400">{open ? '▲' : '▼'}</span>
+        </div>
+      </button>
+
+      {open && (
+        <div className="p-4 space-y-4">
+          <p className="text-sm text-gray-600">{stateInfo.description}</p>
+
+          {/* Gate failure panel */}
+          {gateFailure && (
+            <div className="bg-red-50 border border-red-200 rounded p-3">
+              <p className="text-sm font-medium text-red-800 mb-2">
+                Publication Gate Failed — the following fields must be resolved:
+              </p>
+              <ul className="space-y-1">
+                {Object.entries(gateFailure.fields).map(([key, msg]) => (
+                  <li key={key} className="text-sm text-red-700">
+                    <span className="font-mono text-xs text-red-500 mr-1">{key}:</span>
+                    {msg}
+                  </li>
+                ))}
+              </ul>
+              {Object.keys(gateFailure.warnings).length > 0 && (
+                <div className="mt-2 pt-2 border-t border-red-200">
+                  <p className="text-xs font-medium text-amber-700 mb-1">Warnings (non-blocking):</p>
+                  {Object.entries(gateFailure.warnings).map(([key, msg]) => (
+                    <p key={key} className="text-xs text-amber-600">{msg}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Gate warnings (on successful publish) */}
+          {gateWarnings && Object.keys(gateWarnings).length > 0 && (
+            <div className="bg-amber-50 border border-amber-200 rounded p-3">
+              <p className="text-sm font-medium text-amber-800 mb-1">Publication warnings:</p>
+              {Object.entries(gateWarnings).map(([key, msg]) => (
+                <p key={key} className="text-sm text-amber-700">{msg}</p>
+              ))}
+            </div>
+          )}
+
+          {/* Action error */}
+          {actionError && (
+            <div className="bg-red-50 border border-red-200 rounded p-3">
+              <p className="text-sm text-red-700">{actionError}</p>
+            </div>
+          )}
+
+          {/* Transition buttons by state */}
+          <div className="flex flex-wrap gap-2">
+            {record.publication_state === 'draft' && (
+              <button
+                type="button"
+                disabled={isPending}
+                onClick={() => handleAction('submit-for-review')}
+                className="px-3 py-1.5 bg-yellow-600 text-white rounded text-sm font-medium hover:bg-yellow-700 disabled:opacity-50"
+              >
+                Submit for Review
+              </button>
+            )}
+
+            {record.publication_state === 'submitted_for_review' && (
+              <>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => handleAction('publish')}
+                  className="px-3 py-1.5 bg-green-700 text-white rounded text-sm font-medium hover:bg-green-800 disabled:opacity-50"
+                >
+                  Publish
+                </button>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => handleAction('unpublish')}
+                  className="px-3 py-1.5 bg-gray-600 text-white rounded text-sm font-medium hover:bg-gray-700 disabled:opacity-50"
+                >
+                  Return to Draft
+                </button>
+              </>
+            )}
+
+            {record.publication_state === 'published' && (
+              <>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => handleAction('unpublish')}
+                  className="px-3 py-1.5 bg-gray-600 text-white rounded text-sm font-medium hover:bg-gray-700 disabled:opacity-50"
+                >
+                  Unpublish
+                </button>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => setShowSupersede(s => !s)}
+                  className="px-3 py-1.5 bg-orange-600 text-white rounded text-sm font-medium hover:bg-orange-700 disabled:opacity-50"
+                >
+                  Supersede…
+                </button>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => handleAction('archive')}
+                  className="px-3 py-1.5 bg-blue-700 text-white rounded text-sm font-medium hover:bg-blue-800 disabled:opacity-50"
+                >
+                  Archive
+                </button>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => setShowRetire(s => !s)}
+                  className="px-3 py-1.5 bg-red-700 text-white rounded text-sm font-medium hover:bg-red-800 disabled:opacity-50"
+                >
+                  Retire…
+                </button>
+              </>
+            )}
+
+            {record.publication_state === 'superseded' && (
+              <button
+                type="button"
+                disabled={isPending}
+                onClick={() => handleAction('archive')}
+                className="px-3 py-1.5 bg-blue-700 text-white rounded text-sm font-medium hover:bg-blue-800 disabled:opacity-50"
+              >
+                Archive
+              </button>
+            )}
+          </div>
+
+          {/* Supersede reason inline form */}
+          {showSupersede && (
+            <div className="border border-orange-200 rounded p-3 bg-orange-50 space-y-2">
+              <p className="text-sm font-medium text-orange-800">Supersede — provide a reason:</p>
+              <textarea
+                value={supersessionReason}
+                onChange={e => setSupersessionReason(e.target.value)}
+                placeholder="Why is this record being superseded?"
+                rows={2}
+                className="w-full px-3 py-2 border border-orange-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  disabled={isPending || !supersessionReason.trim()}
+                  onClick={() => {
+                    setShowSupersede(false);
+                    handleAction('supersede', { supersession_reason: supersessionReason });
+                  }}
+                  className="px-3 py-1.5 bg-orange-700 text-white rounded text-sm font-medium hover:bg-orange-800 disabled:opacity-50"
+                >
+                  Confirm Supersede
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowSupersede(false)}
+                  className="px-3 py-1.5 bg-white border border-gray-300 text-gray-600 rounded text-sm hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Retire reason inline form */}
+          {showRetire && (
+            <div className="border border-red-200 rounded p-3 bg-red-50 space-y-2">
+              <p className="text-sm font-medium text-red-800">Retire — provide a reason:</p>
+              <textarea
+                value={retirementReason}
+                onChange={e => setRetirementReason(e.target.value)}
+                placeholder="Why is this record being retired?"
+                rows={2}
+                className="w-full px-3 py-2 border border-red-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
+              />
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  disabled={isPending || !retirementReason.trim()}
+                  onClick={() => {
+                    setShowRetire(false);
+                    handleAction('retire', { retirement_reason: retirementReason });
+                  }}
+                  className="px-3 py-1.5 bg-red-700 text-white rounded text-sm font-medium hover:bg-red-800 disabled:opacity-50"
+                >
+                  Confirm Retire
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowRetire(false)}
+                  className="px-3 py-1.5 bg-white border border-gray-300 text-gray-600 rounded text-sm hover:bg-gray-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {isPending && (
+            <p className="text-xs text-gray-500 italic">Processing lifecycle transition…</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Main Editor ──────────────────────────────────────────────────────────────
 
 export default function RecordEditor({ record: initialRecord }: { record: RecordData }) {
@@ -382,6 +690,12 @@ export default function RecordEditor({ record: initialRecord }: { record: Record
           </button>
         </div>
       </div>
+
+      {/* Lifecycle Actions Panel (F9.9 — collapsed by default) */}
+      <LifecycleActionsPanel
+        record={record}
+        onStateChange={(newState) => setRecord(prev => ({ ...prev, publication_state: newState }))}
+      />
 
       {/* Group 1: Problem Definition (F3.1) */}
       <SectionHeader title="Problem Definition (F3.1)" />
