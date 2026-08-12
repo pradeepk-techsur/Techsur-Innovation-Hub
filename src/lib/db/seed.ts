@@ -324,6 +324,32 @@ async function seed() {
         updated_by = EXCLUDED.updated_by
     `);
 
+    // ─── Seed record_next_actions for audio-security-poc ───────────────────────
+    // These rows are required for NextActionCTAs to render engagement buttons
+    // instead of the single fallback "Contact I&R" button (F8.1, F8.2).
+    // Uses a subquery by slug so it works regardless of the generated UUID.
+    // NOT EXISTS guard — fully idempotent: safe to run on every seed.
+    await client.query(`
+      INSERT INTO record_next_actions (record_id, action_type, is_enabled, display_order)
+      SELECT r.id, 'request_demo', true, 1
+      FROM innovation_records r
+      WHERE r.slug = 'audio-security-poc'
+        AND NOT EXISTS (
+          SELECT 1 FROM record_next_actions
+          WHERE record_id = r.id AND action_type = 'request_demo'
+        )
+    `);
+    await client.query(`
+      INSERT INTO record_next_actions (record_id, action_type, is_enabled, display_order)
+      SELECT r.id, 'contact_ir', true, 2
+      FROM innovation_records r
+      WHERE r.slug = 'audio-security-poc'
+        AND NOT EXISTS (
+          SELECT 1 FROM record_next_actions
+          WHERE record_id = r.id AND action_type = 'contact_ir'
+        )
+    `);
+
     await client.query('COMMIT');
 
     // Verify what was seeded
@@ -337,6 +363,18 @@ async function seed() {
     console.log(`[seed] Seeded ${result.rows.length} published innovation records:`);
     for (const row of result.rows) {
       console.log(`  - ${row.slug}: maturity=${row.maturity}, engagement=${row.engagement_indicator}, reviews=${row.review_count}`);
+    }
+
+    // Verify next_action_count for audio-security-poc
+    const naResult = await client.query(`
+      SELECT r.slug, count(na.action_id)::int AS next_action_count
+      FROM innovation_records r
+      LEFT JOIN record_next_actions na ON na.record_id = r.id AND na.is_enabled = true
+      WHERE r.slug = 'audio-security-poc'
+      GROUP BY r.slug
+    `);
+    for (const row of naResult.rows) {
+      console.log(`  - ${row.slug}: next_action_count=${row.next_action_count}`);
     }
 
   } catch (err) {

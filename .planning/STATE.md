@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: completed
-stopped_at: Completed 02-discovery-04-PLAN.md
-last_updated: "2026-08-11T16:28:02.400Z"
-last_activity: "2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)"
+stopped_at: "Waiting at checkpoint:human-verify Task 3 of 03-GAP-PLAN.md"
+last_updated: "2026-08-11T22:30:54.061Z"
+last_activity: "2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)"
 progress:
-  total_phases: 5
+  total_phases: 8
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
-  percent: 86
+  total_plans: 19
+  completed_plans: 11
+  percent: 61
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 3 — Stakeholder Engagement (Phase 2 complete)
+**Current focus:** Phase 4 — Curator Tools (Phase 3 complete)
 
 ## Current Position
 
-Phase: 2 of 5 (Discovery) — COMPLETE
-Plan: 4 of 4 in phase 2 — Phase 2 COMPLETE
-Status: Phase 2 complete; ready for Phase 3
-Last activity: 2026-08-11 — Completed 02-04 (F5 Lessons-Learned Content Model: SourceBasisBanner, audio-security-poc enriched seed with all 8 findings dimensions)
+Phase: 3 of 7 (Engagement Flows) — COMPLETE; next: Phase 4 (Curator Tools)
+Plan: 4 of 4 in phase 3 — all plans complete
+Status: Phase 3 complete; 11 of 18 plans done
+Last activity: 2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)
 
-Progress: [██████████] 100%
+Progress: [██████░░░░] 61%
 
 ## Performance Metrics
 
@@ -59,6 +59,10 @@ Progress: [██████████] 100%
 | Phase 02-discovery P02 | 5min | 1 tasks | 7 files |
 | Phase 02-discovery P03 | 5min | 1 tasks | 6 files |
 | Phase 02-discovery P04 | 4min | 1 tasks | 3 files |
+| Phase 03-engagement-flows P01 | 4min | 2 tasks | 12 files |
+| Phase 03-engagement-flows P02 | 8min | 2 tasks | 6 files |
+| Phase 03-engagement-flows P03 | 3min | 1 tasks | 5 files |
+| Phase 03-engagement-flows P04 | 4min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -85,6 +89,12 @@ Recent decisions affecting current work:
 - [Phase 02-discovery]: PerspectiveToggle as 'use client' wrapper: toggle needs useState for active perspective; all other record components are server-friendly
 - [Phase 02-discovery]: TrustBanner in each view (not above tabs): F4.4 requires TrustBanner visible in both perspectives; rendered inside each view ensures it appears regardless of active tab
 - [Phase 02-discovery]: SourceBasisBanner placed in record page header (above perspective tabs) so source attribution is visible regardless of active perspective; source_basis for Audio Security POC uses plain-text reference to exercise text rendering path
+- [Phase 03-engagement-flows]: AuthProvider interface abstraction: DevAuthProvider now, OidcAuthProvider wired in Phase 4 when identity system confirmed
+- [Phase 03-engagement-flows]: JWT in HTTP-only cookie: middleware reads JWT via jose without DB round-trip; session payload carries name/office/email for AUTH-10 attribution
+- [Phase 03-engagement-flows]: In-memory rate limiter for dev (production: Redis-backed Map replacement annotated in submissions.service.ts)
+- [Phase 03-engagement-flows]: Two-step contribution form: Step 1 (about the work) → Step 2 (attribution + contact) — simpler than F6 3-step, appropriate for contribution detail level
+- [Phase 03-engagement-flows]: DB-first engagement: INSERT to engagement_requests before sendEmail(); email failure sets email_routing_initiated=false but record always persisted (F8.3)
+- [Phase 03-engagement-flows]: routing_address_at_submission snapshot: audit field captured at INSERT time from hub_settings; past records retain routing address in effect at submission (F8.4 + T-03-04-03)
 
 ### Pending Todos
 
@@ -98,6 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T16:28:02.398Z
-Stopped at: Completed 02-discovery-04-PLAN.md
+Last session: 2026-08-11T22:30:54.060Z
+Stopped at: Waiting at checkpoint:human-verify Task 3 of 03-GAP-PLAN.md
 Resume file: None

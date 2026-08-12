@@ -63,7 +63,7 @@ export HOST=0.0.0.0
 # For allowedDevOrigins (required for sandbox preview iframe embedding on
 # Next 14.x+), there is NO env var; it is a next.config.* field only.
 # See the pre-exec snippet below — we write a small overlay file as a
-# best-effort seed. Read the `## Notes` section in the catalog for limitations.
+# best-effort seed. Read the `## Notes` section for limitations.
 #
 # HOST=0.0.0.0 is also exported for the rare downstream tool / script that
 # reads $HOST for its own host-binding decisions (Next itself ignores it).
@@ -116,7 +116,7 @@ if [[ ! -f .env && -f .env.example ]]; then
   done < .env.example > .env
 fi
 
-# === Optional pre-exec snippet (Next.js allowedDevOrigins overlay) ===
+# === Optional pre-exec snippet (react-next: allowedDevOrigins overlay) ===
 # Only patch if user's next.config doesn't already include allowedDevOrigins.
 for CFG in next.config.mjs next.config.js next.config.ts; do
   if [[ -f "$CFG" ]]; then

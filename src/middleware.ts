@@ -1,19 +1,52 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { jwtVerify } from 'jose';
 
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-  
-  // Curator routes require authentication (enforcement in Phase 4)
-  // For now: pass through with a note that Phase 4 adds full RBAC
-  if (pathname.startsWith('/curator')) {
-    // Phase 4: implement full RBAC enforcement here
-    // Phase 1: placeholder — curator routes are accessible in dev
+// Routes that require authentication
+const PROTECTED_ROUTES = [
+  '/submit-opportunity',
+  '/submit-contribution',
+];
+
+const SESSION_COOKIE = 'tsio_hub_session';
+
+async function hasValidSession(request: NextRequest): Promise<boolean> {
+  const token = request.cookies.get(SESSION_COOKIE)?.value;
+  if (!token) return false;
+  const secret = process.env.AUTH_SECRET;
+  if (!secret || secret.length < 32) return false;
+  try {
+    await jwtVerify(token, new TextEncoder().encode(secret));
+    return true;
+  } catch {
+    return false;
   }
-  
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Check if this is a protected route
+  const isProtected = PROTECTED_ROUTES.some(r => pathname.startsWith(r));
+
+  if (isProtected) {
+    const authenticated = await hasValidSession(request);
+    if (!authenticated) {
+      // Redirect to login with return URL (AUTH-09)
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('returnTo', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/curator/:path*', '/api/v1/curator/:path*'],
+  matcher: [
+    '/submit-opportunity/:path*',
+    '/submit-contribution/:path*',
+    '/curator/:path*',
+    '/api/v1/curator/:path*',
+  ],
 };
