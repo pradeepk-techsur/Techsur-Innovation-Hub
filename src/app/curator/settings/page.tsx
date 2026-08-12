@@ -66,7 +66,7 @@ export default function SettingsPage() {
       const res = await fetch('/api/v1/curator/settings');
       if (res.status === 403) {
         setAccessDenied(true);
-        router.push('/curator');
+        router.push('/unauthorized');
         return;
       }
       const data = await res.json();

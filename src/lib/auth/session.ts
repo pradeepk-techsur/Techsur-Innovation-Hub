@@ -68,8 +68,8 @@ export async function getSession(): Promise<StakeholderSession | null> {
 export function setSessionCookie(response: NextResponse, token: string): void {
   response.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,                              // prevents JS access (SEC-08)
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,          // Required when sameSite='none'; always on for preview proxy
+    sameSite: 'none',      // Allow cross-site/cross-origin preview proxy delivery
     maxAge: SESSION_TTL_SECONDS,
     path: '/',
   });
@@ -78,8 +78,8 @@ export function setSessionCookie(response: NextResponse, token: string): void {
 export function clearSessionCookie(response: NextResponse): void {
   response.cookies.set(SESSION_COOKIE, '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: 'none',
     maxAge: 0,
     path: '/',
   });
