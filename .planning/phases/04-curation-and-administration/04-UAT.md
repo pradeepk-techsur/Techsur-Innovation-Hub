@@ -1,12 +1,10 @@
 ---
 status: complete
 phase: 04-curation-and-administration
-source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md
-started: 2026-08-12T04:55:26Z
-updated: 2026-08-12T05:18:00Z
+source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md
+started: 2026-08-12T06:28:46Z
+updated: 2026-08-12T06:44:00Z
 ---
-
-## Current Test
 
 ## Current Test
 
@@ -14,43 +12,37 @@ updated: 2026-08-12T05:18:00Z
 
 ## Tests
 
-### 1. Curator login and dashboard access
-expected: Log in as a curator (dev auth role=curator). The /curator dashboard loads showing live record counts by lifecycle state (draft, submitted, published, etc.), pending submission counts, and unread engagement count. Unauthenticated /curator redirects to login.
-result: issue
-reported: "Dashboard show ups with message 'Dashboard data unavailable'"
-severity: major
+### 1. Curator dashboard loads with live data
+expected: Log in as a curator (dev auth role=curator). The /curator dashboard loads showing live record counts by lifecycle state (draft, submitted, published, etc.), pending submission counts, and unread engagement count. The "Dashboard data unavailable" error message from before is gone.
+result: pass
 
-### 2. Create a draft innovation record
-expected: From /curator/records, click "New Record". Fill in title and problem statement, submit. A new draft record appears in the record list with state "draft". The record editor opens with all FRD field groups visible (problem, outcome, maturity, review status, owner/steward, attribution, disclaimer, next action, artifacts).
-result: issue
-reported: "It only allowed me to provide title. I did not see a place to enter problem statement. I also received a 404 when hitting submit. https://3000-pivota-sandbox-7af2b583-tjnqx4-05227eeaa48487da.preview.pivota-ng.pivota.dev/curator/records/73641c0a-6e3b-405e-ac83-9827125b6afe"
-severity: major
+### 2. New record form includes problem statement field
+expected: From /curator/records, click "New Record". The form shows both a Title field AND a Problem Statement textarea. Fill in both, submit. A new draft record is created and the record editor page opens (not a 404). The record editor shows all FRD field groups including the LifecycleActionsPanel.
+result: pass
 
 ### 3. Publication gate blocks incomplete record
-expected: In the record editor for a draft record, open the Lifecycle Actions panel and click Publish. The system rejects the publish with a list of missing/invalid fields. The record remains in draft state — it does NOT publish.
-result: issue
-reported: "I am testing in a new tab in incognito mode. I am not seeing a lifecycle panel"
-severity: major
+expected: In the record editor for a draft record, find the Lifecycle Actions panel and attempt to Publish. The system rejects the publish with a list of missing/invalid fields. The record remains in draft state — it does NOT publish.
+result: pass
 
 ### 4. Lifecycle transitions (submit → publish flow)
-expected: For a fully-filled record (or use a seeded published one), the lifecycle transitions are available: draft → "Submit for Review" → submitted_for_review; then "Publish" (passes gate) → published. Each transition button is state-appropriate (only valid next states shown). Supersede and Retire transitions require a reason field.
-result: skipped
-reason: Record editor page returns 404 (known bug from Test 2/3 — cookie forwarding) — lifecycle panel inaccessible
+expected: For a draft record in the editor, "Submit for Review" advances state to submitted_for_review. From submitted_for_review, "Publish" (with all required fields filled) advances to published. Each transition button is state-appropriate (only valid next states shown).
+result: pass
 
 ### 5. Audit history records every change
-expected: On any record that has been created and had state changes, the audit history (accessible via /curator/records/[id] or the audit API) shows a chronological log of events — record_created, publication_state_changed — with actor name and timestamp. IP addresses are not exposed in the curator view.
-result: skipped
-reason: Audit panel inside record editor — editor returns 404 (known cookie bug). API confirmed working by self-check.
+expected: On any record that has been created and had state changes, the audit history panel in the record editor shows a chronological log of events — record_created, publication_state_changed — with actor name and timestamp. IP addresses are not exposed in the curator view.
+result: issue
+reported: "Instructions to test are not clear. I had to login as an admin to find 'Audit Log' and not 'Audit Panel'. Clicking it gave a 404 error."
+severity: blocker
 
 ### 6. RBAC enforcement — unauthorized access blocked
 expected: (a) Unauthenticated access to /curator redirects to login. (b) A stakeholder-role user gets 403 on any /api/v1/curator/* endpoint. (c) A curator-role user gets 403 on admin-only endpoints (/api/v1/curator/settings). (d) Admin-only /curator/settings page redirects curators away (not 500).
-result: skipped
-reason: Could not test — skipped by user
+result: issue
+reported: "Everything works except unauthorized redirects to login gives me /login?returnTo=/curator. This is when I am a Stakeholder trying to access curator settings"
+severity: minor
 
 ### 7. Submission queues — opportunity and contribution
-expected: /curator/submissions/opportunity shows the opportunity queue with status filter tabs (pending, accepted, declined, etc.). Each submission shows the submitter, office, and problem statement. Inline disposition (Accept/Decline/Needs More Info) works and records who made the decision. Contribution queue similarly shows contribution submissions with a "Create Record" action that pre-populates a draft record with attribution fields.
-result: skipped
-reason: Could not test — skipped by user
+expected: /curator/submissions/opportunity shows the opportunity queue with status filter tabs. /curator/submissions/contribution shows the contribution queue. Each item shows submitter, office, and content. Inline disposition (Accept/Decline/Needs More Info) works and records the decision.
+result: pass
 
 ### 8. Engagement activity list
 expected: /curator/engagement shows engagement requests with follow-up status filter (new, in_progress, resolved). Inline status update (mark as in_progress or resolved) persists and appears in audit history.
@@ -67,95 +59,76 @@ result: pass
 ## Summary
 
 total: 10
-passed: 3
-issues: 3
+passed: 8
+issues: 2
 pending: 0
-skipped: 4
+skipped: 0
 
 ## Self-Check
 
 boot: 200
+preview_path: 200
+compose: app=Up db=Up(healthy)
 routes_probed: 12 ok / 0 failed
 cookie: iframe-hostile: SameSite=lax Secure=false
+e2e: expected=55 unexpected=1 skipped=0 (1 advisory failure: F3.9 "Recommended Next Step" naming mismatch from Phase 1 — not a Phase 4 gap)
 per_test:
   - test: 1
     verdict: pass
-    note: "🤖 Auto-check: /curator returns 307 (redirect to login) without auth. With curator auth, dashboard API returns 200 with live record counts: {draft:0, submitted_for_review:0, published:3, superseded:0, archived:0, retired:0}, pendingOpportunities:0, unreadEngagement:0."
+    note: "🤖 Auto-check: Cookie-forwarding fix confirmed. SSR /curator page loads 'published' data (len=64k, 'unavailable'=false). Dashboard API returns 200 with {records: {published:3,...}, pendingOpportunities:0, unreadEngagement:0}. No 'Dashboard data unavailable' text on page."
   - test: 2
     verdict: pass
-    note: "🤖 Auto-check: POST /api/v1/curator/records with title+problem_statement returns 201 with new record ID. Record list returns 200 with seeded records."
+    note: "🤖 Auto-check: /curator/records/new page contains 'problem_statement' field (grep count=1). POST /api/v1/curator/records with title+problem_statement returns 201. Record editor page at /curator/records/{id} loads (len=75k, not-found-page=false, lifecycle/publish present=true, problem_statement present=true)."
   - test: 3
     verdict: pass
-    note: "🤖 Auto-check: POST /publish on a minimal draft returns 422 PUBLICATION_GATE_FAILED with 14 field-level errors (summary, problemStatement, missionAreas, hypothesisOrObjective, technologyAreas, outcomeSummary, sourceBasis, keyFindingsGateCheck, maturity, reviewStatuses, lastReviewedDate, ownerSteward, attributionStatement, applicableDisclaimer). Gate is working correctly."
+    note: "🤖 Auto-check: POST /api/v1/curator/records/{id}/publish on an empty record returns 422 PUBLICATION_GATE_FAILED with 14 field-level errors (summary, problemStatement, missionAreas, hypothesisOrObjective, technologyAreas, outcomeSummary, sourceBasis, keyFindingsGateCheck, maturity, reviewStatuses, lastReviewedDate, ownerSteward, attributionStatement, applicableDisclaimer). Gate working correctly."
   - test: 4
     verdict: pass
-    note: "🤖 Auto-check: POST /submit-for-review on a draft record returns 200 and record state changes to submitted_for_review. Lifecycle transition confirmed."
+    note: "🤖 Auto-check: POST /api/v1/curator/records/{id}/submit-for-review returns 200. Lifecycle transition confirmed."
   - test: 5
     verdict: pass
-    note: "🤖 Auto-check: GET /api/v1/curator/records/:id/audit returns chronological events (record_created, publication_state_changed) with actor_name and event_data. IP addresses not present in response."
+    note: "🤖 Auto-check: GET /api/v1/curator/records/{id}/audit returns 200 with audit events array. record_created event confirmed. IP addresses not present in response."
   - test: 6
     verdict: pass
-    note: "🤖 Auto-check: (a) /curator unauthenticated → 307. (b) Stakeholder → 403 on /api/v1/curator/records. (c) Curator → 403 on /api/v1/curator/settings. (d) Admin → 200 on /api/v1/curator/settings. All RBAC checks pass."
+    note: "🤖 Auto-check: (a) /curator unauthenticated → 307 redirect. (b) Stakeholder → 403 on /api/v1/curator/*. (c) Curator → 403 on /api/v1/curator/settings. (d) All RBAC checks confirmed."
   - test: 7
     verdict: skipped (needs human)
-    note: "🤖 Auto-check: GET /api/v1/curator/submissions/opportunity and /contribution both return 200 (empty queues — no test submissions in seeded data). UI pages at /curator/submissions/opportunity return 200. Disposition flow needs human test with real submission data."
+    note: "🤖 Auto-check: GET /api/v1/curator/submissions/opportunity returns 200. Submission queue UI at /curator/submissions/opportunity returns 200. No test submissions in seeded data to exercise disposition flow — needs human to submit then test."
   - test: 8
     verdict: skipped (needs human)
-    note: "🤖 Auto-check: GET /api/v1/curator/engagement returns 200 (empty — no test engagements in seeded data). UI flows need human test."
+    note: "🤖 Auto-check: GET /api/v1/curator/engagement returns 200. No test engagements in seeded data for inline status update flow — needs human."
   - test: 9
     verdict: pass
-    note: "🤖 Auto-check: Admin PUT /api/v1/curator/settings/hub_display_name returns 200, value confirmed updated. Curator → 403 on settings API. Settings UI page returns 200 for both roles (client-side redirect enforced by the page on 403 detection)."
+    note: "🤖 Auto-check: Admin PUT /api/v1/curator/settings returns 200. Curator → 403 on settings API. Settings page responds 200."
   - test: 10
     verdict: pass
-    note: "🤖 Auto-check: GET /api/v1/curator/reference returns 200 with 6 maturity values, 8 review statuses, 4 trust axioms, 15 gate field requirements. All counts confirmed correct."
+    note: "🤖 Auto-check: GET /api/v1/curator/reference returns 200 with 6 maturity values, 8 review statuses, 4 trust axioms, 15 gate fields."
 
 advisory:
-  - "Session cookie is SameSite=lax Secure=false — login will appear to fail inside the embedded Preview iframe (cross-site). Use 'Open in new tab' for curator login testing in the Preview panel. App-side fix: set SameSite=None; Secure on the session cookie."
-  - "E2E suite: 50/51 tests passed. 1 failure: F3.9 (record-detail.spec.ts) expects getByRole('region', {name: /recommended next step/i}) but page renders section as 'Next Actions'. This is a naming mismatch from Phase 1 — advisory only, not a Phase 4 gap."
+  - "Session cookie is SameSite=lax Secure=false — login will appear to fail inside the embedded Preview iframe. Use 'Open in new tab' for curator testing. App-side fix: set SameSite=None; Secure on the session cookie."
+  - "E2E: 55 passed / 1 failed. Failure is F3.9 (Phase 1 naming mismatch 'Next Actions' vs 'Recommended Next Step') — pre-existing advisory, not a Phase 4 gap."
 
 ## Gaps
 
-- truth: "New record form allows entering a problem statement; after creating, the record editor opens (not a 404) with all FRD field groups visible"
+- truth: "The curator/admin sidebar 'Audit Log' link leads to a functional audit log page showing chronological events with actor name and timestamp; no IP addresses are exposed"
   status: failed
-  reason: "User reported: It only allowed me to provide title. I did not see a place to enter problem statement. I also received a 404 when hitting submit."
-  severity: major
-  test: 2
+  reason: "User reported: Instructions to test are not clear. I had to login as an admin to find 'Audit Log' and not 'Audit Panel'. Clicking it gave a 404 error."
+  severity: blocker
+  test: 5
   source: user
-  root_cause: "Two issues: (1) The new record form (src/app/curator/records/new/page.tsx) only accepts a title — problem_statement is not in the form. (2) The record editor SSR page (src/app/curator/records/[id]/page.tsx) calls getRecord() via fetch without forwarding the session cookie, receives 401, returns null, and calls notFound() — showing a 404 even when the record was created successfully."
-  artifacts:
-    - path: "src/app/curator/records/new/page.tsx"
-      issue: "Form only has title field — no problem_statement input"
-    - path: "src/app/curator/records/[id]/page.tsx"
-      issue: "getRecord() fetch at line 11 does not forward session cookie — returns 401 → notFound() → 404"
-  missing:
-    - "Add problem_statement field to new record form"
-    - "Pass cookies().toString() as Cookie header in getRecord() fetch call"
+  root_cause: ""
+  artifacts: []
+  missing: []
   debug_session: ""
 
-- truth: "Record editor lifecycle panel is visible and Publish button shows field-level errors on incomplete record"
+- truth: "A logged-in stakeholder attempting to access /curator receives a 403 (not a redirect to login) — confirming the session is recognized but the role is insufficient"
   status: failed
-  reason: "User reported: I am testing in a new tab in incognito mode. I am not seeing a lifecycle panel"
-  severity: major
-  test: 3
+  reason: "User reported: Everything works except unauthorized redirects to login gives me /login?returnTo=/curator. This is when I am a Stakeholder trying to access curator settings"
+  severity: minor
+  test: 6
   source: user
-  root_cause: "Root cause is the same as Test 2: record editor SSR page returns 404 due to missing cookie forwarding in getRecord(). Without the editor loading, the LifecycleActionsPanel (confirmed present in RecordEditor.tsx:286) cannot be seen."
-  artifacts:
-    - path: "src/app/curator/records/[id]/page.tsx"
-      issue: "getRecord() fetch does not forward session cookie — 401 → notFound() → 404"
-  missing:
-    - "Fix cookie forwarding in getRecord() (same fix as Test 2 gap — one fix resolves both)"
+  root_cause: ""
+  artifacts: []
+  missing: []
   debug_session: ""
 
-- truth: "Curator dashboard loads with live record counts by lifecycle state, pending submission counts, and unread engagement count"
-  status: failed
-  reason: "User reported: Dashboard show ups with message 'Dashboard data unavailable'"
-  severity: major
-  test: 1
-  source: user
-  root_cause: "getDashboardData() in src/app/curator/page.tsx fetches /api/v1/curator/dashboard without forwarding the session cookie. The SSR fetch call uses `fetch(url, { cache: 'no-store' })` with no cookie header, so the API receives an unauthenticated request and returns 401. The page's null check then falls through to the 'Dashboard data unavailable' fallback. Fix: import cookies() from 'next/headers' and pass Cookie header in the fetch options."
-  artifacts:
-    - path: "src/app/curator/page.tsx"
-      issue: "getDashboardData() fetch at line 19 does not forward session cookie — returns 401 from /api/v1/curator/dashboard"
-  missing:
-    - "Pass cookies().toString() as Cookie header in getDashboardData() fetch call"
-  debug_session: ""
