@@ -91,7 +91,7 @@ Plans:
   3. Unauthenticated or unauthorized users receive an appropriate redirect or error — never silent access — when attempting to reach any `/curator/*` route or protected API endpoint; unauthorized access attempts are recorded in audit history (AUTH-04, SEC-02, SEC-03)
   4. A chronological audit history records every material content, governance, lifecycle, and configuration change — identifying who made the change, what changed, and when — and this history cannot be modified or deleted by any application role
   5. Authorized curators can review the opportunity submission queue, innovation contribution queue, and engagement activity list — and disposition each item (accept, decline, needs-more-information) with the disposition recorded and traceable
-**Plans**: 5 plans
+**Plans**: 7 plans
 
 Plans:
 - [ ] 04-01-PLAN.md — requireRole() RBAC middleware, unauthorized access audit logging, curator SSR layout with server-side session check (AUTH-02–06)
@@ -100,6 +100,7 @@ Plans:
 - [ ] 04-04-PLAN.md — Audit history API, submission queues + disposition, engagement follow-up, settings management (admin-only), content model reference (F9.11–F9.16)
 - [ ] 04-05-PLAN.md — Gap closure: fix SSR cookie forwarding in dashboard/record-editor/record-list pages, add problem_statement to new record form, Playwright regression spec (UAT Gaps 1–3)
 - [ ] 04-06-PLAN.md — Gap closure: global audit log page + API (admin-only, IP redacted), layout 403 split for wrong-role authenticated users, /unauthorized page (UAT Tests 5 + 6)
+- [ ] 04-07-PLAN.md — Gap closure: fix middleware hostname leak in login redirect (nextUrl.clone), SameSite=None; Secure session cookie for proxy compatibility, settings page 403→/unauthorized (UAT Test 9)
 
 ### Phase 5: Launch Readiness
 **Goal**: The application has complete, verified navigation with no dead links; at least 8 published seeded records spanning all required metadata dimensions; and all accessibility, deployment security, and launch-acceptance conditions are confirmed — so the Hub is ready for stakeholder use and the product acceptance criteria are met
