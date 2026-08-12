@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 04-curation-and-administration
-source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md, 04-06-SUMMARY.md
+source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md, 04-06-SUMMARY.md, 04-07-SUMMARY.md
 started: 2026-08-12T15:38:00Z
-updated: 2026-08-12T15:52:00Z
+updated: 2026-08-12T18:30:00Z
 ---
 
 ## Current Test
@@ -46,9 +46,8 @@ result: pass
 
 ### 9. Settings management (admin only)
 expected: Admin-role user can access /curator/settings and update settings such as engagement_routing_address. The change persists (visible after page reload). A curator-role user cannot access settings — the page redirects them away from /curator/settings.
-result: issue
-reported: "logged in as curator and went to /curator/settings instead of unauthorized I am getting redirected to https://3000-pivota-sandbox-f261f1ce-tjoo8q-3b1e974678ba6d7b.preview.pivota-ng.pivota.dev/curator"
-severity: minor
+result: pass
+gap_closure: "Fixed in 04-07: nextUrl.clone() eliminates proxy hostname leak; SameSite=None; Secure session cookie; router.push('/unauthorized') on 403. Re-verified by human 2026-08-12."
 
 ### 10. Content model reference page
 expected: /curator/reference shows the full governance reference: 6 maturity values with descriptions, 8 review status values, 4 trust axioms, and the 15 publication gate field requirements. The page is read-only reference material.
@@ -57,8 +56,8 @@ result: pass
 ## Summary
 
 total: 10
-passed: 9
-issues: 1
+passed: 10
+issues: 0
 pending: 0
 skipped: 0
 
@@ -68,8 +67,9 @@ boot: 200
 preview_path: 200
 compose: app=Up(healthy) db=Up(healthy)
 routes_probed: 10 ok / 0 failed
-cookie: iframe-hostile: SameSite=lax Secure=false
-e2e: expected=63 unexpected=1 skipped=0 (1 pre-existing advisory: F3.9 "Recommended Next Step" naming mismatch from Phase 1 — not a Phase 4 gap)
+cookie: ok (SameSite=None; Secure — fixed in 04-07, iframe-safe)
+e2e: expected=67 unexpected=1 skipped=0 (1 pre-existing advisory: F3.9 "Recommended Next Step" naming mismatch from Phase 1 — not a Phase 4 gap)
+re_verification: 2026-08-12T18:30:00Z — all 10 tests pass including gap closure Test 9
 per_test:
   - test: 1
     verdict: pass
@@ -103,8 +103,8 @@ per_test:
     note: "🤖 Auto-check: GET /api/v1/curator/reference → 200 with 6 maturity values, 8 review statuses, 4 trust axioms, 15 gate fields."
 
 advisory:
-  - "Session cookie is SameSite=lax Secure=false — login will appear to fail inside the embedded Preview iframe. Use 'Open in new tab' for all curator testing. App-side fix: set SameSite=None; Secure on the session cookie."
-  - "E2E: 63 passed / 1 failed. Failure is F3.9 (Phase 1 naming mismatch 'Next Actions' vs 'Recommended Next Step') — pre-existing advisory, not a Phase 4 gap."
+  - "E2E: 67 passed / 1 failed. Failure is F3.9 (Phase 1 naming mismatch 'Next Actions' vs 'Recommended Next Step') — pre-existing advisory, not a Phase 4 gap."
+  - "Session cookie SameSite=None; Secure confirmed in running container — iframe-safe (04-07 gap closure verified)."
 
 ## Gaps
 
