@@ -5,9 +5,17 @@ import Link from 'next/link';
 export default async function CuratorLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
 
-  // Server-side auth check — curator or admin required (AUTH-02, SEC-01)
-  if (!session || (session.role !== 'curator' && session.role !== 'admin')) {
+  // AUTH-02, SEC-01: Unauthenticated → login; wrong role → 403 page (not login)
+  if (!session) {
+    // No valid session → redirect to login (middleware may have already done this;
+    // belt+suspenders for SSR paths that bypass middleware)
     redirect('/login?returnTo=/curator');
+  }
+
+  if (session.role !== 'curator' && session.role !== 'admin') {
+    // AUTH-04: Do not redirect wrong-role users to /login — they ARE logged in
+    // Redirect to top-level /unauthorized (outside /curator route tree — no redirect loop)
+    redirect('/unauthorized');
   }
 
   return (
