@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 04-curation-and-administration
 source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md
 started: 2026-08-12T06:28:46Z
@@ -116,9 +116,15 @@ advisory:
   severity: blocker
   test: 5
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "src/app/curator/layout.tsx line 38 has <Link href='/curator/audit'> (visible to admin only) but no page file exists at src/app/curator/audit/. Next.js has no route to serve → 404. The per-record audit API (/api/v1/curator/records/{id}/audit) works but there is no global audit log page or global audit API."
+  artifacts:
+    - path: "src/app/curator/layout.tsx"
+      issue: "Line 38: <Link href='/curator/audit'>Audit Log</Link> exists and is rendered for admins but has no corresponding page"
+    - path: "src/app/curator/audit/"
+      issue: "Directory does not exist — no page.tsx ever created"
+  missing:
+    - "Create src/app/curator/audit/page.tsx — Server Component querying audit_events DESC, selecting actor_name/event_type/target_type/target_title/occurred_at, explicitly omitting ip_address"
+    - "Optionally add src/app/api/v1/curator/audit/route.ts for a paginated global audit API (requireRole('admin'))"
   debug_session: ""
 
 - truth: "A logged-in stakeholder attempting to access /curator receives a 403 (not a redirect to login) — confirming the session is recognized but the role is insufficient"
@@ -127,8 +133,13 @@ advisory:
   severity: minor
   test: 6
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "src/app/curator/layout.tsx collapses two distinct failure modes (no session + wrong role) into one redirect('/login?returnTo=/curator'). For a stakeholder with a valid session, the layout should return 403, not redirect to login. The SameSite=lax iframe effect masked this during testing (cookie dropped → middleware fires first → same redirect URL), but in a real browser tab with a valid stakeholder session the layout code is reached and produces the wrong response."
+  artifacts:
+    - path: "src/app/curator/layout.tsx"
+      issue: "Lines 9-11: if (!session || wrong-role) → redirect('/login') — merges 'unauthenticated' and 'wrong role' into the same redirect; wrong-role should return 403"
+    - path: "src/middleware.ts"
+      issue: "Lines 14-25: hasValidSession() checks JWT validity only, not role — role check happens in layout, not middleware"
+  missing:
+    - "Split layout.tsx auth check: !session → redirect to login; session present but wrong role → return 403 response (use Next.js 15 forbidden() or a dedicated /curator/unauthorized page)"
   debug_session: ""
 
