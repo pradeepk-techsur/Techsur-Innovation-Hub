@@ -59,6 +59,8 @@ Scope: commits dfa7c57, 0ad6ce8, 36e2019 — cookie forwarding in three SSR page
 
 - **Fix direction:** Replace `(await cookies()).toString()` with the pattern already established in `reference/page.tsx`: `import { headers } from 'next/headers'; const cookie = (await headers()).get('cookie') ?? '';`. This reads the raw incoming Cookie header without re-encoding and is guaranteed correct for all cookie values.
 
+**Resolution:** fixed (94092ad) — replaced `cookies().toString()` with `headers().get('cookie') ?? ''` in all three SSR pages; `tsc --noEmit` clean.
+
 ---
 
 ## WARNINGs
