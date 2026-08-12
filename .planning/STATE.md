@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-08-12T04:23:32.267Z"
-last_activity: 2026-08-12 — Completed 04-02 (curator dashboard, record CRUD, artifact management, record editor UI)
+stopped_at: Completed 04-04-PLAN.md
+last_updated: "2026-08-12T04:33:52.277Z"
+last_activity: "2026-08-12 — Completed 04-03 (publication lifecycle gate: 15 checks, lifecycle routes, RecordEditor lifecycle panel)"
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 20
-  completed_plans: 15
+  completed_plans: 16
   percent: 75
 ---
 
@@ -66,6 +66,7 @@ Progress: [████████░░] 75%
 | Phase 04-curation-and-administration P01 | 4min | 1 tasks | 5 files |
 | Phase 04-curation-and-administration P02 | 6min | 2 tasks | 12 files |
 | Phase 04-curation-and-administration P03 | 3min | 1 tasks | 8 files |
+| Phase 04-curation-and-administration P04 | 6min | 2 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -103,6 +104,8 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: Optimistic concurrency double-check: updateRecord() checks version at service AND DB WHERE clause; PostgreSQL trg_ir_version trigger makes stale writes 0-row no-ops
 - [Phase 04-curation-and-administration]: params as Promise in Next.js 15: dynamic route params are Promise<{id}> — handlers must await params before destructuring
 - [Phase 04-curation-and-administration]: ALLOWED_TRANSITIONS map in transitionState() enforces valid lifecycle sequence; VALID_REVIEW_STATUSES expanded to match editor values so Check 11 correctly validates curator-set statuses
+- [Phase 04-curation-and-administration]: Content model reference as static code: governance definitions are canonical FRD values versioned with the application
+- [Phase 04-curation-and-administration]: Dual-layer admin enforcement for settings: API returns 403 for curator role; UI detects 403 and redirects
 
 ### Pending Todos
 
@@ -116,6 +119,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T04:23:32.266Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-08-12T04:33:52.276Z
+Stopped at: Completed 04-04-PLAN.md
 Resume file: None
