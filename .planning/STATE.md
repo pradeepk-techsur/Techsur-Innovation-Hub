@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-05-PLAN.md
-last_updated: "2026-08-12T05:59:05.871Z"
-last_activity: "2026-08-12 — Completed 04-05 (cookie forwarding fix for 3 SSR curator pages + problem_statement field + Playwright spec)"
+stopped_at: Completed 04-06-PLAN.md
+last_updated: "2026-08-12T15:07:38Z"
+last_activity: "2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)"
 progress:
   total_phases: 8
   completed_phases: 4
-  total_plans: 21
-  completed_plans: 17
-  percent: 81
+  total_plans: 22
+  completed_plans: 18
+  percent: 82
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 
 ## Current Position
 
-Phase: 4 of 7 (Curator Tools) — COMPLETE
-Plan: 5 of 5 in phase 4 — 5 plans complete
-Status: Phase 4 complete; 17 of 21 plans done
-Last activity: 2026-08-12 — Completed 04-05 (cookie forwarding fix for 3 SSR curator pages + problem_statement field + Playwright spec)
+Phase: 4 of 7 (Curator Tools) — COMPLETE (all gaps closed)
+Plan: 6 of 6 in phase 4 — 6 plans complete (includes gap closure 04-06)
+Status: Phase 4 fully complete; 18 of 22 plans done; all UAT tests pass
+Last activity: 2026-08-12 — Completed 04-06 gap closure (audit log page+API, /unauthorized page, RBAC split in layout, 8 Playwright tests)
 
-Progress: [████████░░] 81%
+Progress: [████████░░] 82%
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Progress: [████████░░] 81%
 | Phase 04-curation-and-administration P03 | 3min | 1 tasks | 8 files |
 | Phase 04-curation-and-administration P04 | 6min | 2 tasks | 16 files |
 | Phase 04-curation-and-administration P05 | 3min | 2 tasks | 7 files |
+| Phase 04-curation-and-administration P06 | 8min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -109,6 +110,8 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: Dual-layer admin enforcement for settings: API returns 403 for curator role; UI detects 403 and redirects
 - [Phase 04-curation-and-administration]: Applied cookies() from next/headers SSR cookie forwarding pattern to dashboard, record list, and record editor pages (same pattern as reference/page.tsx)
 - [Phase 04-curation-and-administration]: problem_statement added as optional field at record creation (not required); reduces friction while ensuring field is available for publication gate
+- [Phase 04-curation-and-administration]: Unauthorized page at /unauthorized (top-level, outside /curator route tree) — avoids infinite redirect loop; curator layout fires for all /curator/* children
+- [Phase 04-curation-and-administration]: Two-branch RBAC layout: !session→/login, wrong-role→/unauthorized — not collapsed into single redirect (AUTH-04 gap closure)
 
 ### Pending Todos
 
@@ -122,6 +125,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T05:59:05.869Z
-Stopped at: Completed 04-05-PLAN.md
+Last session: 2026-08-12T15:07:38Z
+Stopped at: Completed 04-06-PLAN.md
 Resume file: None
