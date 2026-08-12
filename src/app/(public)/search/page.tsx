@@ -99,7 +99,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const total: number = searchResult.meta?.total ?? 0;
 
   return (
-    <div id="main-content" style={{ backgroundColor: 'var(--color-surface)' }}>
+    <div id="main-content" tabIndex={-1} style={{ backgroundColor: 'var(--color-surface)' }}>
       {/* Search hero */}
       <div style={{ backgroundColor: 'var(--color-blue-80)', padding: '40px 0 32px' }}>
         <div className="hub-container">
