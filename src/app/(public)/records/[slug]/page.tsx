@@ -16,6 +16,7 @@ import { notFound } from 'next/navigation';
 import { getRecordBySlug } from '@/lib/repositories/innovation-records.repository';
 import { PerspectiveToggle } from './PerspectiveToggle';
 import { SourceBasisBanner } from './SourceBasisBanner';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -31,6 +32,7 @@ export default async function RecordDetailPage({ params }: PageProps) {
   return (
     <main id="main-content">
       <article aria-label={`Innovation record: ${record.title}`} className="max-w-4xl mx-auto px-4 py-8">
+        <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Browse', href: '/catalog' }, { label: record.title }]} />
         <header className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900">{record.title}</h1>
           {record.summary && (

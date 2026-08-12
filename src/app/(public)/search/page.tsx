@@ -19,6 +19,7 @@ import { SearchForm } from './SearchForm';
 import { FilterPanel } from './FilterPanel';
 import { SearchResultCard } from './SearchResultCard';
 import { ActiveFilters } from './ActiveFilters';
+import { Breadcrumb } from '@/components/Breadcrumb';
 
 type SearchParamsShape = {
   q?: string;
@@ -99,6 +100,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Search' }]} />
       <h1 className="mb-1 text-2xl font-bold text-gray-900">Search Innovation Records</h1>
       <p className="mb-6 text-sm text-gray-600">
         Find innovation work using mission-problem language — no need to know project names or locations.
