@@ -1,48 +1,69 @@
 /**
- * Breadcrumb — shared navigation context component (IA-04).
- *
- * Renders a breadcrumb trail on all non-home pages so users always know
- * where they are. Uses ARIA nav + ol with aria-current="page" on the last
- * crumb per WCAG 2.1 AA SC 2.4.8 (Location) and SC 2.4.4 (Link Purpose).
+ * Breadcrumb — IA-04. USWDS 3 breadcrumb pattern.
+ * Uses CSS custom properties from globals.css.
+ * ARIA: nav + ol with aria-current="page" on last item.
  */
 
 import Link from 'next/link';
 
 export interface Crumb {
   label: string;
-  href?: string; // undefined for the current (last) crumb — no link rendered
+  href?: string;
 }
 
 interface Props {
   crumbs: Crumb[];
+  /** Light variant for use on dark backgrounds (hero sections) */
+  light?: boolean;
 }
 
-export function Breadcrumb({ crumbs }: Props) {
+export function Breadcrumb({ crumbs, light = false }: Props) {
   if (crumbs.length === 0) return null;
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-4">
-      <ol className="flex flex-wrap items-center gap-1 text-sm text-gray-500">
+    <nav aria-label="Breadcrumb" style={{ marginBottom: '16px' }}>
+      <ol
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+          gap: '4px',
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
+          fontFamily: 'var(--font-ui)',
+          fontSize: '0.875rem',
+        }}
+      >
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;
           return (
-            <li key={index} className="flex items-center gap-1">
+            <li key={index} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               {index > 0 && (
-                <span aria-hidden="true" className="text-gray-400 select-none">
+                <span
+                  aria-hidden="true"
+                  style={{ color: light ? 'rgba(255,255,255,0.4)' : 'var(--color-light)' }}
+                >
                   /
                 </span>
               )}
               {isLast || !crumb.href ? (
                 <span
                   aria-current={isLast ? 'page' : undefined}
-                  className={isLast ? 'font-medium text-gray-900' : 'text-gray-500'}
+                  style={{
+                    color: light ? 'rgba(255,255,255,0.75)' : 'var(--color-base)',
+                    fontWeight: isLast ? 500 : 400,
+                  }}
                 >
                   {crumb.label}
                 </span>
               ) : (
                 <Link
                   href={crumb.href}
-                  className="hover:underline hover:text-gray-700 transition-colors"
+                  style={{
+                    color: light ? 'rgba(255,255,255,0.65)' : 'var(--color-blue-60)',
+                    textDecoration: 'none',
+                  }}
                 >
                   {crumb.label}
                 </Link>

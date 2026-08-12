@@ -41,27 +41,50 @@ export function TrustBanner({ maturity, reviewStatuses, lastReviewedDate, applic
   return (
     <aside
       aria-label="Trust and maturity information"
-      className="bg-gray-50 border border-gray-200 rounded-lg p-4 mt-4"
       role="complementary"
+      style={{
+        backgroundColor: 'var(--color-blue-5)',
+        border: '1px solid var(--color-blue-10)',
+        borderRadius: 'var(--radius-card)',
+        padding: 'var(--space-3) var(--space-4)',
+        marginTop: 'var(--space-3)',
+      }}
     >
-      <div className="flex flex-wrap gap-3 items-center">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
         {maturity && <MaturityBadge maturity={maturity} />}
         {reviewStatuses.map(rs => (
           <ReviewStatusBadge key={rs} status={rs} />
         ))}
         {displayDate && (
-          <span className="text-sm text-gray-600">
-            Last reviewed: <time dateTime={displayDate}>{displayDate}</time>
+          <span
+            style={{
+              fontFamily: 'var(--font-mono)',
+              fontSize: '0.8125rem',
+              color: 'var(--color-base)',
+            }}
+          >
+            Reviewed{' '}
+            <time dateTime={displayDate}>{displayDate}</time>
           </span>
         )}
       </div>
 
-      {/* Applicable disclaimer — required by trust model when present */}
+      {/* Applicable disclaimer — trust model requires this when present */}
       {applicableDisclaimer && (
         <div
-          className="mt-3 text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded p-3"
           role="note"
           aria-label="Trust disclaimer"
+          style={{
+            marginTop: 'var(--space-3)',
+            backgroundColor: 'var(--color-warning-bg)',
+            borderLeft: '4px solid var(--color-warning)',
+            borderRadius: '0 var(--radius-control) var(--radius-control) 0',
+            padding: 'var(--space-2) var(--space-3)',
+            fontFamily: 'var(--font-ui)',
+            fontSize: '0.875rem',
+            color: 'var(--color-ink)',
+            lineHeight: 1.5,
+          }}
         >
           {applicableDisclaimer}
         </div>

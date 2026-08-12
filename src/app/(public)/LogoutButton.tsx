@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 
 export function LogoutButton() {
@@ -13,7 +14,21 @@ export function LogoutButton() {
   return (
     <button
       onClick={handleLogout}
-      className="text-sm font-medium text-gray-600 hover:text-blue-700"
+      style={{
+        fontFamily: 'var(--font-ui)',
+        fontSize: '0.875rem',
+        fontWeight: 500,
+        color: 'rgba(255,255,255,0.75)',
+        background: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '8px 12px',
+        minHeight: '44px',
+        borderRadius: 'var(--radius-control)',
+        transition: 'color 100ms',
+        textDecoration: 'underline',
+      }}
+      type="button"
     >
       Sign Out
     </button>

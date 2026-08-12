@@ -23,29 +23,91 @@ export default async function CatalogPage() {
   const records = await getPublishedCatalog();
 
   return (
-    <main id="main-content" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Innovation Catalog' }]} />
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Innovation Catalog</h1>
-        <p className="mt-1 text-sm text-gray-600">
-          Discover innovation work from across the Judiciary.
-        </p>
+    <div
+      id="main-content"
+      style={{ backgroundColor: 'var(--color-surface)', minHeight: '60vh' }}
+    >
+      {/* Page hero */}
+      <div
+        style={{
+          backgroundColor: 'var(--color-blue-80)',
+          padding: '40px 0 32px',
+          marginBottom: '40px',
+        }}
+      >
+        <div className="hub-container">
+          <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Innovation Catalog' }]} light />
+          <h1
+            style={{
+              fontFamily: 'var(--font-ui)',
+              fontSize: '2.5rem',
+              lineHeight: 1.2,
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+              color: '#ffffff',
+              margin: '0 0 8px',
+            }}
+          >
+            Innovation Catalog
+          </h1>
+          <p
+            style={{
+              fontFamily: 'var(--font-ui)',
+              fontSize: '1.0625rem',
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.8)',
+              margin: 0,
+              maxWidth: '55ch',
+            }}
+          >
+            Discover Judiciary innovation work — proofs of concept, pilots, validated patterns, and lessons learned.
+          </p>
+        </div>
       </div>
 
-      {records.length === 0 ? (
-        <p className="text-gray-500">No published innovation records yet.</p>
-      ) : (
-        <ul
-          aria-label="Innovation records catalog"
-          className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 list-none p-0"
-        >
-          {records.map((record) => (
-            <li key={record.id}>
-              <CatalogCard record={record} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+      {/* Catalog grid */}
+      <div className="hub-container" style={{ paddingBottom: '80px' }}>
+        {records.length === 0 ? (
+          <div
+            style={{
+              backgroundColor: 'var(--color-card)',
+              border: '1px solid var(--color-hairline)',
+              borderRadius: 'var(--radius-card)',
+              padding: '48px 40px',
+              textAlign: 'center',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: '1rem',
+                color: 'var(--color-base)',
+                margin: 0,
+              }}
+            >
+              No published innovation records yet.
+            </p>
+          </div>
+        ) : (
+          <ul
+            aria-label="Innovation records catalog"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+              gap: '24px',
+              listStyle: 'none',
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            {records.map((record) => (
+              <li key={record.id}>
+                <CatalogCard record={record} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
   );
 }

@@ -1,0 +1,568 @@
+/* ─── TechSur Innovation Hub — Global Styles ────────────────────────────────
+ * USWDS 3 derived design tokens. Source: Color & Type Reference v0.1
+ * Design system: U.S. Web Design System (USWDS 3)
+ * Fonts: Public Sans (UI/body) + Roboto Mono (metadata)
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+/* ─── USWDS-derived CSS custom properties ──────────────────────────────────── */
+:root {
+  /* Primary — Blue ramp */
+  --color-blue-5:  #d9e8f6;
+  --color-blue-10: #aacdec;
+  --color-blue-30: #73b3e7;
+  --color-blue-50: #2378c3;
+  --color-blue-60: #005ea2;   /* default action */
+  --color-blue-70: #1a4480;   /* hover */
+  --color-blue-80: #162e51;   /* active / dark surface */
+
+  /* Neutral ramp */
+  --color-ink:        #1b1b1b;  /* body text */
+  --color-darkest:    #2d2e2f;
+  --color-darker:     #454545;
+  --color-dark-muted: #565c65;
+  --color-base:       #71767a;  /* subtle text */
+  --color-light:      #a9aeb1;  /* strong border */
+  --color-lighter:    #dfe1e2;  /* hairline */
+  --color-lightest:   #f0f0f0;  /* sunken */
+  --color-surface:    #f9f9f9;  /* page surface */
+  --color-card:       #ffffff;  /* card surface */
+  --color-dark-surf:  #162e51;  /* dark surface */
+  --color-focus:      #2491ff;  /* focus ring */
+
+  /* Semantic */
+  --color-success:      #4d8055;
+  --color-success-bg:   #ecf3ee;
+  --color-warning:      #ffbe2e;
+  --color-warning-bg:   #faf3d1;
+  --color-error:        #b50909;
+  --color-error-bg:     #f4e3db;
+  --color-info:         #00687d;
+  --color-info-bg:      #e7f6f8;
+
+  /* Typography */
+  --font-ui:   'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Roboto Mono', 'Courier New', Courier, monospace;
+
+  /* Spacing (8px base) */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  16px;
+  --space-4:  24px;
+  --space-5:  32px;
+  --space-6:  40px;
+  --space-7:  48px;
+  --space-8:  56px;
+  --space-9:  72px;
+  --space-10: 80px;
+
+  /* Radius */
+  --radius-badge:    2px;   /* review status — square corners */
+  --radius-control:  4px;   /* inputs, buttons */
+  --radius-card:     8px;   /* cards */
+  --radius-pill:     9999px; /* maturity badges */
+
+  /* Touch target */
+  --touch-target: 44px;
+}
+
+/* ─── Base layer ────────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-ui);
+    font-size: 1rem;        /* 16px */
+    line-height: 1.6;
+    color: var(--color-ink);
+    background-color: var(--color-surface);
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Focus ring — USWDS standard: 2px solid, 2px offset */
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* Remove default focus for mouse users who don't need it */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Headings — Public Sans */
+  h1 {
+    font-family: var(--font-ui);
+    font-size: 2.5rem;      /* 40px */
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-4);
+  }
+
+  h2 {
+    font-family: var(--font-ui);
+    font-size: 1.875rem;    /* 30px */
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-3);
+  }
+
+  h3 {
+    font-family: var(--font-ui);
+    font-size: 1.375rem;    /* 22px */
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-2);
+  }
+
+  h4 {
+    font-family: var(--font-ui);
+    font-size: 1.0625rem;   /* 17px */
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--color-ink);
+    margin: 0 0 var(--space-2);
+  }
+
+  p {
+    font-size: 1rem;        /* 16px */
+    line-height: 1.6;
+    max-width: 68ch;
+    margin: 0 0 var(--space-3);
+  }
+
+  small, .text-helper {
+    font-size: 0.875rem;    /* 14px */
+    line-height: 1.5;
+  }
+
+  /* Metadata — Roboto Mono */
+  .font-mono,
+  time,
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+  }
+
+  a {
+    color: var(--color-blue-60);
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: var(--color-blue-70);
+  }
+
+  a:active {
+    color: var(--color-blue-80);
+  }
+
+  /* Inputs */
+  input, select, textarea {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    border: 1px solid var(--color-light);
+    border-radius: var(--radius-control);
+    padding: 8px 12px;
+    min-height: var(--touch-target);
+    width: 100%;
+    color: var(--color-ink);
+    background: var(--color-card);
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-blue-60);
+  }
+
+  /* Labels */
+  label {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    display: block;
+    margin-bottom: var(--space-1);
+  }
+
+  /* Tables */
+  table {
+    font-family: var(--font-ui);
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th {
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid var(--color-lighter);
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.875rem;
+    color: var(--color-dark-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-lighter);
+    font-size: 0.9375rem;
+  }
+}
+
+/* ─── Component layer ──────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Hub container ──────────────────────────────────────────────────────── */
+  .hub-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  /* ── Hub button ─────────────────────────────────────────────────────────── */
+  .hub-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--touch-target);
+    padding: 0 var(--space-4);
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius-control);
+    border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+    white-space: nowrap;
+  }
+
+  .hub-btn-primary {
+    background-color: var(--color-blue-60);
+    color: #ffffff;
+    border-color: var(--color-blue-60);
+  }
+
+  .hub-btn-primary:hover {
+    background-color: var(--color-blue-70);
+    border-color: var(--color-blue-70);
+    color: #ffffff;
+  }
+
+  .hub-btn-primary:active {
+    background-color: var(--color-blue-80);
+    border-color: var(--color-blue-80);
+  }
+
+  .hub-btn-outline {
+    background-color: transparent;
+    color: var(--color-blue-60);
+    border-color: var(--color-blue-60);
+  }
+
+  .hub-btn-outline:hover {
+    background-color: var(--color-blue-5);
+    color: var(--color-blue-70);
+    border-color: var(--color-blue-70);
+  }
+
+  .hub-btn-ghost {
+    background-color: transparent;
+    color: var(--color-blue-60);
+    border-color: transparent;
+    padding: 0 var(--space-2);
+  }
+
+  .hub-btn-ghost:hover {
+    color: var(--color-blue-70);
+    text-decoration: underline;
+  }
+
+  .hub-btn-danger {
+    background-color: var(--color-error);
+    color: #ffffff;
+    border-color: var(--color-error);
+  }
+
+  .hub-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ── Hub card ───────────────────────────────────────────────────────────── */
+  .hub-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-lighter);
+    border-radius: var(--radius-card);
+    padding: var(--space-4);
+  }
+
+  .hub-card:hover {
+    border-color: var(--color-light);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ── Maturity badges — pill shape ──────────────────────────────────────── */
+  /* Base pill */
+  .maturity-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* Idea — outlined, no fill */
+  .maturity-idea {
+    background: #ffffff;
+    border: 1.5px solid var(--color-light);
+    color: var(--color-darker);
+  }
+
+  /* Evaluated Idea — blue outline */
+  .maturity-evaluated {
+    background: #ffffff;
+    border: 1.5px solid var(--color-blue-60);
+    color: var(--color-blue-60);
+  }
+
+  /* Experiment / POC — yellow fill */
+  .maturity-poc {
+    background: #ffbe2e;
+    border: 1.5px solid #ffbe2e;
+    color: var(--color-ink);
+  }
+
+  /* Prototype / Pilot — teal fill */
+  .maturity-pilot {
+    background: #00687d;
+    border: 1.5px solid #00687d;
+    color: #ffffff;
+  }
+
+  /* Validated Pattern — green fill */
+  .maturity-validated {
+    background: #4d8055;
+    border: 1.5px solid #4d8055;
+    color: #ffffff;
+  }
+
+  /* Archived / Retired — neutral fill */
+  .maturity-archived {
+    background: var(--color-lighter);
+    border: 1.5px solid var(--color-lighter);
+    color: var(--color-dark-muted);
+  }
+
+  /* ── Review Status badges — indigo family, 2px square corners, uppercase ── */
+  .review-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-badge);  /* 2px — square corners */
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;   /* 11px */
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Security Reviewed — solid indigo, highest consequence */
+  .review-security {
+    background: #3d4076;
+    color: #ffffff;
+  }
+
+  /* All other review statuses — soft indigo */
+  .review-standard {
+    background: #e5e4fa;
+    color: #2b2c5e;
+  }
+
+  /* ── Trust banner ────────────────────────────────────────────────────────── */
+  .trust-banner {
+    background: var(--color-blue-5);
+    border: 1px solid var(--color-blue-10);
+    border-radius: var(--radius-card);
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .trust-banner-disclaimer {
+    background: var(--color-warning-bg);
+    border-left: 4px solid var(--color-warning);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: var(--space-2) var(--space-3);
+    margin-top: var(--space-3);
+    font-size: 0.875rem;
+    color: var(--color-ink);
+  }
+
+  /* ── Semantic alerts ──────────────────────────────────────────────────────── */
+  .alert-info {
+    background: var(--color-info-bg);
+    border-left: 4px solid var(--color-info);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .alert-warning {
+    background: var(--color-warning-bg);
+    border-left: 4px solid var(--color-warning);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .alert-success {
+    background: var(--color-success-bg);
+    border-left: 4px solid var(--color-success);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .alert-error {
+    background: var(--color-error-bg);
+    border-left: 4px solid var(--color-error);
+    border-radius: 0 var(--radius-control) var(--radius-control) 0;
+    padding: var(--space-3) var(--space-4);
+  }
+
+  /* ── Form field ─────────────────────────────────────────────────────────── */
+  .hub-field {
+    margin-bottom: var(--space-4);
+  }
+
+  .hub-field label {
+    font-weight: 600;
+    margin-bottom: var(--space-1);
+  }
+
+  .hub-field input,
+  .hub-field select,
+  .hub-field textarea {
+    display: block;
+    width: 100%;
+  }
+
+  .hub-field .hint {
+    font-size: 0.875rem;
+    color: var(--color-base);
+    margin-top: var(--space-1);
+    max-width: 68ch;
+  }
+
+  /* ── Breadcrumb ─────────────────────────────────────────────────────────── */
+  .hub-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.875rem;
+    color: var(--color-base);
+    margin-bottom: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+  }
+
+  .hub-breadcrumb li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hub-breadcrumb a {
+    color: var(--color-blue-60);
+    text-decoration: none;
+  }
+
+  .hub-breadcrumb a:hover {
+    text-decoration: underline;
+    color: var(--color-blue-70);
+  }
+
+  .hub-breadcrumb [aria-current="page"] {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  /* ── Hub section heading ───────────────────────────────────────────────── */
+  .hub-section-heading {
+    font-size: 1.375rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--color-ink);
+    border-bottom: 2px solid var(--color-lighter);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  /* ── Metadata / mono text ───────────────────────────────────────────────── */
+  .hub-meta {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-base);
+  }
+
+  /* ── Tag (engagement indicator) ─────────────────────────────────────────── */
+  .hub-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: var(--radius-control);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    background: var(--color-blue-5);
+    color: var(--color-blue-70);
+    border: 1px solid var(--color-blue-10);
+  }
+
+  /* ── Step progress bar ───────────────────────────────────────────────────── */
+  .hub-progress {
+    display: flex;
+    gap: var(--space-1);
+    margin-bottom: var(--space-4);
+  }
+
+  .hub-progress-step {
+    height: 4px;
+    flex: 1;
+    border-radius: 2px;
+    background: var(--color-lighter);
+  }
+
+  .hub-progress-step.active {
+    background: var(--color-blue-60);
+  }
+}

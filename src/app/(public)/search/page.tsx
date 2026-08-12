@@ -99,75 +99,116 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   const total: number = searchResult.meta?.total ?? 0;
 
   return (
-    <main id="main-content" className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Search' }]} />
-      <h1 className="mb-1 text-2xl font-bold text-gray-900">Search Innovation Records</h1>
-      <p className="mb-6 text-sm text-gray-600">
-        Find innovation work using mission-problem language — no need to know project names or locations.
-      </p>
-
-      {/* Search form — client component wrapped in Suspense (uses useSearchParams) */}
-      <Suspense fallback={null}>
-        <SearchForm initialQuery={params.q ?? ''} />
-      </Suspense>
-
-      <div className="mt-6 flex gap-6">
-        {/* Filter panel — sidebar */}
-        <aside aria-label="Search filters" className="w-60 shrink-0">
-          {facets ? (
-            <Suspense fallback={null}>
-              <FilterPanel
-                facets={facets}
-                activeFilters={activeFilters}
-                currentQuery={params.q}
-              />
-            </Suspense>
-          ) : (
-            <p className="text-xs text-gray-400">Filters unavailable</p>
-          )}
-        </aside>
-
-        {/* Results area */}
-        <div className="min-w-0 flex-1">
-          {/* Active filter chips */}
-          {hasActiveFilters && (
-            <Suspense fallback={null}>
-              <ActiveFilters activeFilters={activeFilters} currentQuery={params.q} />
-            </Suspense>
-          )}
-
-          {/* Result count — ARIA live region (WCAG 2.1 AA — screen reader announcement) */}
-          <div
-            role="status"
-            aria-live="polite"
-            aria-atomic="true"
-            className="mb-4 text-sm text-gray-600"
+    <div id="main-content" style={{ backgroundColor: 'var(--color-surface)' }}>
+      {/* Search hero */}
+      <div style={{ backgroundColor: 'var(--color-blue-80)', padding: '40px 0 32px' }}>
+        <div className="hub-container">
+          <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'Search' }]} light />
+          <h1
+            style={{
+              fontFamily: 'var(--font-ui)',
+              fontSize: '2.5rem',
+              lineHeight: 1.2,
+              fontWeight: 700,
+              letterSpacing: '-0.01em',
+              color: '#ffffff',
+              margin: '0 0 8px',
+            }}
           >
-            {params.q
-              ? `${total} result${total !== 1 ? 's' : ''} for "${params.q}"`
-              : `${total} published innovation record${total !== 1 ? 's' : ''}`}
-          </div>
-
-          {/* Results list */}
-          {records.length > 0 ? (
-            <ul aria-label="Search results" className="space-y-4">
-              {records.map(record => (
-                <li key={record.id}>
-                  <SearchResultCard record={record} query={params.q} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div role="status" className="py-12 text-center">
-              <p className="text-gray-500">
-                {params.q
-                  ? `No innovation records found for "${params.q}". Try broader terms or remove some filters.`
-                  : 'No published innovation records yet.'}
-              </p>
-            </div>
-          )}
+            Search Innovation Records
+          </h1>
+          <p
+            style={{
+              fontFamily: 'var(--font-ui)',
+              fontSize: '1.0625rem',
+              lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.75)',
+              margin: '0 0 24px',
+              maxWidth: '55ch',
+            }}
+          >
+            Find innovation work using mission-problem language — no need to know project names or locations.
+          </p>
+          <Suspense fallback={null}>
+            <SearchForm initialQuery={params.q ?? ''} />
+          </Suspense>
         </div>
       </div>
-    </main>
+
+      {/* Search results area */}
+      <div className="hub-container" style={{ padding: '40px 24px 80px' }}>
+        <div style={{ display: 'flex', gap: '40px' }}>
+          {/* Filter panel */}
+          <aside aria-label="Search filters" style={{ width: '240px', flexShrink: 0 }}>
+            {facets ? (
+              <Suspense fallback={null}>
+                <FilterPanel
+                  facets={facets}
+                  activeFilters={activeFilters}
+                  currentQuery={params.q}
+                />
+              </Suspense>
+            ) : (
+              <p style={{ fontFamily: 'var(--font-ui)', fontSize: '0.875rem', color: 'var(--color-base)' }}>
+                Filters unavailable
+              </p>
+            )}
+          </aside>
+
+          {/* Results */}
+          <div style={{ minWidth: 0, flex: 1 }}>
+            {hasActiveFilters && (
+              <Suspense fallback={null}>
+                <ActiveFilters activeFilters={activeFilters} currentQuery={params.q} />
+              </Suspense>
+            )}
+
+            {/* Result count — ARIA live region */}
+            <div
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+              style={{
+                fontFamily: 'var(--font-ui)',
+                fontSize: '0.875rem',
+                color: 'var(--color-base)',
+                marginBottom: '20px',
+              }}
+            >
+              {params.q
+                ? `${total} result${total !== 1 ? 's' : ''} for "${params.q}"`
+                : `${total} published innovation record${total !== 1 ? 's' : ''}`}
+            </div>
+
+            {records.length > 0 ? (
+              <ul aria-label="Search results" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {records.map(record => (
+                  <li key={record.id}>
+                    <SearchResultCard record={record} query={params.q} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div
+                role="status"
+                style={{
+                  backgroundColor: 'var(--color-card)',
+                  border: '1px solid var(--color-hairline)',
+                  borderRadius: 'var(--radius-card)',
+                  padding: '48px 40px',
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{ fontFamily: 'var(--font-ui)', fontSize: '1rem', color: 'var(--color-base)', margin: 0 }}>
+                  {params.q
+                    ? `No records found for "${params.q}". Try broader terms or remove some filters.`
+                    : 'No published innovation records yet.'}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

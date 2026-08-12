@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'TSIO Innovation Hub',
@@ -16,11 +17,17 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="min-h-screen bg-white text-gray-900">
+      <body>
         {/* WCAG 2.1 AA: Skip to main content for keyboard navigation */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:top-2 focus:left-2 focus:rounded"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:px-4 focus:py-2 focus:top-2 focus:left-2 focus:rounded-control"
+          style={{
+            backgroundColor: 'var(--color-blue-60)',
+            color: '#ffffff',
+            fontFamily: 'var(--font-ui)',
+            fontWeight: 600,
+          }}
         >
           Skip to main content
         </a>

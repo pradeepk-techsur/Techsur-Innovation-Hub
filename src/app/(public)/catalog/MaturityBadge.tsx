@@ -1,14 +1,16 @@
 /**
- * MaturityBadge — Displays the maturity level of an innovation record.
+ * MaturityBadge — Pill-shaped maturity indicator.
  *
- * F1.3: Shows maturity value as a human-readable label.
- * F1.6: MUST be visually distinct from ReviewStatusBadge.
- *       Uses filled pill badges with level prefix (▲) to differentiate from
- *       outlined ReviewStatusBadge with checkmark prefix (✓).
- *       Different colors per maturity level (never confused with review status).
+ * Spec (Color & Type Reference v0.1 — Maturity Scale):
+ *   Idea         #454545 on #ffffff, border #a9aeb1  — outlined, no fill
+ *   Evaluated    #005ea2 on #ffffff                   — outlined, no fill
+ *   Experiment   #1b1b1b on #ffbe2e                   — filled yellow
+ *   Pilot        #ffffff on #00687d                   — filled teal
+ *   Validated    #ffffff on #4d8055                   — filled green
+ *   Archived     #565c65 on #dfe1e2                   — filled neutral
  *
- * SEC-11 context: Maturity is an independent axis from review status;
- *                 these badges communicate different trust signals.
+ * Shape: pill radius (9999px). Three signals: color, label, shape.
+ * SEC-11: Visually distinct from ReviewStatusBadge (which is square-cornered + uppercase).
  */
 
 import type { MaturityValue } from '@/lib/db/types';
@@ -17,49 +19,84 @@ interface Props {
   maturity: MaturityValue;
 }
 
-const MATURITY_CONFIG: Record<
-  MaturityValue,
-  { label: string; className: string }
-> = {
+// Label prefix: circle icon prefix differentiates from review badge (uppercase tag)
+const MATURITY_CONFIG: Record<MaturityValue, {
+  label: string;
+  bg: string;
+  color: string;
+  border: string;
+  prefix: string;
+}> = {
   idea: {
     label: 'Idea',
-    className: 'bg-gray-100 text-gray-700 border border-gray-300',
+    bg: '#ffffff',
+    color: '#454545',
+    border: '#a9aeb1',
+    prefix: '○',
   },
   evaluated_idea: {
-    label: 'Evaluated Idea',
-    className: 'bg-slate-100 text-slate-700 border border-slate-300',
+    label: 'Evaluated',
+    bg: '#ffffff',
+    color: '#005ea2',
+    border: '#005ea2',
+    prefix: '○',
   },
   experiment_poc: {
     label: 'Experiment / POC',
-    className: 'bg-amber-100 text-amber-800 border border-amber-300',
+    bg: '#ffbe2e',
+    color: '#1b1b1b',
+    border: '#ffbe2e',
+    prefix: '◐',
   },
   prototype_pilot: {
     label: 'Prototype / Pilot',
-    className: 'bg-blue-100 text-blue-800 border border-blue-300',
+    bg: '#00687d',
+    color: '#ffffff',
+    border: '#00687d',
+    prefix: '◕',
   },
   production_validated: {
-    label: 'Production / Validated',
-    className: 'bg-green-100 text-green-800 border border-green-300',
+    label: 'Validated Pattern',
+    bg: '#4d8055',
+    color: '#ffffff',
+    border: '#4d8055',
+    prefix: '●',
   },
   archived_retired: {
-    label: 'Archived / Retired',
-    className: 'bg-stone-100 text-stone-600 border border-stone-300',
+    label: 'Archived',
+    bg: '#dfe1e2',
+    color: '#565c65',
+    border: '#dfe1e2',
+    prefix: '◌',
   },
 };
 
 export function MaturityBadge({ maturity }: Props) {
-  const config = MATURITY_CONFIG[maturity] ?? {
-    label: maturity,
-    className: 'bg-gray-100 text-gray-700 border border-gray-300',
-  };
+  const config = MATURITY_CONFIG[maturity];
+  if (!config) return null;
 
   return (
-    // F1.6: filled pill with ▲ prefix distinguishes from ReviewStatusBadge's outlined + ✓ prefix
     <span
       aria-label={`Maturity: ${config.label}`}
-      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold ${config.className}`}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '4px',
+        padding: '3px 10px',
+        borderRadius: '9999px',
+        fontFamily: 'var(--font-ui)',
+        fontSize: '0.75rem',
+        fontWeight: 600,
+        lineHeight: 1.4,
+        whiteSpace: 'nowrap',
+        backgroundColor: config.bg,
+        color: config.color,
+        border: `1.5px solid ${config.border}`,
+      }}
     >
-      <span aria-hidden="true">▲</span>
+      <span aria-hidden="true" style={{ fontSize: '0.625rem' }}>
+        {config.prefix}
+      </span>
       {config.label}
     </span>
   );
