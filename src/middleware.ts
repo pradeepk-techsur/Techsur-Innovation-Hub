@@ -6,6 +6,7 @@ import { jwtVerify } from 'jose';
 const PROTECTED_ROUTES = [
   '/submit-opportunity',
   '/submit-contribution',
+  '/curator',       // SSR curator section — any authenticated user; role checked in layout
 ];
 
 const SESSION_COOKIE = 'tsio_hub_session';
@@ -33,7 +34,9 @@ export async function middleware(request: NextRequest) {
     const authenticated = await hasValidSession(request);
     if (!authenticated) {
       // Redirect to login with return URL (AUTH-09)
-      const loginUrl = new URL('/login', request.url);
+      // Use nextUrl.clone() — avoids carrying the proxy's external hostname from request.url
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = '/login';
       loginUrl.searchParams.set('returnTo', pathname);
       return NextResponse.redirect(loginUrl);
     }

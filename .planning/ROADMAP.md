@@ -80,7 +80,9 @@ Plans:
 - [ ] 03-06-PLAN.md — Gap closure (plan 06): human-verify checkpoint confirming UAT tests 3, 4, 5 pass end-to-end
 
 ### Phase 4: Curation and Administration
-**Status**: passed
+**Status**: completed (2026-08-12)
+**Last Updated**: 2026-08-12T18:30:18Z
+**Completed**: 2026-08-12
 **Goal**: Authorized curators can create, edit, govern, and publish innovation records through the full publication lifecycle with role-based access control, audit history, and submission/engagement queue management — so the Hub has a complete, auditable back-office that prevents incomplete or misleading records from reaching stakeholders
 **Depends on**: Phase 3
 **Requirements**: AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06, F9.1, F9.2, F9.3, F9.4, F9.5, F9.6, F9.7, F9.8, F9.9, F9.10, F9.11, F9.12, F9.13, F9.14, F9.15, F9.16
@@ -90,13 +92,16 @@ Plans:
   3. Unauthenticated or unauthorized users receive an appropriate redirect or error — never silent access — when attempting to reach any `/curator/*` route or protected API endpoint; unauthorized access attempts are recorded in audit history (AUTH-04, SEC-02, SEC-03)
   4. A chronological audit history records every material content, governance, lifecycle, and configuration change — identifying who made the change, what changed, and when — and this history cannot be modified or deleted by any application role
   5. Authorized curators can review the opportunity submission queue, innovation contribution queue, and engagement activity list — and disposition each item (accept, decline, needs-more-information) with the disposition recorded and traceable
-**Plans**: 4 plans
+**Plans**: 7 plans
 
 Plans:
 - [ ] 04-01-PLAN.md — requireRole() RBAC middleware, unauthorized access audit logging, curator SSR layout with server-side session check (AUTH-02–06)
 - [ ] 04-02-PLAN.md — records.service.ts (create/update + optimistic concurrency + audit), curator dashboard API + UI, record list + editor pages, artifact management (F9.1–F9.5)
 - [ ] 04-03-PLAN.md — publication.service.ts with all 15 gate checks, lifecycle transition endpoints (publish/unpublish/submit/supersede/archive/retire), maturity/review_statuses independent (F9.6–F9.10)
 - [ ] 04-04-PLAN.md — Audit history API, submission queues + disposition, engagement follow-up, settings management (admin-only), content model reference (F9.11–F9.16)
+- [ ] 04-05-PLAN.md — Gap closure: fix SSR cookie forwarding in dashboard/record-editor/record-list pages, add problem_statement to new record form, Playwright regression spec (UAT Gaps 1–3)
+- [ ] 04-06-PLAN.md — Gap closure: global audit log page + API (admin-only, IP redacted), layout 403 split for wrong-role authenticated users, /unauthorized page (UAT Tests 5 + 6)
+- [ ] 04-07-PLAN.md — Gap closure: fix middleware hostname leak in login redirect (nextUrl.clone), SameSite=None; Secure session cookie for proxy compatibility, settings page 403→/unauthorized (UAT Test 9)
 
 ### Phase 5: Launch Readiness
 **Goal**: The application has complete, verified navigation with no dead links; at least 8 published seeded records spanning all required metadata dimensions; and all accessibility, deployment security, and launch-acceptance conditions are confirmed — so the Hub is ready for stakeholder use and the product acceptance criteria are met

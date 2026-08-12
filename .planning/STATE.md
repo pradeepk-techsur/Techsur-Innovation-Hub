@@ -2,16 +2,16 @@
 pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-stopped_at: "Waiting at checkpoint:human-verify Task 3 of 03-GAP-PLAN.md"
-last_updated: "2026-08-11T22:30:54.061Z"
-last_activity: "2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)"
+status: executing
+stopped_at: Completed 04-07-PLAN.md
+last_updated: "2026-08-12T18:10:00Z"
+last_activity: "2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, Playwright spec)"
 progress:
   total_phases: 8
-  completed_phases: 2
-  total_plans: 19
-  completed_plans: 11
-  percent: 61
+  completed_phases: 4
+  total_plans: 23
+  completed_plans: 19
+  percent: 83
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 4 — Curator Tools (Phase 3 complete)
+**Current focus:** Phase 5 — Launch Acceptance (Phase 4 complete)
 
 ## Current Position
 
-Phase: 3 of 7 (Engagement Flows) — COMPLETE; next: Phase 4 (Curator Tools)
-Plan: 4 of 4 in phase 3 — all plans complete
-Status: Phase 3 complete; 11 of 18 plans done
-Last activity: 2026-08-11 — Completed 03-04 (F8 Engagement Routing: DB-first POST /api/v1/engagement, EngagementModal, hub-settings service, email service)
+Phase: 4 of 7 (Curator Tools) — COMPLETE (all gaps closed, including UAT Test 9)
+Plan: 7 of 7 in phase 4 — 7 plans complete (includes gap closure 04-07)
+Status: Phase 4 fully complete; 19 of 23 plans done; all UAT gaps closed; VERIFICATION.md status: passed
+Last activity: 2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, 4 Playwright tests)
 
-Progress: [██████░░░░] 61%
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -63,6 +63,13 @@ Progress: [██████░░░░] 61%
 | Phase 03-engagement-flows P02 | 8min | 2 tasks | 6 files |
 | Phase 03-engagement-flows P03 | 3min | 1 tasks | 5 files |
 | Phase 03-engagement-flows P04 | 4min | 2 tasks | 6 files |
+| Phase 04-curation-and-administration P01 | 4min | 1 tasks | 5 files |
+| Phase 04-curation-and-administration P02 | 6min | 2 tasks | 12 files |
+| Phase 04-curation-and-administration P03 | 3min | 1 tasks | 8 files |
+| Phase 04-curation-and-administration P04 | 6min | 2 tasks | 16 files |
+| Phase 04-curation-and-administration P05 | 3min | 2 tasks | 7 files |
+| Phase 04-curation-and-administration P06 | 8min | 2 tasks | 5 files |
+| Phase 04-curation-and-administration P07 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -95,6 +102,19 @@ Recent decisions affecting current work:
 - [Phase 03-engagement-flows]: Two-step contribution form: Step 1 (about the work) → Step 2 (attribution + contact) — simpler than F6 3-step, appropriate for contribution detail level
 - [Phase 03-engagement-flows]: DB-first engagement: INSERT to engagement_requests before sendEmail(); email failure sets email_routing_initiated=false but record always persisted (F8.3)
 - [Phase 03-engagement-flows]: routing_address_at_submission snapshot: audit field captured at INSERT time from hub_settings; past records retain routing address in effect at submission (F8.4 + T-03-04-03)
+- [Phase 04-curation-and-administration]: user_role_changed event_type for auth denials: DB CHECK constraint incompatible with 'unauthorized_access_attempt'; event_data.reason distinguishes denial categories
+- [Phase 04-curation-and-administration]: requireRole() returns { session } or Response (not throw): callers use instanceof Response guard — consistent with Next.js Route Handler idiom
+- [Phase 04-curation-and-administration]: Optimistic concurrency double-check: updateRecord() checks version at service AND DB WHERE clause; PostgreSQL trg_ir_version trigger makes stale writes 0-row no-ops
+- [Phase 04-curation-and-administration]: params as Promise in Next.js 15: dynamic route params are Promise<{id}> — handlers must await params before destructuring
+- [Phase 04-curation-and-administration]: ALLOWED_TRANSITIONS map in transitionState() enforces valid lifecycle sequence; VALID_REVIEW_STATUSES expanded to match editor values so Check 11 correctly validates curator-set statuses
+- [Phase 04-curation-and-administration]: Content model reference as static code: governance definitions are canonical FRD values versioned with the application
+- [Phase 04-curation-and-administration]: Dual-layer admin enforcement for settings: API returns 403 for curator role; UI detects 403 and redirects
+- [Phase 04-curation-and-administration]: Applied cookies() from next/headers SSR cookie forwarding pattern to dashboard, record list, and record editor pages (same pattern as reference/page.tsx)
+- [Phase 04-curation-and-administration]: problem_statement added as optional field at record creation (not required); reduces friction while ensuring field is available for publication gate
+- [Phase 04-curation-and-administration]: Unauthorized page at /unauthorized (top-level, outside /curator route tree) — avoids infinite redirect loop; curator layout fires for all /curator/* children
+- [Phase 04-curation-and-administration]: Two-branch RBAC layout: !session→/login, wrong-role→/unauthorized — not collapsed into single redirect (AUTH-04 gap closure)
+- [Phase 04-curation-and-administration]: nextUrl.clone() in middleware redirect — eliminates proxy hostname leak in Location header
+- [Phase 04-curation-and-administration]: SameSite=None; Secure unconditionally for session cookie — cross-origin preview proxy compatibility
 
 ### Pending Todos
 
@@ -108,6 +128,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-11T22:30:54.060Z
-Stopped at: Waiting at checkpoint:human-verify Task 3 of 03-GAP-PLAN.md
+Last session: 2026-08-12T17:57:55.333Z
+Stopped at: Completed 04-07-PLAN.md
 Resume file: None
