@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-07-PLAN.md
-last_updated: "2026-08-12T18:10:00Z"
-last_activity: "2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, Playwright spec)"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-08-12T21:58:34.848Z"
+last_activity: 2026-08-12 — Completed 05-02 launch content seed (8 records, all SEED dimensions covered)
 progress:
-  total_phases: 8
+  total_phases: 9
   completed_phases: 4
   total_plans: 23
-  completed_plans: 19
-  percent: 83
+  completed_plans: 22
+  percent: 87
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-08-11)
 
 ## Current Position
 
-Phase: 4 of 7 (Curator Tools) — COMPLETE (all gaps closed, including UAT Test 9)
-Plan: 7 of 7 in phase 4 — 7 plans complete (includes gap closure 04-07)
-Status: Phase 4 fully complete; 19 of 23 plans done; all UAT gaps closed; VERIFICATION.md status: passed
-Last activity: 2026-08-12 — Completed 04-07 gap closure (middleware hostname fix, SameSite=None cookie, settings RBAC redirect, 4 Playwright tests)
+Phase: 5 of 8 (Launch Readiness) — In progress
+Plan: 2 of ? in phase 5 — 20 of 23 plans done
+Status: Phase 5 in progress; 05-01 and 05-02 complete; launch seed (SEED-01–12) done
+Last activity: 2026-08-12 — Completed 05-02 launch content seed (8 records, all SEED dimensions covered)
 
-Progress: [████████░░] 83%
+Progress: [█████████░] 87%
 
 ## Performance Metrics
 
@@ -70,6 +70,9 @@ Progress: [████████░░] 83%
 | Phase 04-curation-and-administration P05 | 3min | 2 tasks | 7 files |
 | Phase 04-curation-and-administration P06 | 8min | 2 tasks | 5 files |
 | Phase 04-curation-and-administration P07 | 6min | 2 tasks | 4 files |
+| Phase 05-launch-readiness P02 | 7min | 1 tasks | 4 files |
+| Phase 05-launch-readiness P01 | 10min | 1 tasks | 6 files |
+| Phase 05-launch-readiness P03 | 7min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -115,6 +118,11 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: Two-branch RBAC layout: !session→/login, wrong-role→/unauthorized — not collapsed into single redirect (AUTH-04 gap closure)
 - [Phase 04-curation-and-administration]: nextUrl.clone() in middleware redirect — eliminates proxy hostname leak in Location header
 - [Phase 04-curation-and-administration]: SameSite=None; Secure unconditionally for session cookie — cross-origin preview proxy compatibility
+- [Phase 05-launch-readiness]: Artifact idempotency via NOT EXISTS guard on (record_id, name) — artifacts table has no unique key
+- [Phase 05-launch-readiness]: Placeholder artifact URLs (placeholder.ao.uscourts.gov) are intentional per T-05-02-01 threat model — replaced with real URLs before launch
+- [Phase 05-launch-readiness]: Home page moved from src/app/page.tsx to src/app/(public)/page.tsx so all public pages including home have auth-state nav (IA-05)
+- [Phase 05-launch-readiness]: Skip link target requires tabIndex={-1} on div#main-content for programmatic focus (WCAG 2.4.1)
+- [Phase 05-launch-readiness]: X-Frame-Options DENY intentionally omitted at app level — Pivota preview iframe must embed the app; CSP frame-ancestors set at load balancer
 
 ### Pending Todos
 
@@ -128,6 +136,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T17:57:55.333Z
-Stopped at: Completed 04-07-PLAN.md
+Last session: 2026-08-12T21:58:34.846Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None

@@ -25,6 +25,7 @@ export default async function CatalogPage() {
   return (
     <div
       id="main-content"
+      tabIndex={-1}
       style={{ backgroundColor: 'var(--color-surface)', minHeight: '60vh' }}
     >
       {/* Page hero */}

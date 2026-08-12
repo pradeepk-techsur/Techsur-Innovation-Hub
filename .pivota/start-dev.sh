@@ -116,7 +116,7 @@ if [[ ! -f .env && -f .env.example ]]; then
   done < .env.example > .env
 fi
 
-# === Optional pre-exec snippet (allowedDevOrigins overlay for Next.js) ===
+# === Optional pre-exec snippet (react-next: allowedDevOrigins overlay) ===
 # Only patch if user's next.config doesn't already include allowedDevOrigins.
 for CFG in next.config.mjs next.config.js next.config.ts; do
   if [[ -f "$CFG" ]]; then
@@ -192,6 +192,14 @@ run_install() {
   echo "[pivota] FATAL install failed (exit=$rc) — dev server cannot start; resolve the dependency conflict in the manifest" >&2
   return "$rc"
 }
+
+# Detect alternate lock files (pnpm, yarn) — wrapper picks the first one present
+for CANDIDATE_LOCK in package-lock.json pnpm-lock.yaml yarn.lock; do
+  if [[ -f "$CANDIDATE_LOCK" ]]; then
+    LOCK_FILE_PATH="$CANDIDATE_LOCK"
+    break
+  fi
+done
 
 if [[ -n "$LOCK_FILE_PATH" && -f "$LOCK_FILE_PATH" ]]; then
   CURRENT_HASH=$(sha256sum "$LOCK_FILE_PATH" | cut -d' ' -f1)
