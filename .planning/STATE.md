@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-04-PLAN.md
-last_updated: "2026-08-12T04:33:52.277Z"
-last_activity: "2026-08-12 — Completed 04-03 (publication lifecycle gate: 15 checks, lifecycle routes, RecordEditor lifecycle panel)"
+stopped_at: Completed 04-05-PLAN.md
+last_updated: "2026-08-12T05:59:05.871Z"
+last_activity: "2026-08-12 — Completed 04-05 (cookie forwarding fix for 3 SSR curator pages + problem_statement field + Playwright spec)"
 progress:
   total_phases: 8
-  completed_phases: 3
-  total_plans: 20
-  completed_plans: 16
-  percent: 75
+  completed_phases: 4
+  total_plans: 21
+  completed_plans: 17
+  percent: 81
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-08-11)
 
 **Core value:** A Judiciary stakeholder can arrive with a mission problem, discover relevant I&R innovation work, understand what was learned and how mature it is, and take a concrete next step — without needing to already know the project name, team, or file location.
-**Current focus:** Phase 4 — Curator Tools (Phase 3 complete)
+**Current focus:** Phase 5 — Launch Acceptance (Phase 4 complete)
 
 ## Current Position
 
-Phase: 4 of 7 (Curator Tools) — IN PROGRESS
-Plan: 3 of 4 in phase 4 — 3 plans complete
-Status: Phase 4 in progress; 15 of 20 plans done
-Last activity: 2026-08-12 — Completed 04-03 (publication lifecycle gate: 15 checks, lifecycle routes, RecordEditor lifecycle panel)
+Phase: 4 of 7 (Curator Tools) — COMPLETE
+Plan: 5 of 5 in phase 4 — 5 plans complete
+Status: Phase 4 complete; 17 of 21 plans done
+Last activity: 2026-08-12 — Completed 04-05 (cookie forwarding fix for 3 SSR curator pages + problem_statement field + Playwright spec)
 
-Progress: [████████░░] 75%
+Progress: [████████░░] 81%
 
 ## Performance Metrics
 
@@ -67,6 +67,7 @@ Progress: [████████░░] 75%
 | Phase 04-curation-and-administration P02 | 6min | 2 tasks | 12 files |
 | Phase 04-curation-and-administration P03 | 3min | 1 tasks | 8 files |
 | Phase 04-curation-and-administration P04 | 6min | 2 tasks | 16 files |
+| Phase 04-curation-and-administration P05 | 3min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -106,6 +107,8 @@ Recent decisions affecting current work:
 - [Phase 04-curation-and-administration]: ALLOWED_TRANSITIONS map in transitionState() enforces valid lifecycle sequence; VALID_REVIEW_STATUSES expanded to match editor values so Check 11 correctly validates curator-set statuses
 - [Phase 04-curation-and-administration]: Content model reference as static code: governance definitions are canonical FRD values versioned with the application
 - [Phase 04-curation-and-administration]: Dual-layer admin enforcement for settings: API returns 403 for curator role; UI detects 403 and redirects
+- [Phase 04-curation-and-administration]: Applied cookies() from next/headers SSR cookie forwarding pattern to dashboard, record list, and record editor pages (same pattern as reference/page.tsx)
+- [Phase 04-curation-and-administration]: problem_statement added as optional field at record creation (not required); reduces friction while ensuring field is available for publication gate
 
 ### Pending Todos
 
@@ -119,6 +122,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T04:33:52.276Z
-Stopped at: Completed 04-04-PLAN.md
+Last session: 2026-08-12T05:59:05.869Z
+Stopped at: Completed 04-05-PLAN.md
 Resume file: None
