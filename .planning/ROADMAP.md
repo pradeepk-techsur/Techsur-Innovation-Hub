@@ -80,7 +80,7 @@ Plans:
 - [ ] 03-06-PLAN.md — Gap closure (plan 06): human-verify checkpoint confirming UAT tests 3, 4, 5 pass end-to-end
 
 ### Phase 4: Curation and Administration
-**Status**: In Progress
+**Status**: executing
 **Goal**: Authorized curators can create, edit, govern, and publish innovation records through the full publication lifecycle with role-based access control, audit history, and submission/engagement queue management — so the Hub has a complete, auditable back-office that prevents incomplete or misleading records from reaching stakeholders
 **Depends on**: Phase 3
 **Requirements**: AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06, F9.1, F9.2, F9.3, F9.4, F9.5, F9.6, F9.7, F9.8, F9.9, F9.10, F9.11, F9.12, F9.13, F9.14, F9.15, F9.16
