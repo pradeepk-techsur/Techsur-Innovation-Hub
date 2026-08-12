@@ -99,6 +99,7 @@ Plans:
 - [ ] 04-03-PLAN.md — publication.service.ts with all 15 gate checks, lifecycle transition endpoints (publish/unpublish/submit/supersede/archive/retire), maturity/review_statuses independent (F9.6–F9.10)
 - [ ] 04-04-PLAN.md — Audit history API, submission queues + disposition, engagement follow-up, settings management (admin-only), content model reference (F9.11–F9.16)
 - [ ] 04-05-PLAN.md — Gap closure: fix SSR cookie forwarding in dashboard/record-editor/record-list pages, add problem_statement to new record form, Playwright regression spec (UAT Gaps 1–3)
+- [ ] 04-06-PLAN.md — Gap closure: global audit log page + API (admin-only, IP redacted), layout 403 split for wrong-role authenticated users, /unauthorized page (UAT Tests 5 + 6)
 
 ### Phase 5: Launch Readiness
 **Goal**: The application has complete, verified navigation with no dead links; at least 8 published seeded records spanning all required metadata dimensions; and all accessibility, deployment security, and launch-acceptance conditions are confirmed — so the Hub is ready for stakeholder use and the product acceptance criteria are met
