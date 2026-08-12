@@ -2,24 +2,25 @@
 phase: 04
 status: clean
 blockers: 0
-warnings: 3
-files_reviewed: 7
+warnings: 1
+files_reviewed: 5
 files_reviewed_list:
-  - src/app/curator/page.tsx
-  - src/app/curator/records/page.tsx
-  - src/app/curator/records/[id]/page.tsx
-  - src/app/curator/records/new/page.tsx
-  - src/app/api/v1/curator/records/route.ts
-  - src/lib/services/records.service.ts
-  - e2e/curator-cookie-forwarding.spec.ts
-reviewed_at: 2026-08-12T08:00:00Z
-iteration: 2
+  - src/app/api/v1/curator/audit/route.ts
+  - src/app/curator/audit/page.tsx
+  - src/app/unauthorized/page.tsx
+  - src/app/curator/layout.tsx
+  - e2e/curator-audit-rbac-gaps.spec.ts
+reviewed_at: 2026-08-12T00:00:00Z
+iteration: 3
 ---
 
-# Phase 04 Code Review
+# Phase 04 Code Review — Iteration 3 (gap-closure-2 wave, plans 04-06)
 
-Scope: commits dfa7c57, 0ad6ce8, 36e2019, 94092ad — cookie forwarding in three SSR pages,
-`problem_statement` field end-to-end, Playwright regression spec, and iteration-1 fix.
+Scope: commits `8cdb766` and `b631e8b` — global audit log API + page, `/unauthorized` page,
+curator layout RBAC split, and Playwright regression spec.
+
+Prior iterations (1–2) reviewed a different file set; findings from those iterations are
+preserved below the iteration-3 section unchanged.
 
 ---
 
@@ -27,73 +28,82 @@ Scope: commits dfa7c57, 0ad6ce8, 36e2019, 94092ad — cookie forwarding in three
 
 None.
 
-### B1 (resolved): `cookies().toString()` URL-encoded cookie values; `jwtVerify` received a percent-encoded JWT
-
-- **Resolution commit:** 94092ad
-- **Verification:** All three pages (`src/app/curator/page.tsx`:21, `src/app/curator/records/page.tsx`:53,
-  `src/app/curator/records/[id]/page.tsx`:12) now use `(await headers()).get('cookie') ?? ''`.
-  The `import { cookies }` import has been fully replaced with `import { headers }` in all three files
-  (no residual `cookies` import anywhere under `src/app/curator/`). `tsc --noEmit` is clean.
-  No regression introduced by the fix.
-
 ---
 
 ## WARNINGs
 
-These three warnings carry over unchanged from iteration 1. None were reclassified as BLOCKERs.
+### W4: Non-integer `page`/`page_size` query params propagate `NaN` to DB `LIMIT`/`OFFSET` — unhandled 500
 
-### W1: `getRecord()` — non-404 API error swallowed by catch, renders misleading 404 page
-- **File:** `src/app/curator/records/[id]/page.tsx`:17–22
+- **File:** `src/app/api/v1/curator/audit/route.ts`:11–12
+- **Category:** bug
 - **Evidence:**
   ```ts
-  if (res.status === 404) return null;
-  if (!res.ok) throw new Error(`Failed to fetch record: ${res.status}`);
-  return (await res.json()).data;
-  } catch {
-    return null;   // ← catches the throw above
-  }
+  const page     = Math.max(1, Number(searchParams.get('page')      ?? 1));
+  const pageSize = Math.min(100, Number(searchParams.get('page_size') ?? 50));
   ```
-  The `throw` on line 18 is immediately caught by the surrounding `catch {}` block, which returns
-  `null`. Any 403, 500, or network error causes `notFound()` — an opaque 404 — instead of an
-  actionable error message.
-- **Fix direction:** Handle `!res.ok` outside the try/catch (or re-throw inside catch for
-  non-network errors) so the page component can render a meaningful diagnostic instead of a 404.
+  `searchParams.get()` returns `null` when absent (the `?? 1` / `?? 50` defaults fire) or the
+  raw string when present. When the param is present but non-numeric (e.g. `?page=abc`),
+  `Number('abc')` evaluates to `NaN`, and both `Math.max(1, NaN)` and `Math.min(100, NaN)`
+  return `NaN` rather than the fallback integer:
 
-### W2: `redirect('/login?returnTo=/curator/records')` in `[id]/page.tsx` discards the record URL
-- **File:** `src/app/curator/records/[id]/page.tsx`:27
-- **Evidence:**
-  ```ts
-  if (!session) redirect('/login?returnTo=/curator/records');
   ```
-  The dynamic `id` is available from `params` (line 29) but is awaited *after* the redirect check.
-  Post-login the curator is sent to the records list, not the specific record they requested.
-- **Fix direction:** Await `params` before the session check and pass `returnTo=/curator/records/${id}`.
+  > Math.max(1, Number('abc'))  → NaN
+  > Math.min(100, Number('abc')) → NaN
+  ```
 
-### W3: Playwright `beforeEach` uses `page.request.post(...)` for authentication — cookie propagation not guaranteed across all configurations
-- **File:** `e2e/curator-cookie-forwarding.spec.ts`:6
-- **Evidence:**
-  ```ts
-  await page.request.post('/api/auth/login', { data: { role: 'curator' } });
-  ```
-  In Playwright ≥1.30, `page.request` shares the cookie store with `page` within the same browser
-  context, so this works. If the test runner ever isolates these contexts (e.g. `storageState: {}`
-  reset), the login cookie will not propagate to subsequent `page.goto()` calls. This is a
-  pre-existing accepted pattern in the codebase (`opportunity-submission.spec.ts`).
-- **Fix direction:** Low priority; if flakiness emerges, switch to `storageState` setup or add an
-  assertion that the page did not redirect to `/login`.
+  `NaN` is then forwarded to Kysely's `.limit(NaN)` and `.offset(NaN)`, which will either throw a
+  DB driver error or produce an invalid query — both surface as an unhandled 500 to the caller.
+
+  This endpoint is gated by `requireRole(request, 'admin')`, so the blast radius is confined to
+  admins crafting malformed requests; there is no data corruption or privilege escalation risk.
+  Classified WARNING (degraded path, not a core feature failure).
+
+- **Fix direction:** Replace `Number(x ?? fallback)` with `parseInt(x ?? '', 10) || fallback`
+  (or add `|| fallback` after `Number()`), or add an explicit `isNaN` guard before using the
+  values. The fix is the same pattern already in use in several other paginated routes in this
+  codebase.
 
 ---
 
-## Cross-file seams checked
+## Confirmed correct — T-04-06 test items
+
+| Item | Finding |
+|---|---|
+| **T-04-06-01** ip_address never in `/api/v1/curator/audit` response | PASS — explicit `select([...])` list contains 8 named columns; `ip_address` is absent. Column is stored separately and never aliases into `event_data`. |
+| **T-04-06-02** `requireRole('admin')` enforced — curators get 403 | PASS — line 7 of `route.ts`; `requireRole` rank-checks `ROLE_RANK['curator']=2 < ROLE_RANK['admin']=3` and returns 403. |
+| **T-04-06-04** Layout split: `!session` → `/login`; wrong-role → `/unauthorized` | PASS — two separate `if` guards at lines 9–13 and 15–19 of `layout.tsx`; redirect targets are distinct. |
+| `/unauthorized` at top-level (no redirect loop) | PASS — `src/app/unauthorized/page.tsx` exists outside `/curator` route tree; middleware `matcher` only covers `/curator/:path*` so `/unauthorized` is never re-protected. |
+
+---
+
+## Cross-file seams checked (iteration 3)
 
 | Seam | Status |
 |---|---|
-| All three SSR pages: `(await headers()).get('cookie') ?? ''` → forwarded as `Cookie:` header | OK — B1 resolved; pattern matches `reference/page.tsx` |
-| `new/page.tsx` POST body `{ problem_statement }` → `route.ts` extracts `body.problem_statement` → `createRecord({ problemStatement })` → `records.service.ts` persists `params.problemStatement ?? ''` | OK — fully wired |
-| `route.ts` POST returns `{ status: 'ok', data: { id } }` → `new/page.tsx` reads `data.data.id` for redirect | OK — shape matches |
-| `route.ts` GET returns `{ status: 'ok', data: RecordSummary[], meta }` → `records/page.tsx` casts as `RecordListResponse { data, meta }` | OK — extra `status` field is ignored at runtime; `result.data` and `result.meta` accesses are correct |
-| `records/[id]/route.ts` GET response `{ status, data: record }` → `[id]/page.tsx` reads `(await res.json()).data` | OK — shape matches |
-| `records.service.ts` `createRecord` params type includes `problemStatement?: string` | OK — callers in `route.ts` pass it correctly |
-| E2E spec auth stub `POST /api/auth/login { role: 'curator' }` → login route accepts `body.role` | OK — route confirmed |
-| E2E `page.request.get('/api/v1/curator/records?page_size=1')` used to obtain a real record ID | OK — route exists and returns `{ data: [...] }` |
-| No residual `import { cookies }` in any curator SSR page | OK — confirmed clean |
+| `layout.tsx` `getSession()` → `redirect('/login?returnTo=/curator')` / `redirect('/unauthorized')` split | OK — two distinct branches, no collapse |
+| `layout.tsx` `session.role === 'admin'` sidebar guard → only admin sees "Audit Log" link | OK — curator cannot navigate to audit page via sidebar |
+| `audit/page.tsx` SSR fetch → `NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'` | OK — consistent with codebase-wide pattern (`curator/page.tsx`, `records/page.tsx`, `search/page.tsx`); `reference/page.tsx`'s use of `NEXTAUTH_URL` is a pre-existing outlier, out of scope |
+| `audit/page.tsx` `{ cache: 'no-store', headers: { cookie } }` → `route.ts` `getRequestSession` reads cookie | OK — same pattern as `reference/page.tsx`; cookie is forwarded via `(await headers()).get('cookie')` |
+| `route.ts` `GET` export → `page.tsx` fetch path `/api/v1/curator/audit` | OK — path matches Next.js file location `src/app/api/v1/curator/audit/route.ts` |
+| `route.ts` response shape `{ status, data, meta: { page, page_size, total } }` → `page.tsx` reads `json.data`, `json.meta.total` | OK — shapes match |
+| `requireRole(request, 'admin')` return type `{ session } \| Response` → `if (auth instanceof Response) return auth` guard | OK — standard pattern; `auth instanceof Response` is a valid discriminant for `NextResponse` |
+| E2E: `page.request.post('/api/auth/login', { data: { role: 'stakeholder' } })` → login route accepts `body.role` | OK — confirmed from login route at `src/app/api/auth/login/route.ts`:9 |
+| E2E: `/unauthorized` URL tested → `src/app/unauthorized/page.tsx` exists and renders "Access Restricted" h1 | OK |
+| No `src/app/curator/unauthorized/` directory created (would cause redirect loop) | OK — directory does not exist |
+
+---
+
+## Carry-over from iterations 1–2
+
+The three warnings from iteration 2 (W1–W3) are unchanged and remain open:
+
+### W1: `getRecord()` — non-404 API error swallowed by catch, renders misleading 404 page
+- **File:** `src/app/curator/records/[id]/page.tsx`:17–22
+
+### W2: `redirect('/login?returnTo=/curator/records')` in `[id]/page.tsx` discards the record URL
+- **File:** `src/app/curator/records/[id]/page.tsx`:27
+
+### W3: Playwright `beforeEach` uses `page.request.post(...)` for authentication — cookie propagation not guaranteed across all configurations
+- **File:** `e2e/curator-cookie-forwarding.spec.ts`:6
+
+*(Full evidence for W1–W3 in iteration-2 section above.)*
