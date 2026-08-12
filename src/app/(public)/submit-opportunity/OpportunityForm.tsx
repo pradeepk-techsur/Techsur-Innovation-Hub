@@ -178,6 +178,7 @@ export function OpportunityForm({ userInfo }: Props) {
                 rows={3}
                 className="w-full border rounded px-3 py-2"
               />
+              {errors.affectedUsers && <p className="text-red-600 text-sm mt-1">{errors.affectedUsers}</p>}
             </div>
             <div>
               <label htmlFor="impact" className="block text-sm font-medium mb-1">
@@ -190,6 +191,7 @@ export function OpportunityForm({ userInfo }: Props) {
                 rows={3}
                 className="w-full border rounded px-3 py-2"
               />
+              {errors.impact && <p className="text-red-600 text-sm mt-1">{errors.impact}</p>}
             </div>
             <div>
               <label htmlFor="currentWorkflow" className="block text-sm font-medium mb-1">
@@ -259,6 +261,7 @@ export function OpportunityForm({ userInfo }: Props) {
                 onChange={e => update('submittingOffice', e.target.value)}
                 className="w-full border rounded px-3 py-2"
               />
+              {errors.submittingOffice && <p className="text-red-600 text-sm mt-1">{errors.submittingOffice}</p>}
             </div>
             <div>
               <label htmlFor="submitterName" className="block text-sm font-medium mb-1">
@@ -271,6 +274,7 @@ export function OpportunityForm({ userInfo }: Props) {
                 onChange={e => update('submitterName', e.target.value)}
                 className="w-full border rounded px-3 py-2"
               />
+              {errors.submitterName && <p className="text-red-600 text-sm mt-1">{errors.submitterName}</p>}
             </div>
             <div>
               <label htmlFor="submitterEmail" className="block text-sm font-medium mb-1">
@@ -283,6 +287,7 @@ export function OpportunityForm({ userInfo }: Props) {
                 onChange={e => update('submitterEmail', e.target.value)}
                 className="w-full border rounded px-3 py-2"
               />
+              {errors.submitterEmail && <p className="text-red-600 text-sm mt-1">{errors.submitterEmail}</p>}
             </div>
 
             {/* F6.4 — Non-acceptance acknowledgment checkbox (explicit user action required) */}
