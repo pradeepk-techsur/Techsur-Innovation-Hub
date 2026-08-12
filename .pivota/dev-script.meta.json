@@ -1,15 +1,19 @@
 {
   "generator_version": "init-dev-server@1",
-  "catalog_entry": "react-next",
-  "generated_at": "2026-08-12T06:19:49Z",
-  "inspection_inputs_hash": "ec4009d00781477a95bdd9d22c23508d79a1bc6bf5f7e9fdfa4d333538380f03",
+  "catalog_entry": null,
+  "generated_at": "2026-08-12T15:31:04Z",
+  "inspection_inputs_hash": "86555d5a8d616c3c5bd91451f70a79151897a794f926d6ade878124e70d5bb63",
   "inspection_inputs": {
     "matched_globs": [
-      "next.config.mjs",
+      "docker-compose.yml",
+      "next.config.*",
       "package.json"
     ],
     "manifest_signatures": [
+      "docker-compose.yml:services:app,db",
       "package.json:dep:next@^15.0.0",
+      "package.json:dep:pg@^8.12.0",
+      "package.json:dep:react@^18.0.0",
       "package.json:dev-script:next dev -H 0.0.0.0 -p 3000"
     ],
     "existing_scripts": []
