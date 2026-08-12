@@ -1,9 +1,9 @@
 ---
-status: complete
+status: diagnosed
 phase: 04-curation-and-administration
 source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md, 04-06-SUMMARY.md
 started: 2026-08-12T15:38:00Z
-updated: 2026-08-12T15:47:00Z
+updated: 2026-08-12T15:52:00Z
 ---
 
 ## Current Test
@@ -114,7 +114,13 @@ advisory:
   severity: minor
   test: 9
   source: user
-  root_cause: ""
-  artifacts: []
-  missing: []
+  root_cause: "Two compounding issues: (1) The middleware in src/middleware.ts:34 uses `new URL('/login', request.url)` to build the login redirect — when the request comes in via the Daytona preview proxy, `request.url` has the external preview hostname, so the redirect lands on the external preview URL instead of the app's internal /login path. Fix: use `request.nextUrl.clone()` or a relative redirect. (2) The session cookie is SameSite=lax with no Secure flag — in the embedded Preview iframe (cross-site context), the browser drops the cookie, so the middleware sees no session and redirects to login even for a logged-in curator. The /unauthorized redirect (added in 04-06) only fires in the SSR curator layout (after the middleware), but when the cookie is dropped the middleware fires first. Fix (longer term): set SameSite=None; Secure on the session cookie."
+  artifacts:
+    - path: "src/middleware.ts"
+      issue: "Line 34: new URL('/login', request.url) — uses request.url which carries the proxy's external hostname; should use a path-relative redirect"
+    - path: "src/lib/auth/session.ts"
+      issue: "setSessionCookie() sets SameSite=lax (no Secure) — cookie dropped in cross-site Preview iframe"
+  missing:
+    - "Fix middleware.ts login redirect to use path-relative URL (not request.url origin) so proxy hostname doesn't leak into redirect"
+    - "Set SameSite=None; Secure on session cookie in setSessionCookie() for iframe-safe preview behavior"
   debug_session: ""
