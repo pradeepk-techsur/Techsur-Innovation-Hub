@@ -8,6 +8,7 @@
     "start": "next start -H 0.0.0.0 -p 3000",
     "db:migrate": "tsx src/lib/db/migrate.ts",
     "db:seed": "tsx src/lib/db/seed.ts",
+    "db:seed-launch": "tsx src/lib/db/seed-launch.ts && tsx src/lib/db/seed-launch-artifacts.ts",
     "lint": "next lint"
   },
   "dependencies": {
