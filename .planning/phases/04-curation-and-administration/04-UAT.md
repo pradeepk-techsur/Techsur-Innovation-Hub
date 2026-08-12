@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 04-curation-and-administration
-source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md
-started: 2026-08-12T06:28:46Z
-updated: 2026-08-12T06:44:00Z
+source: 04-01-SUMMARY.md, 04-02-SUMMARY.md, 04-03-SUMMARY.md, 04-04-SUMMARY.md, 04-05-SUMMARY.md, 04-06-SUMMARY.md
+started: 2026-08-12T15:38:00Z
+updated: 2026-08-12T15:47:00Z
 ---
 
 ## Current Test
@@ -28,17 +28,13 @@ result: pass
 expected: For a draft record in the editor, "Submit for Review" advances state to submitted_for_review. From submitted_for_review, "Publish" (with all required fields filled) advances to published. Each transition button is state-appropriate (only valid next states shown).
 result: pass
 
-### 5. Audit history records every change
-expected: On any record that has been created and had state changes, the audit history panel in the record editor shows a chronological log of events — record_created, publication_state_changed — with actor name and timestamp. IP addresses are not exposed in the curator view.
-result: issue
-reported: "Instructions to test are not clear. I had to login as an admin to find 'Audit Log' and not 'Audit Panel'. Clicking it gave a 404 error."
-severity: blocker
+### 5. Audit log page works (gap closure verification)
+expected: Log in as admin. In the /curator sidebar, click "Audit Log". The page loads at /curator/audit showing a table of audit events with columns for actor name, event type, target, and timestamp. No 404. No IP addresses visible. The page is only accessible to admins (curators redirected to /unauthorized).
+result: pass
 
-### 6. RBAC enforcement — unauthorized access blocked
-expected: (a) Unauthenticated access to /curator redirects to login. (b) A stakeholder-role user gets 403 on any /api/v1/curator/* endpoint. (c) A curator-role user gets 403 on admin-only endpoints (/api/v1/curator/settings). (d) Admin-only /curator/settings page redirects curators away (not 500).
-result: issue
-reported: "Everything works except unauthorized redirects to login gives me /login?returnTo=/curator. This is when I am a Stakeholder trying to access curator settings"
-severity: minor
+### 6. RBAC enforcement — unauthorized access shows /unauthorized page (gap closure verification)
+expected: (a) Unauthenticated access to /curator redirects to /login. (b) A stakeholder-role user who tries to access /curator is redirected to /unauthorized (the "Access Restricted" page) — NOT to /login. (c) A curator-role user gets 403 on admin-only endpoints like /api/v1/curator/settings. (d) Admin-only /curator/settings page redirects curators to /unauthorized.
+result: pass
 
 ### 7. Submission queues — opportunity and contribution
 expected: /curator/submissions/opportunity shows the opportunity queue with status filter tabs. /curator/submissions/contribution shows the contribution queue. Each item shows submitter, office, and content. Inline disposition (Accept/Decline/Needs More Info) works and records the decision.
@@ -50,7 +46,9 @@ result: pass
 
 ### 9. Settings management (admin only)
 expected: Admin-role user can access /curator/settings and update settings such as engagement_routing_address. The change persists (visible after page reload). A curator-role user cannot access settings — the page redirects them away from /curator/settings.
-result: pass
+result: issue
+reported: "logged in as curator and went to /curator/settings instead of unauthorized I am getting redirected to https://3000-pivota-sandbox-f261f1ce-tjoo8q-3b1e974678ba6d7b.preview.pivota-ng.pivota.dev/curator"
+severity: minor
 
 ### 10. Content model reference page
 expected: /curator/reference shows the full governance reference: 6 maturity values with descriptions, 8 review status values, 4 trust axioms, and the 15 publication gate field requirements. The page is read-only reference material.
@@ -59,8 +57,8 @@ result: pass
 ## Summary
 
 total: 10
-passed: 8
-issues: 2
+passed: 9
+issues: 1
 pending: 0
 skipped: 0
 
@@ -68,78 +66,55 @@ skipped: 0
 
 boot: 200
 preview_path: 200
-compose: app=Up db=Up(healthy)
-routes_probed: 12 ok / 0 failed
+compose: app=Up(healthy) db=Up(healthy)
+routes_probed: 10 ok / 0 failed
 cookie: iframe-hostile: SameSite=lax Secure=false
-e2e: expected=55 unexpected=1 skipped=0 (1 advisory failure: F3.9 "Recommended Next Step" naming mismatch from Phase 1 — not a Phase 4 gap)
+e2e: expected=63 unexpected=1 skipped=0 (1 pre-existing advisory: F3.9 "Recommended Next Step" naming mismatch from Phase 1 — not a Phase 4 gap)
 per_test:
   - test: 1
     verdict: pass
-    note: "🤖 Auto-check: Cookie-forwarding fix confirmed. SSR /curator page loads 'published' data (len=64k, 'unavailable'=false). Dashboard API returns 200 with {records: {published:3,...}, pendingOpportunities:0, unreadEngagement:0}. No 'Dashboard data unavailable' text on page."
+    note: "🤖 Auto-check: Dashboard API returns 200 with record counts. /curator SSR 307-redirects to /login for unauthenticated (correct). With curator cookie: page loads (200). No 'unavailable' markers in log."
   - test: 2
     verdict: pass
-    note: "🤖 Auto-check: /curator/records/new page contains 'problem_statement' field (grep count=1). POST /api/v1/curator/records with title+problem_statement returns 201. Record editor page at /curator/records/{id} loads (len=75k, not-found-page=false, lifecycle/publish present=true, problem_statement present=true)."
+    note: "🤖 Auto-check: /curator/records/new returns 200. POST /api/v1/curator/records with title+problem_statement returns 201. problem_statement field confirmed present in page source."
   - test: 3
     verdict: pass
-    note: "🤖 Auto-check: POST /api/v1/curator/records/{id}/publish on an empty record returns 422 PUBLICATION_GATE_FAILED with 14 field-level errors (summary, problemStatement, missionAreas, hypothesisOrObjective, technologyAreas, outcomeSummary, sourceBasis, keyFindingsGateCheck, maturity, reviewStatuses, lastReviewedDate, ownerSteward, attributionStatement, applicableDisclaimer). Gate working correctly."
+    note: "🤖 Auto-check: POST /api/v1/curator/records/{id}/publish on empty draft returns 422 PUBLICATION_GATE_FAILED with 14 field-level errors. Gate working correctly."
   - test: 4
     verdict: pass
     note: "🤖 Auto-check: POST /api/v1/curator/records/{id}/submit-for-review returns 200. Lifecycle transition confirmed."
   - test: 5
     verdict: pass
-    note: "🤖 Auto-check: GET /api/v1/curator/records/{id}/audit returns 200 with audit events array. record_created event confirmed. IP addresses not present in response."
+    note: "🤖 Auto-check: GET /curator/audit (admin cookie) → 200 (not 404). Audit API GET /api/v1/curator/audit → 200 with {status:ok,data:[],meta:{page:1,page_size:50,total:0}}. IP address not in API response. /curator/audit now resolves (gap closure 04-06 confirmed). Note: DB is freshly migrated so audit event list is empty — the page structure is present; human should verify the table heading/columns are visible."
   - test: 6
     verdict: pass
-    note: "🤖 Auto-check: (a) /curator unauthenticated → 307 redirect. (b) Stakeholder → 403 on /api/v1/curator/*. (c) Curator → 403 on /api/v1/curator/settings. (d) All RBAC checks confirmed."
+    note: "🤖 Auto-check: Stakeholder cookie + GET /curator → 307 redirect to http://127.0.0.1:3000/unauthorized (not /login). /unauthorized page → 200 with 'Access Restricted' heading and 'HTTP 403 — Authenticated but insufficient role' text. Gap closure 04-06 confirmed."
   - test: 7
     verdict: skipped (needs human)
-    note: "🤖 Auto-check: GET /api/v1/curator/submissions/opportunity returns 200. Submission queue UI at /curator/submissions/opportunity returns 200. No test submissions in seeded data to exercise disposition flow — needs human to submit then test."
+    note: "🤖 Auto-check: GET /api/v1/curator/submissions/opportunity → 200. GET /curator/submissions/opportunity → 200. No seeded submission data in fresh DB — disposition flow needs human to submit an opportunity first."
   - test: 8
     verdict: skipped (needs human)
-    note: "🤖 Auto-check: GET /api/v1/curator/engagement returns 200. No test engagements in seeded data for inline status update flow — needs human."
+    note: "🤖 Auto-check: GET /api/v1/curator/engagement → 200. No seeded engagement data in fresh DB — inline status update needs human."
   - test: 9
     verdict: pass
-    note: "🤖 Auto-check: Admin PUT /api/v1/curator/settings returns 200. Curator → 403 on settings API. Settings page responds 200."
+    note: "🤖 Auto-check: Admin PUT /api/v1/curator/settings → 200. Curator → 403 on settings API. GET /curator/settings (curator cookie) → follows redirect to /unauthorized."
   - test: 10
     verdict: pass
-    note: "🤖 Auto-check: GET /api/v1/curator/reference returns 200 with 6 maturity values, 8 review statuses, 4 trust axioms, 15 gate fields."
+    note: "🤖 Auto-check: GET /api/v1/curator/reference → 200 with 6 maturity values, 8 review statuses, 4 trust axioms, 15 gate fields."
 
 advisory:
-  - "Session cookie is SameSite=lax Secure=false — login will appear to fail inside the embedded Preview iframe. Use 'Open in new tab' for curator testing. App-side fix: set SameSite=None; Secure on the session cookie."
-  - "E2E: 55 passed / 1 failed. Failure is F3.9 (Phase 1 naming mismatch 'Next Actions' vs 'Recommended Next Step') — pre-existing advisory, not a Phase 4 gap."
+  - "Session cookie is SameSite=lax Secure=false — login will appear to fail inside the embedded Preview iframe. Use 'Open in new tab' for all curator testing. App-side fix: set SameSite=None; Secure on the session cookie."
+  - "E2E: 63 passed / 1 failed. Failure is F3.9 (Phase 1 naming mismatch 'Next Actions' vs 'Recommended Next Step') — pre-existing advisory, not a Phase 4 gap."
 
 ## Gaps
 
-- truth: "The curator/admin sidebar 'Audit Log' link leads to a functional audit log page showing chronological events with actor name and timestamp; no IP addresses are exposed"
+- truth: "A curator-role user attempting to access /curator/settings is redirected to /unauthorized (not to the external preview URL or /login)"
   status: failed
-  reason: "User reported: Instructions to test are not clear. I had to login as an admin to find 'Audit Log' and not 'Audit Panel'. Clicking it gave a 404 error."
-  severity: blocker
-  test: 5
-  source: user
-  root_cause: "src/app/curator/layout.tsx line 38 has <Link href='/curator/audit'> (visible to admin only) but no page file exists at src/app/curator/audit/. Next.js has no route to serve → 404. The per-record audit API (/api/v1/curator/records/{id}/audit) works but there is no global audit log page or global audit API."
-  artifacts:
-    - path: "src/app/curator/layout.tsx"
-      issue: "Line 38: <Link href='/curator/audit'>Audit Log</Link> exists and is rendered for admins but has no corresponding page"
-    - path: "src/app/curator/audit/"
-      issue: "Directory does not exist — no page.tsx ever created"
-  missing:
-    - "Create src/app/curator/audit/page.tsx — Server Component querying audit_events DESC, selecting actor_name/event_type/target_type/target_title/occurred_at, explicitly omitting ip_address"
-    - "Optionally add src/app/api/v1/curator/audit/route.ts for a paginated global audit API (requireRole('admin'))"
-  debug_session: ""
-
-- truth: "A logged-in stakeholder attempting to access /curator receives a 403 (not a redirect to login) — confirming the session is recognized but the role is insufficient"
-  status: failed
-  reason: "User reported: Everything works except unauthorized redirects to login gives me /login?returnTo=/curator. This is when I am a Stakeholder trying to access curator settings"
+  reason: "User reported: logged in as curator and went to /curator/settings instead of unauthorized I am getting redirected to https://3000-pivota-sandbox-f261f1ce-tjoo8q-3b1e974678ba6d7b.preview.pivota-ng.pivota.dev/curator"
   severity: minor
-  test: 6
+  test: 9
   source: user
-  root_cause: "src/app/curator/layout.tsx collapses two distinct failure modes (no session + wrong role) into one redirect('/login?returnTo=/curator'). For a stakeholder with a valid session, the layout should return 403, not redirect to login. The SameSite=lax iframe effect masked this during testing (cookie dropped → middleware fires first → same redirect URL), but in a real browser tab with a valid stakeholder session the layout code is reached and produces the wrong response."
-  artifacts:
-    - path: "src/app/curator/layout.tsx"
-      issue: "Lines 9-11: if (!session || wrong-role) → redirect('/login') — merges 'unauthenticated' and 'wrong role' into the same redirect; wrong-role should return 403"
-    - path: "src/middleware.ts"
-      issue: "Lines 14-25: hasValidSession() checks JWT validity only, not role — role check happens in layout, not middleware"
-  missing:
-    - "Split layout.tsx auth check: !session → redirect to login; session present but wrong role → return 403 response (use Next.js 15 forbidden() or a dedicated /curator/unauthorized page)"
+  root_cause: ""
+  artifacts: []
+  missing: []
   debug_session: ""
-
