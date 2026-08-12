@@ -1,7 +1,7 @@
 import { getSession } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { cookies } from 'next/headers';
+import { headers } from 'next/headers';
 
 interface RecordSummary {
   id: string;
@@ -50,7 +50,7 @@ async function getRecords(state: string | null, page: number): Promise<RecordLis
   const params = new URLSearchParams({ page: String(page), page_size: '20' });
   if (state) params.set('state', state);
   try {
-    const cookieHeader = (await cookies()).toString();
+    const cookieHeader = (await headers()).get('cookie') ?? '';
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}/api/v1/curator/records?${params}`,
       { cache: 'no-store', headers: { Cookie: cookieHeader } }
