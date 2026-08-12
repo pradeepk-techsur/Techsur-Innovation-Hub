@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 03-engagement-flows
 source: 03-01-SUMMARY.md, 03-02-SUMMARY.md, 03-03-SUMMARY.md, 03-04-SUMMARY.md
 started: 2026-08-11T21:02:29Z
-updated: 2026-08-11T21:18:00Z
+updated: 2026-08-12T04:00:00Z
 ---
 
 ## Current Test
@@ -23,20 +23,16 @@ result: pass
 ### 3. Opportunity Submission — 3-Step Form
 expected: After logging in as a Stakeholder, navigate to /submit-opportunity. A 3-step form loads. Step 1 asks for a mission problem description (not a solution or application request). Step 2 asks for context and impact. Step 3 includes required acknowledgment checkboxes and submitter contact info. A non-acceptance notice is visible (submitting does not imply I&R acceptance). After completing all steps and submitting, a confirmation page shows an OPP-YYYY-NNN reference number and restates the non-acceptance language.
 result: issue
-reported: "Confirmation page did not show up after submitting"
+reported: "Form stays on /submit-opportunity after Submit — no navigation to confirmation. Console shows 422. API returns field-level validation errors but the form shows no visible error messages to indicate which fields failed."
 severity: major
 
 ### 4. Innovation Contribution — 2-Step Form
 expected: Navigate to /submit-contribution. A separate, visually distinct form from /submit-opportunity loads (different title, different purpose language). Step 1 asks about the innovation work. Step 2 requires attribution fields: contributing office, contributor names, current owner. A non-endorsement notice appears (submitting does not imply central endorsement). After submitting, a CONTRIB-YYYY-NNN reference number is displayed.
-result: issue
-reported: "Confirmation page did not show up after submission"
-severity: major
+result: pass
 
 ### 5. Engagement Request Modal on Record Page
 expected: Navigate to any published innovation record (e.g. /records/audio-security-poc). The "Next Actions" section shows engagement buttons (Request Demo, Discuss Use Case, etc.) — not plain mailto links. Clicking one opens a modal with a form asking for name, office, email, description, and a consent checkbox. After submitting the modal, a reference number (ENG-YYYY-NNN) is displayed confirming the request was recorded.
-result: issue
-reported: "There is no Next actions section in /records/audio-security-poc. There is only a Contact I&R button that really does not do anything."
-severity: major
+result: pass
 
 ### 6. Logout and Session Clear
 expected: While logged in, click the Sign Out button in the nav. The session ends, the nav reverts to showing "Sign In", and attempting to access /submit-opportunity redirects to /login again. The session cookie is cleared.
@@ -45,8 +41,8 @@ result: pass
 ## Summary
 
 total: 6
-passed: 3
-issues: 3
+passed: 5
+issues: 1
 pending: 0
 skipped: 0
 
@@ -82,53 +78,16 @@ per_test:
 
 - truth: "After completing all 3 steps of the opportunity submission form and submitting, a confirmation page with an OPP-YYYY-NNN reference number is shown"
   status: failed
-  reason: "User reported: Confirmation page did not show up after submitting"
+  reason: "User reported: Form stays on /submit-opportunity after Submit — no navigation to confirmation. Console shows 422. API returns field-level validation errors but the form shows no visible error messages to indicate which fields failed."
   severity: major
   test: 3
   source: user
-  root_cause: "OpportunityForm.tsx handleSubmit (lines 49-84) has no try/catch — any exception silently prevents router.push to the confirmation page. Additionally, generateReferenceNumber DB call in route.ts sits outside try/catch block (line 67 vs line 69); if DB fails, Next.js returns HTML 500 instead of structured JSON, causing res.json() to throw SyntaxError in the form."
+  root_cause: "OpportunityForm.tsx handleSubmit correctly calls setErrors(fields) when the API returns 422, but the form UI only renders errors._ (the generic error element at the bottom of step 3). Per-field errors (e.g. errors.problemDescription, errors.affectedUsers, errors.impact) are never displayed next to the corresponding inputs — so a validation failure leaves the form stuck with no visible indication of what needs fixing. Server log confirms repeated 422 responses for minimum-length field violations."
   artifacts:
     - path: "src/app/(public)/submit-opportunity/OpportunityForm.tsx"
-      issue: "handleSubmit lacks try/catch and finally block — exceptions leave submitting=true and silently abort navigation"
-    - path: "src/app/api/v1/submissions/opportunity/route.ts"
-      issue: "generateReferenceNumber() call at line 67 is outside the try/catch block starting at line 69"
+      issue: "Per-field validation errors from the API (setErrors(fields)) are stored in state but never rendered next to the input fields — only errors._ is displayed, which is only set on generic/network errors, not field-level 422 responses"
   missing:
-    - "Add try/catch/finally to handleSubmit in OpportunityForm.tsx"
-    - "Move generateReferenceNumber inside try block in route.ts"
-  debug_session: ".planning/debug/opportunity-confirmation-not-shown.md"
-
-- truth: "After completing the 2-step innovation contribution form and submitting, a confirmation page with a CONTRIB-YYYY-NNN reference number is shown"
-  status: failed
-  reason: "User reported: Confirmation page did not show up after submission"
-  severity: major
-  test: 4
-  source: user
-  root_cause: "ContributionForm.tsx handleSubmit (lines 56-89) has no try/catch and no finally — exceptions leave submitting=true permanently. Additionally the Step 1 Next button (line 373) performs no validation before advancing; if user advances with empty fields and submits, the API returns 422 with step-1 field errors that are set via setErrors() but those error elements are inside the step===1 conditional and invisible on step 2."
-  artifacts:
-    - path: "src/app/(public)/submit-contribution/ContributionForm.tsx"
-      issue: "handleSubmit lacks try/catch/finally; Step 1 Next button (line 373) skips client-side validation; step-1 API errors rendered invisible when on step 2"
-  missing:
-    - "Add try/catch/finally to handleSubmit in ContributionForm.tsx"
-    - "Add step-1 client-side validation before allowing Next button advance"
-    - "Add step reset to step 1 when API returns step-1 field errors"
-  debug_session: ".planning/debug/contribution-confirmation-not-showing.md"
-
-- truth: "The record detail page Next Actions section shows engagement type buttons (Request Demo, Discuss Use Case, etc.) that open a modal form capturing name/office/email/description; submission returns an ENG-YYYY-NNN reference number"
-  status: failed
-  reason: "User reported: There is no Next actions section in /records/audio-security-poc. There is only a Contact I&R button that really does not do anything."
-  severity: major
-  test: 5
-  source: user
-  root_cause: "record_next_actions table is never seeded in seed.ts — NextActionCTAs receives empty actions array and falls back to a single default 'contact_ir' button (line 29 of NextActionCTAs.tsx). Additionally, the section is titled 'Recommended Next Step' (ExecutiveView.tsx line 133) not 'Next Actions'."
-  artifacts:
-    - path: "src/lib/db/seed.ts"
-      issue: "No INSERT into record_next_actions table — engagement buttons for seeded records are never created"
-    - path: "src/app/(public)/records/[slug]/ExecutiveView.tsx"
-      issue: "Section title is 'Recommended Next Step' (line 133) instead of 'Next Actions'"
-    - path: "src/app/(public)/records/[slug]/NextActionCTAs.tsx"
-      issue: "Fallback at line 29 renders single 'contact_ir' button when actions array is empty"
-  missing:
-    - "Seed record_next_actions rows for audio-security-poc (request_demo, contact_ir) in seed.ts"
-    - "Rename section heading in ExecutiveView.tsx line 133 to 'Next Actions'"
-  debug_session: ".planning/debug/no-next-actions-engagement-modal.md"
+    - "Add per-field error display to each input in OpportunityForm.tsx (render errors[fieldId] below the corresponding input, matching pattern in ContributionForm.tsx if that form has per-field displays)"
+    - "Optionally add client-side min-length validation on step advance to surface errors earlier"
+  debug_session: ""
 
