@@ -121,10 +121,22 @@ Plans:
 - [ ] 05-02-PLAN.md — 8-record launch seed (all 6 maturity levels, 3+ mission areas, 4+ tech areas, 2+ offices, lifecycle transparency) with artifact rows (SEED-01–12)
 - [ ] 05-03-PLAN.md — axe-core accessibility tests (WCAG 2.1 AA), PRD §12 launch acceptance suite, docs/LAUNCH-CHECKLIST.md + docs/DEPLOYMENT-SECURITY.md (SEED-11, SEC-08/09/10)
 
+### Phase 6: End-to-End Verification
+**Depends on**: Phase 5
+**Goal**: Every v1 requirement is verified end-to-end against the running application; failures trigger user clarification and targeted fixes; all artifacts (REQUIREMENTS.md, ROADMAP.md, test specs, LAUNCH-CHECKLIST.md) reflect final verified state
+**Requirements**: All 87 v1 requirements (AUTH-01–10, F1.1–F9.16, IA-01–05, SEED-01–12)
+**Plans**: 4 plans
+
+Plans:
+- [ ] 06-01-PLAN.md — Requirements traceability matrix + automated test scaffold: one test per requirement mapped to its REQ-ID, organized by category
+- [ ] 06-02-PLAN.md — Execute full requirement test suite; collect failures; interactive triage loop (ask user root cause for each failure, classify as bug/gap/design-decision)
+- [ ] 06-03-PLAN.md — Fix all bugs and gaps identified in triage; update code, seed data, and specs as needed; re-run failing tests to confirm green
+- [ ] 06-04-PLAN.md — Final sign-off: mark verified requirements in REQUIREMENTS.md, update ROADMAP.md progress, produce VERIFICATION-REPORT.md
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -133,3 +145,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 3. Engagement Flows | 0/4 | Planned | - |
 | 4. Curation and Administration | 0/4 | Planned | - |
 | 5. Launch Readiness | 0/3 | Planned | - |
+| 6. End-to-End Verification | 0/4 | Planned | - |
