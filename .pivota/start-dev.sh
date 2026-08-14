@@ -151,8 +151,8 @@ done
 # NB: no migrate hook here. This slot runs BEFORE `npm ci` (no node_modules —
 # a node/prisma migrator would fail with `prisma: not found`; that exact
 # swallowed failure once shipped an empty-DB app). A DB-backed Next.js app
-# provisions its DB via its own docker-compose.yml, where migrate -> seed ->
-# serve run inside the app service command AFTER the image's install step --
+# provisions its DB via its own docker-compose.yml, where migrate → seed →
+# serve run inside the app service command AFTER the image's install step —
 # see references/runtime-environment.md §3.
 
 # === D-12: idempotent install via lockfile hash + presence check ===
@@ -192,14 +192,6 @@ run_install() {
   echo "[pivota] FATAL install failed (exit=$rc) — dev server cannot start; resolve the dependency conflict in the manifest" >&2
   return "$rc"
 }
-
-# Detect alternate lock files (pnpm, yarn) — wrapper picks the first one present
-for CANDIDATE_LOCK in package-lock.json pnpm-lock.yaml yarn.lock; do
-  if [[ -f "$CANDIDATE_LOCK" ]]; then
-    LOCK_FILE_PATH="$CANDIDATE_LOCK"
-    break
-  fi
-done
 
 if [[ -n "$LOCK_FILE_PATH" && -f "$LOCK_FILE_PATH" ]]; then
   CURRENT_HASH=$(sha256sum "$LOCK_FILE_PATH" | cut -d' ' -f1)

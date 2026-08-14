@@ -12,11 +12,11 @@ The Hub delivers in five phases that follow the primary user journey: first buil
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation** - Database schema, application structure, anonymous catalog and full innovation record display, dev auth stub
-- [ ] **Phase 2: Discovery** - Problem-oriented full-text search, faceted filtering, executive/technical perspective toggle, lessons-learned content model
-- [ ] **Phase 3: Engagement Flows** - Stakeholder authentication, opportunity submission, innovation contribution, engagement routing
-- [ ] **Phase 4: Curation and Administration** - Full curator/admin interface, publication lifecycle, audit history, submission and engagement queues, RBAC enforcement
-- [ ] **Phase 5: Launch Readiness** - IA completeness, navigation verification, accessibility verification, content seeding (≥8 records), deployment security checks
+- [x] **Phase 1: Foundation** - Database schema, application structure, anonymous catalog and full innovation record display, dev auth stub
+- [x] **Phase 2: Discovery** - Problem-oriented full-text search, faceted filtering, executive/technical perspective toggle, lessons-learned content model
+- [x] **Phase 3: Engagement Flows** - Stakeholder authentication, opportunity submission, innovation contribution, engagement routing
+- [x] **Phase 4: Curation and Administration** - Full curator/admin interface, publication lifecycle, audit history, submission and engagement queues, RBAC enforcement
+- [x] **Phase 5: Launch Readiness** - IA completeness, navigation verification, accessibility verification, content seeding (≥8 records), deployment security checks
 
 ## Phase Details
 
@@ -123,16 +123,19 @@ Plans:
 
 ### Phase 6: End-to-End Verification
 **Depends on**: Phase 5
-**Status**: passed
+**Status**: completed (2026-08-14)
+**Completed**: 2026-08-14
 **Goal**: Every v1 requirement is verified end-to-end against the running application; failures trigger user clarification and targeted fixes; all artifacts (REQUIREMENTS.md, ROADMAP.md, test specs, LAUNCH-CHECKLIST.md) reflect final verified state
 **Requirements**: All 87 v1 requirements (AUTH-01–10, F1.1–F9.16, IA-01–05, SEED-01–12)
 **Plans**: 4 plans
 
+Result: 87/87 v1 requirements verified — 100/100 Playwright tests passing.
+
 Plans:
-- [ ] 06-01-PLAN.md — Requirements traceability matrix + automated test scaffold: one test per requirement mapped to its REQ-ID, organized by category
-- [ ] 06-02-PLAN.md — Execute full requirement test suite; collect failures; interactive triage loop (ask user root cause for each failure, classify as bug/gap/design-decision)
-- [ ] 06-03-PLAN.md — Fix all bugs and gaps identified in triage; update code, seed data, and specs as needed; re-run failing tests to confirm green
-- [ ] 06-04-PLAN.md — Final sign-off: mark verified requirements in REQUIREMENTS.md, update ROADMAP.md progress, produce VERIFICATION-REPORT.md
+- [x] 06-01-PLAN.md — Requirements traceability matrix + automated test scaffold: one test per requirement mapped to its REQ-ID, organized by category
+- [x] 06-02-PLAN.md — Execute full requirement test suite; collect failures; interactive triage loop (ask user root cause for each failure, classify as bug/gap/design-decision)
+- [x] 06-03-PLAN.md — Fix all bugs and gaps identified in triage; update code, seed data, and specs as needed; re-run failing tests to confirm green
+- [x] 06-04-PLAN.md — Final sign-off: mark verified requirements in REQUIREMENTS.md, update ROADMAP.md progress, produce VERIFICATION-REPORT.md
 
 ## Progress
 
@@ -141,9 +144,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/3 | Planned | - |
-| 2. Discovery | 0/4 | Planned | - |
-| 3. Engagement Flows | 0/4 | Planned | - |
-| 4. Curation and Administration | 0/4 | Planned | - |
-| 5. Launch Readiness | 0/3 | Planned | - |
-| 6. End-to-End Verification | 0/4 | Planned | - |
+| 1. Foundation | 3/3 | Completed | 2026-08-11 |
+| 2. Discovery | 4/4 | Completed | 2026-08-11 |
+| 3. Engagement Flows | 6/6 | Completed | 2026-08-12 |
+| 4. Curation and Administration | 7/7 | Completed | 2026-08-12 |
+| 5. Launch Readiness | 3/3 | Completed | 2026-08-12 |
+| 6. End-to-End Verification | 4/4 | Completed | 2026-08-14 |

@@ -51,6 +51,31 @@
 | Publishing authority designated | ⬜ Pending | Required before publication workflow baseline |
 | Initial taxonomy values confirmed | ⬜ Pending | Mission areas and technology areas to be populated in hub_settings |
 
+## Requirement Verification (Phase 6)
+
+All 87 v1 requirements verified end-to-end via Playwright test suite (2026-08-14).
+
+| # | Category | Requirements | Verified | Status |
+|---|----------|-------------|----------|--------|
+| 1 | AUTH | AUTH-01–10 (10) | 10/10 | ✓ |
+| 2 | F1 Catalog | F1.1–F1.6 (6) | 6/6 | ✓ |
+| 3 | F2 Search | F2.1–F2.5 (5) | 5/5 | ✓ |
+| 4 | F3 Record | F3.1–F3.9 (9) | 9/9 | ✓ |
+| 5 | F4 Perspectives | F4.1–F4.4 (4) | 4/4 | ✓ |
+| 6 | F5 Lessons Learned | F5.1–F5.5 (5) | 5/5 | ✓ |
+| 7 | F6 Opportunity | F6.1–F6.5 (5) | 5/5 | ✓ |
+| 8 | F7 Contribution | F7.1–F7.4 (4) | 4/4 | ✓ |
+| 9 | F8 Engagement | F8.1–F8.6 (6) | 6/6 | ✓ |
+| 10 | F9 Curation | F9.1–F9.16 (16) | 16/16 | ✓ |
+| 11 | IA | IA-01–05 (5) | 5/5 | ✓ |
+| 12 | SEED | SEED-01–12 (12) | 12/12 | ✓ |
+| **Total** | | **87** | **87/87** | **✓ Complete** |
+
+**Verification test suite:** `npx playwright test e2e/requirements/ --reporter=list`  
+**Results file:** `requirements-final-results.json`  
+**Full report:** `docs/VERIFICATION-REPORT.md`  
+**Test suite result:** 100/100 tests passing
+
 ## Sign-Off
 
 | Role | Name | Date | Signature |

@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-08-12T21:58:34.848Z"
+stopped_at: Completed 06-04-PLAN.md
+last_updated: "2026-08-14T02:53:38.625Z"
 last_activity: 2026-08-12 — Completed 05-02 launch content seed (8 records, all SEED dimensions covered)
 progress:
-  total_phases: 9
-  completed_phases: 4
-  total_plans: 23
-  completed_plans: 22
+  total_phases: 11
+  completed_phases: 5
+  total_plans: 27
+  completed_plans: 26
   percent: 87
 ---
 
@@ -73,6 +73,10 @@ Progress: [█████████░] 87%
 | Phase 05-launch-readiness P02 | 7min | 1 tasks | 4 files |
 | Phase 05-launch-readiness P01 | 10min | 1 tasks | 6 files |
 | Phase 05-launch-readiness P03 | 7min | 2 tasks | 8 files |
+| Phase 06-end-to-end-verification P01 | 5min | 2 tasks | 13 files |
+| Phase 06-end-to-end-verification P02 | 5min | 1 tasks | 2 files |
+| Phase 06-end-to-end-verification P03 | 12min | 1 tasks | 8 files |
+| Phase 06-end-to-end-verification P04 | 13min | 1 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -123,6 +127,15 @@ Recent decisions affecting current work:
 - [Phase 05-launch-readiness]: Home page moved from src/app/page.tsx to src/app/(public)/page.tsx so all public pages including home have auth-state nav (IA-05)
 - [Phase 05-launch-readiness]: Skip link target requires tabIndex={-1} on div#main-content for programmatic focus (WCAG 2.4.1)
 - [Phase 05-launch-readiness]: X-Frame-Options DENY intentionally omitted at app level — Pivota preview iframe must embed the app; CSP frame-ancestors set at load balancer
+- [Phase 06-end-to-end-verification]: Test titles begin with [REQ-ID] in brackets for machine-readable parsing by run-all.ts runner
+- [Phase 06-end-to-end-verification]: 11 spec files organized by category matching REQUIREMENTS.md structure; run-all.ts produces requirements-results.json for triage phase
+- [Phase 06-end-to-end-verification]: Cookie-transfer pattern: APIRequestContext cookies don't transfer to browser page in Playwright test specs
+- [Phase 06-end-to-end-verification]: F8.4/F8.5 gap: settings GET restricted to admin role; response is object not array with setting_key property
+- [Phase 06-end-to-end-verification]: F9.9 gap: POST /curator/records response omits state field; test expects {state:'draft'}
+- [Phase 06-end-to-end-verification]: F8.4/F8.5: tests updated to use admin role for GET /curator/settings (admin-only by AUTH-03 design); response accessed as keyed object not array
+- [Phase 06-end-to-end-verification]: F9.9: POST /curator/records response now includes state:'draft' alongside id — implementation fix ensuring response matches actual record state
+- [Phase 06-end-to-end-verification]: Cookie-transfer pattern: page.request.post() (not request.post()) required so auth cookies flow into browser page context in Playwright
+- [Phase 06-end-to-end-verification]: 87/87 v1 requirements verified — 100/100 Playwright tests passing; Phase 6 End-to-End Verification complete
 
 ### Pending Todos
 
@@ -136,6 +149,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-12T21:58:34.846Z
-Stopped at: Completed 05-03-PLAN.md
+Last session: 2026-08-14T02:53:38.623Z
+Stopped at: Completed 06-04-PLAN.md
 Resume file: None
