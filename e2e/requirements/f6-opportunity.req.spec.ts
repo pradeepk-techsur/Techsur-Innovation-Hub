@@ -6,12 +6,12 @@ import { test, expect } from '@playwright/test';
 
 test.describe('F6 — Opportunity Submission', () => {
 
-  test.beforeEach(async ({ request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test.beforeEach(async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
   });
 
-  test('[F6.1] Submission flow starts with problem description, not application request', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F6.1] Submission flow starts with problem description, not application request', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-opportunity');
     // Page should describe problem-first framing
     const text = await page.textContent('main');
@@ -19,8 +19,8 @@ test.describe('F6 — Opportunity Submission', () => {
     expect(text).not.toMatch(/what application do you want/i);
   });
 
-  test('[F6.2] Form captures all required fields', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F6.2] Form captures all required fields', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-opportunity');
     // Key fields visible: problem, who is affected, impact
     const text = await page.textContent('main');
@@ -35,8 +35,8 @@ test.describe('F6 — Opportunity Submission', () => {
     await expect(selects.first()).toBeVisible();
   });
 
-  test('[F6.4] Non-acceptance notice explicitly stated', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F6.4] Non-acceptance notice explicitly stated', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-opportunity');
     const text = await page.textContent('main');
     expect(text).toMatch(/does not.*imply.*acceptance|does not.*commit|not.*imply.*acceptance/i);

@@ -65,9 +65,7 @@ test.describe('F3 — Innovation Record', () => {
   test('[F3.9] Record provides next action CTAs', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
     // At least one action button/link in the record
-    const ctaRegion = page.getByLabel(/next action options/i).or(
-      page.getByRole('region', { name: /next action/i })
-    );
+    const ctaRegion = page.getByLabel(/next action options/i);
     await expect(ctaRegion).toBeVisible();
     await expect(ctaRegion.getByRole('button').first().or(ctaRegion.getByRole('link').first())).toBeVisible();
   });

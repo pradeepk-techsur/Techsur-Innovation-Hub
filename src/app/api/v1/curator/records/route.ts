@@ -52,5 +52,5 @@ export async function POST(request: Request) {
     actorName: auth.session.name,
   });
 
-  return NextResponse.json({ status: 'ok', data: { id } }, { status: 201 });
+  return NextResponse.json({ status: 'ok', data: { id, state: 'draft' } }, { status: 201 });
 }

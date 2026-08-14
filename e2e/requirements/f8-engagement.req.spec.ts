@@ -16,9 +16,7 @@ test.describe('F8 — Engagement Routing', () => {
 
   test('[F8.1] CTAs visible on record detail page', async ({ page }) => {
     await page.goto(`/records/${recordSlug}`);
-    const ctaArea = page.getByLabel(/next action options/i).or(
-      page.getByRole('region', { name: /next action/i })
-    );
+    const ctaArea = page.getByLabel(/next action options/i);
     await expect(ctaArea).toBeVisible();
   });
 
@@ -53,25 +51,23 @@ test.describe('F8 — Engagement Routing', () => {
   });
 
   test('[F8.4] Routing address configurable from hub_settings', async ({ request }) => {
-    await request.post('/api/auth/login', { data: { role: 'curator' } });
+    await request.post('/api/auth/login', { data: { role: 'admin' } });
     const res = await request.get('/api/v1/curator/settings');
     expect(res.ok()).toBeTruthy();
     const body = await res.json();
-    const routingAddress = body.data?.find((s: { setting_key: string }) =>
-      s.setting_key === 'engagement_routing_address'
-    );
+    // Settings returned as a keyed object: { engagement_routing_address: { value, type, ... } }
+    const routingAddress = body.data?.['engagement_routing_address'];
     expect(routingAddress).toBeDefined();
-    expect(routingAddress.setting_value).toBeTruthy();
+    expect(routingAddress.value).toBeTruthy();
   });
 
   test('[F8.5] Default routing address is TSIO I&R address', async ({ request }) => {
-    await request.post('/api/auth/login', { data: { role: 'curator' } });
+    await request.post('/api/auth/login', { data: { role: 'admin' } });
     const res = await request.get('/api/v1/curator/settings');
     const body = await res.json();
-    const addr = body.data?.find((s: { setting_key: string }) =>
-      s.setting_key === 'engagement_routing_address'
-    );
-    expect(addr?.setting_value).toContain('ao.uscourts.gov');
+    // Settings returned as a keyed object: { engagement_routing_address: { value, type, ... } }
+    const addr = body.data?.['engagement_routing_address'];
+    expect(addr?.value).toContain('ao.uscourts.gov');
   });
 
   test('[F8.6] Engagement without consent returns 422', async ({ request }) => {

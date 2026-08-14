@@ -24,7 +24,7 @@ test.describe('AUTH — Authentication and Authorization', () => {
   test('[AUTH-01] Anonymous users can use search without login', async ({ page }) => {
     await page.goto('/search');
     expect(page.url()).not.toContain('/login');
-    await expect(page.getByRole('heading', { name: /search/i })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /search/i })).toBeVisible();
   });
 
   test('[AUTH-02] Curator role required for record management — unauthenticated returns 401', async ({ request }) => {
@@ -68,11 +68,11 @@ test.describe('AUTH — Authentication and Authorization', () => {
     expect(page.url()).not.toContain('/login');
   });
 
-  test('[AUTH-06] Three roles exist: curator access works', async ({ request, page }) => {
-    await request.post('/api/auth/login', { data: { role: 'curator' } });
+  test('[AUTH-06] Three roles exist: curator access works', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'curator' } });
     await page.goto('/curator');
     expect(page.url()).not.toContain('/login');
-    await expect(page.getByRole('heading')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   });
 
   test('[AUTH-07] Dev auth stub raises fatal error in production — env guard present in source', async () => {

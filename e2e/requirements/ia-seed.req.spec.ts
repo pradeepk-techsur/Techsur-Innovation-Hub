@@ -56,8 +56,8 @@ test.describe('IA — Information Architecture', () => {
     await expect(page.getByRole('link', { name: /sign in/i })).toBeVisible();
   });
 
-  test('[IA-05] Logged-in header shows user name and Sign Out', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[IA-05] Logged-in header shows user name and Sign Out', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/');
     await expect(page.getByRole('button', { name: /sign out/i })).toBeVisible();
   });

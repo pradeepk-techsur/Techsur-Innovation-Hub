@@ -6,16 +6,16 @@ import { test, expect } from '@playwright/test';
 
 test.describe('F7 — Share Existing Innovation Work', () => {
 
-  test('[F7.1] Separate contribution flow distinct from opportunity submission', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F7.1] Separate contribution flow distinct from opportunity submission', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-contribution');
     const text = await page.textContent('main');
     // Should explicitly distinguish itself from opportunity submission
     expect(text).toMatch(/existing.*work|share.*innovation|have.*work.*share/i);
   });
 
-  test('[F7.2] Attribution fields present and required', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F7.2] Attribution fields present and required', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-contribution');
     const text = await page.textContent('main');
     expect(text).toMatch(/contributing office|contributor|attribution/i);
@@ -44,8 +44,8 @@ test.describe('F7 — Share Existing Innovation Work', () => {
     expect(res.status()).toBe(422);
   });
 
-  test('[F7.4] Non-endorsement language present on contribution page', async ({ page, request }) => {
-    await request.post('/api/auth/login', { data: { role: 'stakeholder' } });
+  test('[F7.4] Non-endorsement language present on contribution page', async ({ page }) => {
+    await page.request.post('/api/auth/login', { data: { role: 'stakeholder' } });
     await page.goto('/submit-contribution');
     const text = await page.textContent('main');
     expect(text).toMatch(/does not.*imply.*endorsement|not.*endorse|curation.*before.*publication/i);
