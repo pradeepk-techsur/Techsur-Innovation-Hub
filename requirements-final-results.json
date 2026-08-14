@@ -1,0 +1,702 @@
+[
+  {
+    "req_id": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can browse catalog without login",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 1458
+  },
+  {
+    "req_id": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can view published records without login",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 1771
+  },
+  {
+    "req_id": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can use search without login",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 764
+  },
+  {
+    "req_id": "AUTH-02",
+    "title": "[AUTH-02] Curator role required for record management \u2014 unauthenticated returns 401",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 520
+  },
+  {
+    "req_id": "AUTH-02",
+    "title": "[AUTH-02] Curator role required for record management \u2014 stakeholder returns 403",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 174
+  },
+  {
+    "req_id": "AUTH-03",
+    "title": "[AUTH-03] Admin role required for settings \u2014 curator returns 403",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 382
+  },
+  {
+    "req_id": "AUTH-04",
+    "title": "[AUTH-04] Unauthenticated users cannot access protected functions",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 523
+  },
+  {
+    "req_id": "AUTH-05",
+    "title": "[AUTH-05] Auth decisions are auditable \u2014 login creates audit event",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 169
+  },
+  {
+    "req_id": "AUTH-06",
+    "title": "[AUTH-06] Three roles exist: anonymous browse works",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 295
+  },
+  {
+    "req_id": "AUTH-06",
+    "title": "[AUTH-06] Three roles exist: curator access works",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 899
+  },
+  {
+    "req_id": "AUTH-07",
+    "title": "[AUTH-07] Dev auth stub raises fatal error in production \u2014 env guard present in source",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 1
+  },
+  {
+    "req_id": "AUTH-08",
+    "title": "[AUTH-08] Stakeholder login is available",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 170
+  },
+  {
+    "req_id": "AUTH-09",
+    "title": "[AUTH-09] Unauthenticated access to /submit-opportunity redirects to login",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 274
+  },
+  {
+    "req_id": "AUTH-09",
+    "title": "[AUTH-09] Unauthenticated access to /submit-contribution redirects to login",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 274
+  },
+  {
+    "req_id": "AUTH-10",
+    "title": "[AUTH-10] User session includes name, office, email",
+    "file": "requirements/auth.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 19
+  },
+  {
+    "req_id": "F1.1",
+    "title": "[F1.1] User can browse a catalog of curated innovation records",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 359
+  },
+  {
+    "req_id": "F1.2",
+    "title": "[F1.2] Each catalog card shows title and one-sentence summary",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 327
+  },
+  {
+    "req_id": "F1.3",
+    "title": "[F1.3] Each card shows maturity badge",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 315
+  },
+  {
+    "req_id": "F1.3",
+    "title": "[F1.3] Each card shows review status badge",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 305
+  },
+  {
+    "req_id": "F1.3",
+    "title": "[F1.3] Each card shows contributing office",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 301
+  },
+  {
+    "req_id": "F1.4",
+    "title": "[F1.4] Each card shows engagement indicator when configured",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 294
+  },
+  {
+    "req_id": "F1.5",
+    "title": "[F1.5] Each card shows last-reviewed date",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 290
+  },
+  {
+    "req_id": "F1.6",
+    "title": "[F1.6] Maturity badge and review status badge are visually distinct",
+    "file": "requirements/f1-catalog.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 319
+  },
+  {
+    "req_id": "F2.1",
+    "title": "[F2.1] User can search without knowing internal project names",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 437
+  },
+  {
+    "req_id": "F2.1",
+    "title": "[F2.1] Search page accessible from main navigation",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 845
+  },
+  {
+    "req_id": "F2.2",
+    "title": "[F2.2] Search API covers problem statements and findings",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 11
+  },
+  {
+    "req_id": "F2.3",
+    "title": "[F2.3] Filter by maturity is supported",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 11
+  },
+  {
+    "req_id": "F2.3",
+    "title": "[F2.3] Facets endpoint returns all filter dimensions",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 8
+  },
+  {
+    "req_id": "F2.4",
+    "title": "[F2.4] Every search result includes maturity and review_statuses",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 9
+  },
+  {
+    "req_id": "F2.5",
+    "title": "[F2.5] Problem-language query surfaces relevant records",
+    "file": "requirements/f2-search.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 9
+  },
+  {
+    "req_id": "F3.1",
+    "title": "[F3.1] Record explains problem and context",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 380
+  },
+  {
+    "req_id": "F3.2",
+    "title": "[F3.2] Record explains what was explored",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 1002
+  },
+  {
+    "req_id": "F3.3",
+    "title": "[F3.3] Record explains outcome and evidence",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 392
+  },
+  {
+    "req_id": "F3.4",
+    "title": "[F3.4] Record surfaces key findings",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 383
+  },
+  {
+    "req_id": "F3.5",
+    "title": "[F3.5] Record shows maturity and readiness with trust banner",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 385
+  },
+  {
+    "req_id": "F3.6",
+    "title": "[F3.6] Record provides reuse guidance",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 379
+  },
+  {
+    "req_id": "F3.7",
+    "title": "[F3.7] Record identifies ownership and attribution",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 382
+  },
+  {
+    "req_id": "F3.8",
+    "title": "[F3.8] Artifacts section is present",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 404
+  },
+  {
+    "req_id": "F3.9",
+    "title": "[F3.9] Record provides next action CTAs",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 385
+  },
+  {
+    "req_id": "F3.8",
+    "title": "[F3.8] Restricted artifact URLs not exposed in API",
+    "file": "requirements/f3-record.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 669
+  },
+  {
+    "req_id": "F4.1",
+    "title": "[F4.1] Single record supports both perspectives \u2014 toggle visible",
+    "file": "requirements/f4-perspectives.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 420
+  },
+  {
+    "req_id": "F4.2",
+    "title": "[F4.2] Executive perspective shows problem, outcome, ownership",
+    "file": "requirements/f4-perspectives.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 379
+  },
+  {
+    "req_id": "F4.3",
+    "title": "[F4.3] Technical perspective shows architecture and limitations",
+    "file": "requirements/f4-perspectives.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 410
+  },
+  {
+    "req_id": "F4.4",
+    "title": "[F4.4] Trust banner visible in both perspectives",
+    "file": "requirements/f4-perspectives.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 430
+  },
+  {
+    "req_id": "F4.1",
+    "title": "[F4.1] No duplicate source records \u2014 single API call serves both views",
+    "file": "requirements/f4-perspectives.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 22
+  },
+  {
+    "req_id": "F5.1",
+    "title": "[F5.1] Lessons-learned source is linked, not migrated \u2014 source_basis field present",
+    "file": "requirements/f5-lessons-learned.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 11
+  },
+  {
+    "req_id": "F5.2",
+    "title": "[F5.2] Structured record wraps the source and extracts findings",
+    "file": "requirements/f5-lessons-learned.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 10
+  },
+  {
+    "req_id": "F5.3",
+    "title": "[F5.3] Metadata applied \u2014 maturity, review status, last_reviewed_date present",
+    "file": "requirements/f5-lessons-learned.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 15
+  },
+  {
+    "req_id": "F5.4",
+    "title": "[F5.4] Record is discoverable via problem-oriented search",
+    "file": "requirements/f5-lessons-learned.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 12
+  },
+  {
+    "req_id": "F5.5",
+    "title": "[F5.5] Source basis banner visible on record page",
+    "file": "requirements/f5-lessons-learned.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 486
+  },
+  {
+    "req_id": "F6.1",
+    "title": "[F6.1] Submission flow starts with problem description, not application request",
+    "file": "requirements/f6-opportunity.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 865
+  },
+  {
+    "req_id": "F6.2",
+    "title": "[F6.2] Form captures all required fields",
+    "file": "requirements/f6-opportunity.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 302
+  },
+  {
+    "req_id": "F6.3",
+    "title": "[F6.3] Request type selector present",
+    "file": "requirements/f6-opportunity.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 302
+  },
+  {
+    "req_id": "F6.4",
+    "title": "[F6.4] Non-acceptance notice explicitly stated",
+    "file": "requirements/f6-opportunity.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 281
+  },
+  {
+    "req_id": "F6.5",
+    "title": "[F6.5] Submission persisted \u2014 API returns reference number",
+    "file": "requirements/f6-opportunity.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 452
+  },
+  {
+    "req_id": "F7.1",
+    "title": "[F7.1] Separate contribution flow distinct from opportunity submission",
+    "file": "requirements/f7-contribution.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 901
+  },
+  {
+    "req_id": "F7.2",
+    "title": "[F7.2] Attribution fields present and required",
+    "file": "requirements/f7-contribution.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 281
+  },
+  {
+    "req_id": "F7.3",
+    "title": "[F7.3] Attribution preserved \u2014 API requires contributingOffice",
+    "file": "requirements/f7-contribution.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 219
+  },
+  {
+    "req_id": "F7.4",
+    "title": "[F7.4] Non-endorsement language present on contribution page",
+    "file": "requirements/f7-contribution.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 309
+  },
+  {
+    "req_id": "F8.1",
+    "title": "[F8.1] CTAs visible on record detail page",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 409
+  },
+  {
+    "req_id": "F8.2",
+    "title": "[F8.2] Engagement modal captures requester info",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 436
+  },
+  {
+    "req_id": "F8.3",
+    "title": "[F8.3] Engagement persisted before email \u2014 API returns reference number",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 208
+  },
+  {
+    "req_id": "F8.4",
+    "title": "[F8.4] Routing address configurable from hub_settings",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 221
+  },
+  {
+    "req_id": "F8.5",
+    "title": "[F8.5] Default routing address is TSIO I&R address",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 21
+  },
+  {
+    "req_id": "F8.6",
+    "title": "[F8.6] Engagement without consent returns 422",
+    "file": "requirements/f8-engagement.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 15
+  },
+  {
+    "req_id": "F9.1",
+    "title": "[F9.1] Curator dashboard returns live counts",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 40
+  },
+  {
+    "req_id": "F9.2",
+    "title": "[F9.2] Record management list returns records across all states",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 30
+  },
+  {
+    "req_id": "F9.3",
+    "title": "[F9.3] Curator can create a draft record",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 29
+  },
+  {
+    "req_id": "F9.4",
+    "title": "[F9.4] Curator can edit record fields with version",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 693
+  },
+  {
+    "req_id": "F9.5",
+    "title": "[F9.5] Artifact can be added to a record",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 497
+  },
+  {
+    "req_id": "F9.6",
+    "title": "[F9.6] Maturity can be assigned independently",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 61
+  },
+  {
+    "req_id": "F9.7",
+    "title": "[F9.7] Review status independent from maturity \u2014 both can be set separately",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 63
+  },
+  {
+    "req_id": "F9.8",
+    "title": "[F9.8] Attribution fields can be set on a record",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 61
+  },
+  {
+    "req_id": "F9.9",
+    "title": "[F9.9] Publication lifecycle supports draft to archived transitions",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 34
+  },
+  {
+    "req_id": "F9.10",
+    "title": "[F9.10] Publication gate blocks publish when required fields missing",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 503
+  },
+  {
+    "req_id": "F9.11",
+    "title": "[F9.11] Audit history returns events for a record",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 486
+  },
+  {
+    "req_id": "F9.12",
+    "title": "[F9.12] Opportunity submission queue accessible to curator",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 253
+  },
+  {
+    "req_id": "F9.13",
+    "title": "[F9.13] Contribution submission queue accessible to curator",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 243
+  },
+  {
+    "req_id": "F9.14",
+    "title": "[F9.14] Engagement activity accessible to curator",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 254
+  },
+  {
+    "req_id": "F9.15",
+    "title": "[F9.15] Settings management \u2014 admin-only update works",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 129
+  },
+  {
+    "req_id": "F9.16",
+    "title": "[F9.16] Content model reference returns definitions",
+    "file": "requirements/f9-curation.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 297
+  },
+  {
+    "req_id": "IA-01",
+    "title": "[IA-01] All primary nav links resolve without 404",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 864
+  },
+  {
+    "req_id": "IA-02",
+    "title": "[IA-02] Catalog, search, record routes all return 200",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 34
+  },
+  {
+    "req_id": "IA-03",
+    "title": "[IA-03] NAVIGATION-MAP.md exists",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 0
+  },
+  {
+    "req_id": "IA-04",
+    "title": "[IA-04] Breadcrumb present on catalog page",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 416
+  },
+  {
+    "req_id": "IA-04",
+    "title": "[IA-04] Breadcrumb present on record detail page",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 393
+  },
+  {
+    "req_id": "IA-05",
+    "title": "[IA-05] Logged-out header shows Sign In link",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 263
+  },
+  {
+    "req_id": "IA-05",
+    "title": "[IA-05] Logged-in header shows user name and Sign Out",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 274
+  },
+  {
+    "req_id": "SEED-01",
+    "title": "[SEED-01] At least 8 published innovation records exist",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 14
+  },
+  {
+    "req_id": "SEED-02",
+    "title": "[SEED-02] Records span multiple mission areas",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 10
+  },
+  {
+    "req_id": "SEED-03",
+    "title": "[SEED-03] Records span multiple technology areas",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 10
+  },
+  {
+    "req_id": "SEED-04",
+    "title": "[SEED-04] Records span all 6 maturity levels",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 11
+  },
+  {
+    "req_id": "SEED-05",
+    "title": "[SEED-05] Records span multiple review statuses",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 7
+  },
+  {
+    "req_id": "SEED-06",
+    "title": "[SEED-06] Records span multiple contributing offices",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 7
+  },
+  {
+    "req_id": "SEED-07",
+    "title": "[SEED-07] At least 1 record has technical findings and artifact links",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 22
+  },
+  {
+    "req_id": "SEED-08",
+    "title": "[SEED-08] At least 1 record supports executive decision discussion",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 10
+  },
+  {
+    "req_id": "SEED-09",
+    "title": "[SEED-09] At least 1 record seeking adoption or collaboration",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 10
+  },
+  {
+    "req_id": "SEED-10",
+    "title": "[SEED-10] At least 1 archived/retired record exists",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 26
+  },
+  {
+    "req_id": "SEED-11",
+    "title": "[SEED-11] All published records pass the 15-field gate check",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 151
+  },
+  {
+    "req_id": "SEED-12",
+    "title": "[SEED-12] Audio Security POC seeded with full content model",
+    "file": "requirements/ia-seed.req.spec.ts",
+    "status": "pass",
+    "duration_ms": 13
+  }
+]
