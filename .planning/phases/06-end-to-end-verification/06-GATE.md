@@ -24,3 +24,10 @@ waves:
 - Tests: E2E suite executed in plan 06-02 (Playwright) — 87/100 passed, 13 failures classified in TRIAGE-REPORT.md
 - Fix attempts: 0/3
 
+
+## Wave 3
+
+- Build: `npm run build` → pass (exit 0)
+- Tests: Playwright requirement suite re-run in plan 06-03 — 100/100 passed (was 87/100)
+- Fix attempts: 0/3 (fixes applied by executor, not gate loop)
+
