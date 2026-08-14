@@ -1,0 +1,702 @@
+[
+  {
+    "reqId": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can browse catalog without login",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can view published records without login",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-01",
+    "title": "[AUTH-01] Anonymous users can use search without login",
+    "status": "fail",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('heading', { name: /search/i })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: /search/i }) resolved to 2 elements:\n    1) <h1>Search Innovation Records</h1> aka getByRole('heading', { name: 'Search Innovation Records' })\n    2) <h2 class=\"text-base font-semibold text-gray-900 group-hover:text-blue-700 group-hover:underline\">Remote Proceedings Accessibility Research</h2> aka getByRole('link', { name: 'Remote Proceedings' })\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByRole('heading', { name: /search/i })\n",
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-02",
+    "title": "[AUTH-02] Curator role required for record management — unauthenticated returns 401",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-02",
+    "title": "[AUTH-02] Curator role required for record management — stakeholder returns 403",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-03",
+    "title": "[AUTH-03] Admin role required for settings — curator returns 403",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-04",
+    "title": "[AUTH-04] Unauthenticated users cannot access protected functions",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-05",
+    "title": "[AUTH-05] Auth decisions are auditable — login creates audit event",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-06",
+    "title": "[AUTH-06] Three roles exist: anonymous browse works",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-06",
+    "title": "[AUTH-06] Three roles exist: curator access works",
+    "status": "fail",
+    "error": "Error: expect(received).not.toContain(expected) // indexOf\n\nExpected substring: not \"/login\"\nReceived string:        \"http://localhost:3000/login?returnTo=%2Fcurator\"",
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-07",
+    "title": "[AUTH-07] Dev auth stub raises fatal error in production — env guard present in source",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-08",
+    "title": "[AUTH-08] Stakeholder login is available",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-09",
+    "title": "[AUTH-09] Unauthenticated access to /submit-opportunity redirects to login",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-09",
+    "title": "[AUTH-09] Unauthenticated access to /submit-contribution redirects to login",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "AUTH-10",
+    "title": "[AUTH-10] User session includes name, office, email",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/auth.req.spec.ts"
+  },
+  {
+    "reqId": "F1.1",
+    "title": "[F1.1] User can browse a catalog of curated innovation records",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.2",
+    "title": "[F1.2] Each catalog card shows title and one-sentence summary",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.3",
+    "title": "[F1.3] Each card shows maturity badge",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.3",
+    "title": "[F1.3] Each card shows review status badge",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.3",
+    "title": "[F1.3] Each card shows contributing office",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.4",
+    "title": "[F1.4] Each card shows engagement indicator when configured",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.5",
+    "title": "[F1.5] Each card shows last-reviewed date",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F1.6",
+    "title": "[F1.6] Maturity badge and review status badge are visually distinct",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f1-catalog.req.spec.ts"
+  },
+  {
+    "reqId": "F2.1",
+    "title": "[F2.1] User can search without knowing internal project names",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.1",
+    "title": "[F2.1] Search page accessible from main navigation",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.2",
+    "title": "[F2.2] Search API covers problem statements and findings",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.3",
+    "title": "[F2.3] Filter by maturity is supported",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.3",
+    "title": "[F2.3] Facets endpoint returns all filter dimensions",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.4",
+    "title": "[F2.4] Every search result includes maturity and review_statuses",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F2.5",
+    "title": "[F2.5] Problem-language query surfaces relevant records",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f2-search.req.spec.ts"
+  },
+  {
+    "reqId": "F3.1",
+    "title": "[F3.1] Record explains problem and context",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.2",
+    "title": "[F3.2] Record explains what was explored",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.3",
+    "title": "[F3.3] Record explains outcome and evidence",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.4",
+    "title": "[F3.4] Record surfaces key findings",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.5",
+    "title": "[F3.5] Record shows maturity and readiness with trust banner",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.6",
+    "title": "[F3.6] Record provides reuse guidance",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.7",
+    "title": "[F3.7] Record identifies ownership and attribution",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.8",
+    "title": "[F3.8] Artifacts section is present",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.9",
+    "title": "[F3.9] Record provides next action CTAs",
+    "status": "fail",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i }))\nExpected: visible\nError: strict mode violation: getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i })) resolved to 2 elements:\n    1) <section class=\"mt-8\" id=\"exec-next\" aria-labelledby=\"exec-next-heading\">…</section> aka getByRole('region', { name: 'Next Actions' })\n    2) <div class=\"flex flex-wrap gap-3\" aria-label=\"Next action options\">…</div> aka getByLabel('Next action options')\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i }))\n",
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F3.8",
+    "title": "[F3.8] Restricted artifact URLs not exposed in API",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f3-record.req.spec.ts"
+  },
+  {
+    "reqId": "F4.1",
+    "title": "[F4.1] Single record supports both perspectives — toggle visible",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f4-perspectives.req.spec.ts"
+  },
+  {
+    "reqId": "F4.2",
+    "title": "[F4.2] Executive perspective shows problem, outcome, ownership",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f4-perspectives.req.spec.ts"
+  },
+  {
+    "reqId": "F4.3",
+    "title": "[F4.3] Technical perspective shows architecture and limitations",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f4-perspectives.req.spec.ts"
+  },
+  {
+    "reqId": "F4.4",
+    "title": "[F4.4] Trust banner visible in both perspectives",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f4-perspectives.req.spec.ts"
+  },
+  {
+    "reqId": "F4.1",
+    "title": "[F4.1] No duplicate source records — single API call serves both views",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f4-perspectives.req.spec.ts"
+  },
+  {
+    "reqId": "F5.1",
+    "title": "[F5.1] Lessons-learned source is linked, not migrated — source_basis field present",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f5-lessons-learned.req.spec.ts"
+  },
+  {
+    "reqId": "F5.2",
+    "title": "[F5.2] Structured record wraps the source and extracts findings",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f5-lessons-learned.req.spec.ts"
+  },
+  {
+    "reqId": "F5.3",
+    "title": "[F5.3] Metadata applied — maturity, review status, last_reviewed_date present",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f5-lessons-learned.req.spec.ts"
+  },
+  {
+    "reqId": "F5.4",
+    "title": "[F5.4] Record is discoverable via problem-oriented search",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f5-lessons-learned.req.spec.ts"
+  },
+  {
+    "reqId": "F5.5",
+    "title": "[F5.5] Source basis banner visible on record page",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f5-lessons-learned.req.spec.ts"
+  },
+  {
+    "reqId": "F6.1",
+    "title": "[F6.1] Submission flow starts with problem description, not application request",
+    "status": "fail",
+    "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /problem|mission|friction|need/i\nReceived string:  \"Home/Sign InSign InSign in to submit opportunities, share innovation work, or initiate engagement requests.Development mode — select a role to sign in as.Stakeholder (submit/engage)Curator (manage records)Admin (settings)Sign InBrowsing, searching, and viewing innovation records does not require sign-in.\"",
+    "file": "requirements/f6-opportunity.req.spec.ts"
+  },
+  {
+    "reqId": "F6.2",
+    "title": "[F6.2] Form captures all required fields",
+    "status": "fail",
+    "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /problem|describe/i\nReceived string:  \"Home/Sign InSign InSign in to submit opportunities, share innovation work, or initiate engagement requests.Development mode — select a role to sign in as.Stakeholder (submit/engage)Curator (manage records)Admin (settings)Sign InBrowsing, searching, and viewing innovation records does not require sign-in.\"",
+    "file": "requirements/f6-opportunity.req.spec.ts"
+  },
+  {
+    "reqId": "F6.3",
+    "title": "[F6.3] Request type selector present",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f6-opportunity.req.spec.ts"
+  },
+  {
+    "reqId": "F6.4",
+    "title": "[F6.4] Non-acceptance notice explicitly stated",
+    "status": "fail",
+    "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /does not.*imply.*acceptance|does not.*commit|not.*imply.*acceptance/i\nReceived string:  \"Home/Sign InSign InSign in to submit opportunities, share innovation work, or initiate engagement requests.Development mode — select a role to sign in as.Stakeholder (submit/engage)Curator (manage records)Admin (settings)Sign InBrowsing, searching, and viewing innovation records does not require sign-in.\"",
+    "file": "requirements/f6-opportunity.req.spec.ts"
+  },
+  {
+    "reqId": "F6.5",
+    "title": "[F6.5] Submission persisted — API returns reference number",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f6-opportunity.req.spec.ts"
+  },
+  {
+    "reqId": "F7.1",
+    "title": "[F7.1] Separate contribution flow distinct from opportunity submission",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f7-contribution.req.spec.ts"
+  },
+  {
+    "reqId": "F7.2",
+    "title": "[F7.2] Attribution fields present and required",
+    "status": "fail",
+    "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /contributing office|contributor|attribution/i\nReceived string:  \"Home/Sign InSign InSign in to submit opportunities, share innovation work, or initiate engagement requests.Development mode — select a role to sign in as.Stakeholder (submit/engage)Curator (manage records)Admin (settings)Sign InBrowsing, searching, and viewing innovation records does not require sign-in.\"",
+    "file": "requirements/f7-contribution.req.spec.ts"
+  },
+  {
+    "reqId": "F7.3",
+    "title": "[F7.3] Attribution preserved — API requires contributingOffice",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f7-contribution.req.spec.ts"
+  },
+  {
+    "reqId": "F7.4",
+    "title": "[F7.4] Non-endorsement language present on contribution page",
+    "status": "fail",
+    "error": "Error: expect(received).toMatch(expected)\n\nExpected pattern: /does not.*imply.*endorsement|not.*endorse|curation.*before.*publication/i\nReceived string:  \"Home/Sign InSign InSign in to submit opportunities, share innovation work, or initiate engagement requests.Development mode — select a role to sign in as.Stakeholder (submit/engage)Curator (manage records)Admin (settings)Sign InBrowsing, searching, and viewing innovation records does not require sign-in.\"",
+    "file": "requirements/f7-contribution.req.spec.ts"
+  },
+  {
+    "reqId": "F8.1",
+    "title": "[F8.1] CTAs visible on record detail page",
+    "status": "fail",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i }))\nExpected: visible\nError: strict mode violation: getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i })) resolved to 2 elements:\n    1) <section class=\"mt-8\" id=\"exec-next\" aria-labelledby=\"exec-next-heading\">…</section> aka getByRole('region', { name: 'Next Actions' })\n    2) <div class=\"flex flex-wrap gap-3\" aria-label=\"Next action options\">…</div> aka getByLabel('Next action options')\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByLabel(/next action options/i).or(getByRole('region', { name: /next action/i }))\n",
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F8.2",
+    "title": "[F8.2] Engagement modal captures requester info",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F8.3",
+    "title": "[F8.3] Engagement persisted before email — API returns reference number",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F8.4",
+    "title": "[F8.4] Routing address configurable from hub_settings",
+    "status": "fail",
+    "error": "Error: expect(received).toBeTruthy()\n\nReceived: false",
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F8.5",
+    "title": "[F8.5] Default routing address is TSIO I&R address",
+    "status": "fail",
+    "error": "Error: expect(received).toContain(expected) // indexOf\n\nMatcher error: received value must not be null nor undefined\n\nReceived has value: undefined",
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F8.6",
+    "title": "[F8.6] Engagement without consent returns 422",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f8-engagement.req.spec.ts"
+  },
+  {
+    "reqId": "F9.1",
+    "title": "[F9.1] Curator dashboard returns live counts",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.2",
+    "title": "[F9.2] Record management list returns records across all states",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.3",
+    "title": "[F9.3] Curator can create a draft record",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.4",
+    "title": "[F9.4] Curator can edit record fields with version",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.5",
+    "title": "[F9.5] Artifact can be added to a record",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.6",
+    "title": "[F9.6] Maturity can be assigned independently",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.7",
+    "title": "[F9.7] Review status independent from maturity — both can be set separately",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.8",
+    "title": "[F9.8] Attribution fields can be set on a record",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.9",
+    "title": "[F9.9] Publication lifecycle supports draft to archived transitions",
+    "status": "fail",
+    "error": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"draft\"\nReceived: undefined",
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.10",
+    "title": "[F9.10] Publication gate blocks publish when required fields missing",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.11",
+    "title": "[F9.11] Audit history returns events for a record",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.12",
+    "title": "[F9.12] Opportunity submission queue accessible to curator",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.13",
+    "title": "[F9.13] Contribution submission queue accessible to curator",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.14",
+    "title": "[F9.14] Engagement activity accessible to curator",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.15",
+    "title": "[F9.15] Settings management — admin-only update works",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "F9.16",
+    "title": "[F9.16] Content model reference returns definitions",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/f9-curation.req.spec.ts"
+  },
+  {
+    "reqId": "IA-01",
+    "title": "[IA-01] All primary nav links resolve without 404",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-02",
+    "title": "[IA-02] Catalog, search, record routes all return 200",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-03",
+    "title": "[IA-03] NAVIGATION-MAP.md exists",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-04",
+    "title": "[IA-04] Breadcrumb present on catalog page",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-04",
+    "title": "[IA-04] Breadcrumb present on record detail page",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-05",
+    "title": "[IA-05] Logged-out header shows Sign In link",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "IA-05",
+    "title": "[IA-05] Logged-in header shows user name and Sign Out",
+    "status": "fail",
+    "error": "Error: expect(locator).toBeVisible() failed\n\nLocator: getByRole('button', { name: /sign out/i })\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toBeVisible\" with timeout 5000ms\n  - waiting for getByRole('button', { name: /sign out/i })\n",
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-01",
+    "title": "[SEED-01] At least 8 published innovation records exist",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-02",
+    "title": "[SEED-02] Records span multiple mission areas",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-03",
+    "title": "[SEED-03] Records span multiple technology areas",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-04",
+    "title": "[SEED-04] Records span all 6 maturity levels",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-05",
+    "title": "[SEED-05] Records span multiple review statuses",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-06",
+    "title": "[SEED-06] Records span multiple contributing offices",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-07",
+    "title": "[SEED-07] At least 1 record has technical findings and artifact links",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-08",
+    "title": "[SEED-08] At least 1 record supports executive decision discussion",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-09",
+    "title": "[SEED-09] At least 1 record seeking adoption or collaboration",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-10",
+    "title": "[SEED-10] At least 1 archived/retired record exists",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-11",
+    "title": "[SEED-11] All published records pass the 15-field gate check",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  },
+  {
+    "reqId": "SEED-12",
+    "title": "[SEED-12] Audio Security POC seeded with full content model",
+    "status": "pass",
+    "error": null,
+    "file": "requirements/ia-seed.req.spec.ts"
+  }
+]
