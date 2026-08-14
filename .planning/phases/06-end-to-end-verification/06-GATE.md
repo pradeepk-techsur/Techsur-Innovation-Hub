@@ -17,3 +17,10 @@ waves:
 - Tests: E2E-only suite detected (`playwright test`) — deferred to verify phase per gate rules
 - Fix attempts: 0/3
 
+
+## Wave 2
+
+- Build: `npm run build` → pass (exit 0)
+- Tests: E2E suite executed in plan 06-02 (Playwright) — 87/100 passed, 13 failures classified in TRIAGE-REPORT.md
+- Fix attempts: 0/3
+
