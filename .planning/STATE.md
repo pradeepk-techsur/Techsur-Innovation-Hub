@@ -3,14 +3,14 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 06-01-PLAN.md
-last_updated: "2026-08-14T02:21:35.831Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-08-14T02:30:13.173Z"
 last_activity: 2026-08-12 — Completed 05-02 launch content seed (8 records, all SEED dimensions covered)
 progress:
   total_phases: 11
   completed_phases: 4
   total_plans: 27
-  completed_plans: 23
+  completed_plans: 24
   percent: 87
 ---
 
@@ -74,6 +74,7 @@ Progress: [█████████░] 87%
 | Phase 05-launch-readiness P01 | 10min | 1 tasks | 6 files |
 | Phase 05-launch-readiness P03 | 7min | 2 tasks | 8 files |
 | Phase 06-end-to-end-verification P01 | 5min | 2 tasks | 13 files |
+| Phase 06-end-to-end-verification P02 | 5min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -126,6 +127,9 @@ Recent decisions affecting current work:
 - [Phase 05-launch-readiness]: X-Frame-Options DENY intentionally omitted at app level — Pivota preview iframe must embed the app; CSP frame-ancestors set at load balancer
 - [Phase 06-end-to-end-verification]: Test titles begin with [REQ-ID] in brackets for machine-readable parsing by run-all.ts runner
 - [Phase 06-end-to-end-verification]: 11 spec files organized by category matching REQUIREMENTS.md structure; run-all.ts produces requirements-results.json for triage phase
+- [Phase 06-end-to-end-verification]: Cookie-transfer pattern: APIRequestContext cookies don't transfer to browser page in Playwright test specs
+- [Phase 06-end-to-end-verification]: F8.4/F8.5 gap: settings GET restricted to admin role; response is object not array with setting_key property
+- [Phase 06-end-to-end-verification]: F9.9 gap: POST /curator/records response omits state field; test expects {state:'draft'}
 
 ### Pending Todos
 
@@ -139,6 +143,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-08-14T02:21:35.830Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-08-14T02:30:13.172Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
