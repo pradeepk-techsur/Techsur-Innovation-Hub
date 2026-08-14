@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "dev": "node scripts/dev-bootstrap.mjs && next dev -H 0.0.0.0 -p 3000",
+    "dev:no-bootstrap": "next dev -H 0.0.0.0 -p 3000",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p 3000",
     "db:migrate": "tsx src/lib/db/migrate.ts",
