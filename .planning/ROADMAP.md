@@ -123,7 +123,7 @@ Plans:
 
 ### Phase 6: End-to-End Verification
 **Depends on**: Phase 5
-**Status**: executing
+**Status**: failed
 **Goal**: Every v1 requirement is verified end-to-end against the running application; failures trigger user clarification and targeted fixes; all artifacts (REQUIREMENTS.md, ROADMAP.md, test specs, LAUNCH-CHECKLIST.md) reflect final verified state
 **Requirements**: All 87 v1 requirements (AUTH-01–10, F1.1–F9.16, IA-01–05, SEED-01–12)
 **Plans**: 4 plans
